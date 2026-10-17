@@ -2,7 +2,7 @@
 
 A delayed report should not overwrite a newer fact. An authorized correction should revise an assertion while preserving what was known before the correction arrived.
 
-This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: verified deterministic baseline plus a real pretrained Qwen runtime smoke. The smoke produced 0/10 schema-valid proposals; raw failures are published. No adapter trained, no human label review, no learned-model advantage claimed.**
+This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: deterministic baseline plus real, saved/reloaded educational LoRA adapters. The bounded adjustment matched 13/20 training targets, below the 20/20 overfit goal. Human label review and matched held-out comparisons remain unfinished; no learned-memory advantage is claimed.**
 
 ## See the behavior first
 
@@ -69,10 +69,10 @@ flowchart LR
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
 | Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
 | Prompted Qwen3 runtime | Real CPU smoke complete; 0/10 schema-valid proposals; [raw evidence](examples/qwen-smoke-cpu/README.md) |
-| LoRA training and saved adapter | Deferred; no adapter exists |
+| LoRA training and saved adapter | Two bounded educational runs saved/reloaded; full 20/20 overfit goal unmet |
 | Matched learned-model comparisons and uncertainty | Deferred; no model effect estimated |
 
-The training gate is currently **training_not_justified** for a research campaign: supplied annotations let transparent rules solve this pilot. A small future SFT run could demonstrate structured-rule imitation. A claim of a learned-memory contribution needs a separately justified task and independent label review. Model requests without a cached runtime and all training requests return exit **3**; rule results are never substituted.
+The research-training gate is **training_not_justified**: supplied annotations let transparent rules solve this unaudited pilot. The original brief permits a tiny `educational_imitation_only` control, which has now run with a saved adapter and exact reload proof. Training is capped at twenty examples and three epochs; research training remains disabled. A learned-memory claim still needs a separately justified task and independent label review. Missing optional runtimes return exit **3**; rule results are never substituted.
 
 ## Optional model diagnostics
 
@@ -86,6 +86,12 @@ uv run --locked --extra ml python -m cam.cli model-smoke --config configs/base.j
 
 The smoke records ten pilot/development requests, raw responses and failures, token counts, prompt hashes, backend/dtype, latency/memory, and a tiny backward compatibility probe. It never updates or saves weights. The first real CPU float32 run completed in **28.9 seconds excluding model load**, peaked at **4.89 GiB** including its passing four-token backward probe, and produced **0/10 schema-valid proposals**: every response omitted `review_required`. All ten selected requests were initial-create events, so this is a narrow runtime check, not a balanced benchmark. [Raw responses and interpretation](examples/qwen-smoke-cpu/README.md). Fake-runtime tests and randomly initialized tiny-model API checks remain distinct from this pretrained run.
 
+## Educational adapter proof
+
+Following the [original brief alignment check](docs/drift-audit.md), Task 6 now includes actual completion-only LoRA training with frozen-base hashes, preserved loss/output records and exact fresh-base reload tokens. The original default produced 2/20 exact training targets; the one allowed accumulation adjustment produced 13/20, with 20/20 schema-valid outputs and 13/20 guard-valid expected actions. Neither achieved full overfit. These are training diagnostics, with no matched prompted-base or held-out quality result.
+
+[Default checkpoint and raw evidence](examples/educational-sft/README.md) · [Single adjustment and raw evidence](examples/educational-sft-overfit/README.md) · [Model card and reproduction](docs/model-card.md). Human reviewers remain zero, and the full comparison/statistics phase is pending.
+
 CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional experiment, `4` failed correctness gate. All generated artifacts stay inside the selected output directory.
 
 ## Inspect the evidence
@@ -96,4 +102,4 @@ The [pilot review packet](audits/pilot-seed11/review.md) includes the exact sour
 
 The task plan and execution record are under [docs/superpowers](docs/superpowers/plans/2026-10-17-correction-aware-memory.md) and [docs/progress.md](docs/progress.md). Code is MIT-licensed; original synthetic data is designated CC0-1.0. This project is not a full MEMORA/PSD reproduction or a validated novel memory method. [Related work and remaining novelty audit](docs/novelty-audit.md).
 
-**Next concrete task:** work through the [50-event pilot audit](audits/pilot-seed11/review.md), record disagreements in its CSV, then decide whether an educational Qwen3-0.6B SFT experiment provides useful evidence beyond this deterministic milestone.
+**Next concrete task:** implement the original Task 7 matched development comparison and uncertainty path; complete the [50-event human pilot audit](audits/pilot-seed11/review.md) before scientific claims. Keep final tests locked and report negative results rather than extending the training sweep.

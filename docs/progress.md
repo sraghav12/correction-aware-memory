@@ -10,7 +10,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 | 3. Rule policy/adversarial cases | Complete | 33 cumulative tests passed; commit 64c2d40 |
 | 4. Independent offline pilot/report | Complete | 49 cumulative tests passed; commit 7fe75e7 |
 | 5. Prompted model runtime | Complete, including real CPU smoke | Ten pretrained requests recorded; 0/10 schema-valid, four-token backward passed; raw evidence committed |
-| 6. LoRA training | Deferred | No training or adapter; research gate not justified |
+| 6. LoRA training | Bounded educational proof complete; full overfit unmet | Two actual saved/reloaded adapters; default2/20 and one adjustment13/20 canonical targets; no research campaign |
 | 7. Learned-arm comparisons/statistics | Deferred | No learned arms or model effect |
 | 8. Release A package | Complete | Canonical demo, portable smoke run, 61 tests, clean-checkout fixed-code replay |
 
@@ -86,3 +86,23 @@ The user explicitly chose “Download and run the smoke test”. The complete pi
 Clean production source `c655119` ran ten pilot requests on CPU float32: 7,047 input and 787 output tokens, median request latency 2.560 seconds, 28.889-second smoke wall time excluding 3.679-second model loading, and peak process memory 4.894 GiB including a passing four-token backward probe. All ten responses were valid JSON but omitted required `review_required`; 0/10 became typed proposals, and none reached semantic validation. Raw outputs and failures were retained without repair. All selected requests were initial-create events with empty histories, so this is a narrow runtime diagnostic rather than a balanced or closed-loop benchmark. [Complete evidence and replay command](../examples/qwen-smoke-cpu/README.md).
 
 Having real weights cached also exposed an order-dependent test: changing `HF_HOME` after Hub had been imported did not isolate its import-time cache constants. The missing-cache test failed before the fix, then passed in a fresh subprocess with its own empty cache and blocked network connections. Full optional suite: 89 passed. No production behavior or model prompt changed after the smoke. No adapter, optimizer step, prompt tuning, full model comparison, final holdout access, or human label review occurred.
+
+## Original-brief alignment and Task 6 (October 17, 2026)
+
+The user asked to check against the Markdown in folder `1` and continue. The original file and repository handoff are byte-identical (SHA-256 `7ac059d03f0c9b00a32b7032f9c2edf83e9cc2412080df43b47c2003f182cd72`). Architecture/contracts matched, while the training and comparison deliverables were unfinished. Treating human review as the only next action had over-deferred the brief's explicit educational SFT exception. [Requirement mapping and remaining gaps](drift-audit.md).
+
+Implemented typed training contracts, completion-only masks with actual inference-prefix identity, explicit split/runtime gates, length preflight, frozen-base hashing, LoRA-only optimization, safe checkpoint loading and exact token reload proof. Config classes now share the original `contracts.py` location. Fourteen initial boundary assertions failed before implementation; later data/runtime/adapter-integrity and offline-save regressions also failed before their fixes. Real-tokenizer preflight caught a library dictionary-return default before optimization; explicit token-list output fixed the mask boundary. Complete optional suite: 111 passed; isolated core: 109 passed, two native checks skipped.
+
+Two actual clean-source CPU float32 controls used twenty training examples (four per action), three epochs, seed11, rank16/alpha32/dropout.05, q/v projections, learning rate .0002 and at most2048 tokens. Default accumulation16 made six steps and matched2/20 canonical targets; the original's one allowed accumulation-one adjustment made sixty steps and matched13/20. Both preserved full base-parameter hashes, changed2,293,760 adapter parameters, and reproduced exact token arrays after fresh-base reload. Same corpus/base/initial-adapter hashes hold across runs. **The20/20 overfit acceptance criterion failed in both; no scale-up or further tuning occurred.**
+
+The actual9,189,904-byte checkpoint files, full corpus/data/loss/prediction records and replay configs are [published as separate controls](model-card.md). Both packaged checkpoints also loaded through the public pin/hash-verifying inference runtime and reproduced their recorded probes. Default/adjusted CPU wall time excluding initial load:279.553/273.234s; peak memory6.917/7.093GiB. These are training/serialization diagnostics, not matched base/SFT or held-out memory-quality results.
+
+Task6 execution rulings and costs:
+
+1. Use `educational_imitation_only` under the original explicit exception; human reviewers stay0. Cost: no research-superiority or generalization claim.
+2. Use a small explicit PyTorch+PEFT loop rather than optional TRL/Datasets. Cost: masking, accumulation and serialization need direct tests.
+3. Save final bounded smoke states, without research checkpoint selection. Cost: neither is a selected winner or full overfit success.
+4. Use20 training trajectories and5 development trajectories for this smoke, rather than instantiate the full600/100/150 research split. Cost: full split/style-transfer/uncertainty evidence remains pending.
+5. After the default's six steps underfit, use exactly one accumulation adjustment with all other settings and hashes fixed. Cost: a second local run; both are disclosed, with no additional sweep.
+
+Full matched development comparison, the remaining original metrics/controls, actual human audits and a locked final study remain unfinished. The original handoff and its input/output scope have not been changed.

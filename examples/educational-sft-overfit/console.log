@@ -1,0 +1,4 @@
+W1017 12:50:45.437000 66019 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<06:04,  1.17s/it]Loading weights:  68%|██████▊   | 213/311 [00:01<00:00, 227.13it/s]Loading weights: 100%|██████████| 311/311 [00:01<00:00, 197.29it/s]
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<05:46,  1.12s/it]Loading weights:  67%|██████▋   | 208/311 [00:01<00:00, 235.21it/s]Loading weights: 100%|██████████| 311/311 [00:01<00:00, 185.34it/s]
+{"overfit_achieved": false, "run": "runs/educational-sft-overfit", "status": "ok", "training_status": "trained", "verification": {"adapter_changed": true, "base_unchanged": true, "reload_match": true}}

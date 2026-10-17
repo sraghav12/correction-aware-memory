@@ -31,4 +31,4 @@ For reproduction, install the locked ML extra and cache the pinned base as descr
 HF_HUB_OFFLINE=1 uv run --locked --extra ml python -m cam.cli train --config examples/educational-sft/replay-config.json --out runs/educational-sft-replayed --offline
 ```
 
-The original brief allows one small development adjustment. After this default failed the overfit criterion, a separate accumulation-one run was registered with all other settings and the same data fixed; its result is kept separately. No default failure is discarded, and neither run supports a research-advantage claim.
+The original brief allows one small development adjustment. After this default failed the overfit criterion, a separate [accumulation-one run](../educational-sft-overfit/README.md) used identical data, base and initial adapter parameters. It reached 13/20 canonical targets, still below the 20/20 goal. No default failure is discarded, and neither run supports a research-advantage claim. The adapter weights are released under Apache-2.0, with the base license included.

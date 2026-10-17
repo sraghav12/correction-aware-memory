@@ -1,0 +1,17 @@
+{
+  "BASE_MODEL_LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+  "README.md": "145012468caea02bb917ff2dfceec2813721415f12cc101605cf75ded83c36ca",
+  "adapter/adapter_config.json": "f6819af3901d181f91252f6a8737c18de8fab5289ef6456488cf94ad98d9ae31",
+  "adapter/adapter_model.safetensors": "43a78c332736f8469b6d9fb60d1bc9baf3da9bdaf2d7d797780138af9791f21b",
+  "console.log": "5e037420df51a004e722661606cacb19ac5cb09f263b33ff08d15a1e7f034bc2",
+  "corpus.jsonl": "2ad22c288ad7bb02853c59f4ee0be1550f05938a855a207b77934787fbf971f8",
+  "inference-config.json": "bd324c4d58228106bb29dbb61dcdb0f848ac0d971b8658aff0b90f500d8ef911",
+  "manifest.json": "966bd8abc2fd0cd1c009ffd4db93ff4c42c59057aa4bb26942c9d8b69bfc734c",
+  "public-loader-proof.json": "0d35c4d0d890d2cc39f398f714b5a5d8b9c2e71518ce3fb51ae561ae3b3c73c3",
+  "reload-proof.jsonl": "433077e20a0ed993505fb51c03464780762dcc51a81d7e4e4392cc283909b0c3",
+  "replay-config.json": "b9f316d88e24a91ff4be1d8998b5136f3131d71743db05491244989725f7db8d",
+  "resolved-config.json": "9b203cfe4c885e1144dccd20741de9aaaccf297d8b3fb624da617316dabc057f",
+  "summary.json": "82ce0a71279894abc0323c028c0c7d5fac470e14bef487dd96cdcd82be8bcc4f",
+  "training-greedy.jsonl": "d94964afa4f432431da495ee8e17919aa412fc7227005583d47f2ca71711fd75",
+  "training-log.jsonl": "f2670ca7b2b46a82cc092c751027ec3387ae102d340d5ad6aa3b943e7396275d"
+}

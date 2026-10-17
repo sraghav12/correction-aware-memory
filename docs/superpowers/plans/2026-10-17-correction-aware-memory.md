@@ -166,8 +166,8 @@ Also enforce `CONTEXT_LIMIT` for more than 16 assertion versions and input token
 
 **Interfaces:** `train_adapter(config: TrainConfig) -> TrainingManifest`. Manifest records data/model/tokenizer/config hashes, actual module names/trainable counts, seed, runtime, adapter paths and adapter file hashes. Keep the handoff's completion-only training contract.
 
-- [ ] **Step 1: Enforce the Task 4 gate before a training campaign.** `training_not_justified` skips actual model optimization. `educational_imitation_only` permits a tiny transparent imitation control when the user wants training evidence; it is labeled accordingly. An undocumented or unaudited gate cannot support a research-advantage claim.
-- [ ] **Step 2: Add failing training tests.** Write `test_prompt_tokens_have_no_loss`, `test_test_split_training_rejected`, `test_base_weights_frozen`, `test_overlength_example_is_rejected_before_trainer`, and `test_adapter_reload_matches_saved_output`. Use tiny fake/local models for core tests; mark heavyweight runtime tests separately. Required mask/parameter assertions:
+- [x] **Step 1: Enforce the Task 4 gate before a training campaign.** `training_not_justified` skips actual model optimization. `educational_imitation_only` permits a tiny transparent imitation control when the user wants training evidence; it is labeled accordingly. An undocumented or unaudited gate cannot support a research-advantage claim.
+- [x] **Step 2: Add failing training tests.** Write `test_prompt_tokens_have_no_loss`, `test_test_split_training_rejected`, `test_base_weights_frozen`, `test_overlength_example_is_rejected_before_trainer`, and `test_adapter_reload_matches_saved_output`. Use tiny fake/local models for core tests; mark heavyweight runtime tests separately. Required mask/parameter assertions:
 
 ```python
 assert all(label == -100 for label in prompt_labels)
@@ -176,9 +176,11 @@ assert all(not parameter.requires_grad for parameter in frozen_base_parameters)
 assert saved_greedy_tokens == reloaded_greedy_tokens
 ```
 
-- [ ] **Step 3: Confirm failure.** `uv run python -m pytest tests/test_train.py -q`; expect missing masking, gate or training behavior.
-- [ ] **Step 4: Implement the smallest supported SFT path.** Use rank 16, alpha 32, dropout 0.05, `q_proj`/`v_proj`, learning rate 2e-4, max 3 epochs, microbatch 1, accumulation 16, sequence max 2048, packing off. Preflight token lengths; TRL's own truncation must not silently change the task. Start seed 11, preserve prompt/completion masks, and choose checkpoints by development stale rate with false-overwrite non-regression, then macro-F1. Do not assume BF16, bitsandbytes, FlashAttention or CUDA support on MPS.
+- [x] **Step 3: Confirm failure.** `uv run python -m pytest tests/test_train.py -q`; expect missing masking, gate or training behavior.
+- [x] **Step 4: Implement the smallest supported SFT path.** Use rank 16, alpha 32, dropout 0.05, `q_proj`/`v_proj`, learning rate 2e-4, max 3 epochs, microbatch 1, accumulation 16, sequence max 2048, packing off. Preflight token lengths; TRL's own truncation must not silently change the task. Start seed 11, preserve prompt/completion masks, and choose checkpoints by development stale rate with false-overwrite non-regression, then macro-F1. Do not assume BF16, bitsandbytes, FlashAttention or CUDA support on MPS.
 - [ ] **Step 5: Verify smoke training before scaling.** First overfit 20 development/training-only examples, save the adapter, reload onto the exact base revision, and reproduce fixed greedy development outputs. Record actual losses and results, including failure. Estimate full-run compute from the probe; paid alternatives need an exact cost/run proposal. Then run the justified registered training, or leave the adapter milestone pending. Core tests passing alone never satisfies training completion. Commit `feat: train and verify correction memory LoRA adapters` only if that accurately describes the implemented capability.
+
+**Observed Step 5 outcome:** actual optimization/save/reload proof passed for the default and the original handoff's one permitted accumulation-one adjustment. Exact training targets were2/20 and13/20, so the full overfit acceptance criterion remains unmet and no larger campaign followed. The educational checkpoint is real, not a dry run. Smoke saves the final bounded state; research development-selected checkpointing is still unimplemented. [Actual artifacts and costs](../../model-card.md).
 
 ## Task 7: Matched comparisons, ablations, and uncertainty
 
@@ -220,4 +222,4 @@ Recommended execution is direct implementation with a fresh review at Release A 
 
 ## Execution status — October 17, 2026
 
-The user authorized implementation with “start working”. Tasks 1–4 and Release A Task 8 are complete, with reviewed fixes and portable evidence. Task 5 is complete, including the explicitly authorized pretrained download and ten-request CPU smoke: 0/10 proposals passed the schema, and the four-token backward probe passed. Raw failures and resource measurements are published without repair or prompt tuning. Tasks 6–7 remain deferred under the research-training gate; no adapter or learned-model advantage is claimed. The current suite passes 89 tests with the optional ML extra (88 passed, one native API check skipped in the isolated core environment). See docs/progress.md for the persistent execution record.
+The original handoff remains authoritative and byte-identical to the folder1 Markdown. Tasks1–4 and ReleaseA Task8 are complete. Task5 includes the authorized base-model smoke (0/10 schema-valid). Task6 now has actual educational adapters with verified frozen-base/save/reload behavior; the default and one allowed accumulation adjustment reached2/20 and13/20 canonical training targets, so the full overfit goal remains unmet. Task7 matched comparisons/statistics and actual human audits remain unfinished. No research advantage, full training campaign or final-test result is claimed. Current tests:111 optional; isolated core109 passed,2 native skips. See docs/progress.md and docs/drift-audit.md.

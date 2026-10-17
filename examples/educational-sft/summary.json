@@ -26,5 +26,6 @@
   "peak_process_memory_bytes": 7426703360,
   "matched_base_comparison_run": false,
   "human_reviewers": 0,
-  "research_advantage_claim": false
+  "research_advantage_claim": false,
+  "guard_valid_expected_action_matches": 5
 }

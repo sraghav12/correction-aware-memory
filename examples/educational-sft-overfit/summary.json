@@ -1,0 +1,27 @@
+{
+  "purpose": "educational_imitation_only",
+  "adjustment": "accumulation16to1; all other recipe settings and data held fixed",
+  "examples": 20,
+  "initial_completion_loss": 0.6753510892391205,
+  "final_completion_loss": 0.015978368392097764,
+  "optimizer_steps": 60,
+  "schema_valid_training_outputs": 20,
+  "guard_valid_training_outputs": 13,
+  "parsed_training_action_matches": 14,
+  "exact_canonical_training_targets": 13,
+  "overfit_achieved": false,
+  "verification": {
+    "adapter_changed": true,
+    "base_unchanged": true,
+    "reload_match": true
+  },
+  "wall_seconds_excluding_model_load": 273.23353887500707,
+  "peak_process_memory_bytes": 7615758336,
+  "same_corpus_as_default": true,
+  "same_initial_adapter_as_default": true,
+  "same_base_as_default": true,
+  "human_reviewers": 0,
+  "matched_base_comparison_run": false,
+  "research_advantage_claim": false,
+  "guard_valid_expected_action_matches": 13
+}
