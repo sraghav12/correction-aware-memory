@@ -1,0 +1,29 @@
+{
+  "data": {
+    "manifest": "dataset/manifest.json",
+    "seed": 11,
+    "split": "pilot",
+    "trajectories": 2
+  },
+  "evaluation": {
+    "bootstrap_count": 2000,
+    "qa_mode": "deterministic",
+    "seeds": [
+      11
+    ]
+  },
+  "generation": {
+    "decoding": "unconstrained",
+    "do_sample": false,
+    "enable_thinking": false,
+    "max_input_tokens": 2048,
+    "max_new_tokens": 256
+  },
+  "output_dir": ".",
+  "proposer": {
+    "kind": "rule"
+  },
+  "training": {
+    "gate": "training_not_justified"
+  }
+}

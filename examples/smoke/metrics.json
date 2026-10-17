@@ -1,0 +1,131 @@
+{
+  "action_classes": {
+    "create": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 2,
+      "recall": 1.0,
+      "support": 2
+    },
+    "no_op": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 9,
+      "recall": 1.0,
+      "support": 9
+    },
+    "reinforce": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 5,
+      "recall": 1.0,
+      "support": 5
+    },
+    "supersede": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 1,
+      "recall": 1.0,
+      "support": 1
+    },
+    "update": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 2,
+      "recall": 1.0,
+      "support": 2
+    }
+  },
+  "action_macro_f1": 1.0,
+  "checkpoint_count": 44,
+  "correctness_gate_passed": true,
+  "deterministic_qa_exact_match": {
+    "denominator": 44,
+    "numerator": 44,
+    "value": 1.0
+  },
+  "false_overwrite_rate": {
+    "denominator": 14,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "guard_rejections": 0,
+  "invalid_output_rate": {
+    "denominator": 38,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "invariant_violations": 0,
+  "mechanical_provenance_validity": {
+    "denominator": 19,
+    "numerator": 19,
+    "value": 1.0
+  },
+  "missing_state_rate": {
+    "denominator": 44,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "observation_count": 19,
+  "parse_invalid_rate_closed_loop": {
+    "denominator": 19,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "parse_invalid_rate_gold_history": {
+    "denominator": 19,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "provenance_precision": {
+    "denominator": 103,
+    "numerator": 103,
+    "value": 1.0
+  },
+  "provenance_recall": {
+    "denominator": 103,
+    "numerator": 103,
+    "value": 1.0
+  },
+  "resources": {
+    "backend": "python-rules",
+    "model_runtime_evaluated": false,
+    "peak_process_memory_bytes": 29163520,
+    "proposer_calls": 38,
+    "proposer_p50_seconds": 9.89600084722042e-06,
+    "proposer_p95_seconds": 1.8207996618002653e-05,
+    "tokens": null,
+    "wall_seconds": 0.05525262502487749
+  },
+  "stale_active_rate": {
+    "denominator": 15,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "state_exact_match": {
+    "denominator": 44,
+    "numerator": 44,
+    "value": 1.0
+  },
+  "state_exact_match_current": {
+    "denominator": 19,
+    "numerator": 19,
+    "value": 1.0
+  },
+  "state_exact_match_historical_or_future": {
+    "denominator": 25,
+    "numerator": 25,
+    "value": 1.0
+  },
+  "trajectory_count": 2,
+  "validator_rejection_rate_closed_loop": {
+    "denominator": 19,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "validator_rejection_rate_gold_history": {
+    "denominator": 19,
+    "numerator": 0,
+    "value": 0.0
+  }
+}

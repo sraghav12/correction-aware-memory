@@ -1,0 +1,222 @@
+{
+  "pilot-11-0000": {
+    "action_classes": {
+      "create": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 1,
+        "recall": 1.0,
+        "support": 1
+      },
+      "no_op": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "support": 4
+      },
+      "reinforce": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 1,
+        "recall": 1.0,
+        "support": 1
+      },
+      "supersede": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 1,
+        "recall": 1.0,
+        "support": 1
+      },
+      "update": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 2,
+        "recall": 1.0,
+        "support": 2
+      }
+    },
+    "action_macro_f1": 1.0,
+    "deterministic_qa_exact_match": {
+      "denominator": 24,
+      "numerator": 24,
+      "value": 1.0
+    },
+    "false_overwrite_rate": {
+      "denominator": 5,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "invalid_output_rate": {
+      "denominator": 18,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "missing_state_rate": {
+      "denominator": 24,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "parse_invalid_rate_closed_loop": {
+      "denominator": 9,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "parse_invalid_rate_gold_history": {
+      "denominator": 9,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "provenance_precision": {
+      "denominator": 31,
+      "numerator": 31,
+      "value": 1.0
+    },
+    "provenance_recall": {
+      "denominator": 31,
+      "numerator": 31,
+      "value": 1.0
+    },
+    "stale_active_rate": {
+      "denominator": 15,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "state_exact_match": {
+      "denominator": 24,
+      "numerator": 24,
+      "value": 1.0
+    },
+    "state_exact_match_current": {
+      "denominator": 9,
+      "numerator": 9,
+      "value": 1.0
+    },
+    "state_exact_match_historical_or_future": {
+      "denominator": 15,
+      "numerator": 15,
+      "value": 1.0
+    },
+    "validator_rejection_rate_closed_loop": {
+      "denominator": 9,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "validator_rejection_rate_gold_history": {
+      "denominator": 9,
+      "numerator": 0,
+      "value": 0.0
+    }
+  },
+  "pilot-11-0001": {
+    "action_classes": {
+      "create": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 1,
+        "recall": 1.0,
+        "support": 1
+      },
+      "no_op": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 5,
+        "recall": 1.0,
+        "support": 5
+      },
+      "reinforce": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "support": 4
+      },
+      "supersede": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted": 0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "update": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "predicted": 0,
+        "recall": 0.0,
+        "support": 0
+      }
+    },
+    "action_macro_f1": 0.6,
+    "deterministic_qa_exact_match": {
+      "denominator": 20,
+      "numerator": 20,
+      "value": 1.0
+    },
+    "false_overwrite_rate": {
+      "denominator": 9,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "invalid_output_rate": {
+      "denominator": 20,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "missing_state_rate": {
+      "denominator": 20,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "parse_invalid_rate_closed_loop": {
+      "denominator": 10,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "parse_invalid_rate_gold_history": {
+      "denominator": 10,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "provenance_precision": {
+      "denominator": 72,
+      "numerator": 72,
+      "value": 1.0
+    },
+    "provenance_recall": {
+      "denominator": 72,
+      "numerator": 72,
+      "value": 1.0
+    },
+    "stale_active_rate": {
+      "denominator": 0,
+      "numerator": 0,
+      "value": null
+    },
+    "state_exact_match": {
+      "denominator": 20,
+      "numerator": 20,
+      "value": 1.0
+    },
+    "state_exact_match_current": {
+      "denominator": 10,
+      "numerator": 10,
+      "value": 1.0
+    },
+    "state_exact_match_historical_or_future": {
+      "denominator": 10,
+      "numerator": 10,
+      "value": 1.0
+    },
+    "validator_rejection_rate_closed_loop": {
+      "denominator": 10,
+      "numerator": 0,
+      "value": 0.0
+    },
+    "validator_rejection_rate_gold_history": {
+      "denominator": 10,
+      "numerator": 0,
+      "value": 0.0
+    }
+  }
+}

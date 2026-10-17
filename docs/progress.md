@@ -12,7 +12,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 | 5. Prompted model runtime | Deferred | No runtime implementation/download/evaluation |
 | 6. LoRA training | Deferred | No training or adapter; research gate not justified |
 | 7. Learned-arm comparisons/statistics | Deferred | No learned arms or model effect |
-| 8. Release A package | Review fixes verified | Canonical CLI demo; 61 cumulative tests pass; final artifact replay follows |
+| 8. Release A package | Complete | Canonical demo, portable smoke run, 61 tests, clean-checkout fixed-code replay |
 
 ## Decisions made
 
@@ -43,3 +43,11 @@ Review rulings for deliberately excluded behavior:
 - Treat natural-language entailment and source-authority authentication as trusted annotation inputs; cost: this does not generalize to arbitrary extraction.
 - Support the documented source-repository execution workflow; standalone installed-wheel fixture discovery is not advertised. Cost: wheel-only demo execution is not guaranteed.
 - Preserve the ignored execution ledger and verification evidence rather than deleting local files; cost: a small amount of local scratch storage remains, supporting continuity and audit.
+
+## Final verification
+
+Fixed source commit `8201fb6d13c4d1ebb265cbeb081b9b2767a50045` was checked out cleanly in an independent local clone. `uv sync --locked`, all 61 tests, full 50-trajectory evaluation and report succeeded with `git_dirty=false`. Final state scores remain 1005/1005; combined parse-invalid rate is 0/824, with explicit per-track denominators. The 50-event audit is prepared with zero human verdicts.
+
+A committed two-trajectory smoke run includes original synthetic dataset, raw outputs, ledgers, metrics and HTML. Its relative-path replay configuration reproduced all non-resource metrics exactly. Full local artifacts are in `runs/verified-rule/`; the original development run remains preserved in `runs/rule/`. Artifact hash inventories are saved. Browser verification checked layout and source-evidence expansion.
+
+The feature branch remains local and unmerged. No publishing or external messages occurred. Next action: conduct the actual 50-event label audit, then decide whether an educational small-model imitation experiment is useful.
