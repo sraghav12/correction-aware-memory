@@ -9,7 +9,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 | 2. Validated immutable ledger | Complete | 22 cumulative tests passed; commit 6be0375 |
 | 3. Rule policy/adversarial cases | Complete | 33 cumulative tests passed; commit 64c2d40 |
 | 4. Independent offline pilot/report | Complete | 49 cumulative tests passed; commit 7fe75e7 |
-| 5. Prompted model runtime | Implemented; pretrained smoke pending | Strict optional cached-only runtime, injected-runtime tests, tiny random-model CPU/MPS API check; no pretrained weights |
+| 5. Prompted model runtime | Complete, including real CPU smoke | Ten pretrained requests recorded; 0/10 schema-valid, four-token backward passed; raw evidence committed |
 | 6. LoRA training | Deferred | No training or adapter; research gate not justified |
 | 7. Learned-arm comparisons/statistics | Deferred | No learned arms or model effect |
 | 8. Release A package | Complete | Canonical demo, portable smoke run, 61 tests, clean-checkout fixed-code replay |
@@ -68,7 +68,7 @@ User requested “go ahead with the next step” after publication. Task 5 resum
 
 The proposer uses a label-free fixed prompt, the same pinned model/tokenizer commit, strict JSON without repair, an explicit 16-version context cap, and token limits checked before generation. Schema-valid fabricated IDs/provenance reach the shared commit guard so typed rejections stay auditable. Optional imports stay outside the offline core path. Model loads are cached-only, with no download, model/rule substitution, or backend fallback.
 
-Watched boundary and integration regressions fail before implementing them; the suite now passes 88 tests with the locked ML extra, and 87 pass with one optional native API check skipped in an isolated core environment. Native APIs were checked using randomly initialized tiny Qwen3 weights: generation and backward passed on CPU and MPS; nonfinite probe loss remains a serializable explicit failure. These checks do not evaluate pretrained Qwen. The actual `model-smoke` command returned exit 3 because the pinned weights are absent; no run directory, pretrained scores, weight updates or adapter were created. [Exact preparation and smoke commands](model-runtime.md).
+At the initial model-boundary checkpoint, 88 tests passed with the locked ML extra, and 87 passed with one optional native API check skipped in an isolated core environment. Native APIs were checked using randomly initialized tiny Qwen3 weights: generation and backward passed on CPU and MPS; nonfinite probe loss remained a serializable explicit failure. Those checks did not evaluate pretrained Qwen. Before the download was authorized, `model-smoke` returned exit 3 for absent weights without creating results. The later authorized pretrained run is recorded below. [Exact preparation and smoke commands](model-runtime.md).
 
 Task 5 rulings:
 
@@ -78,3 +78,11 @@ Task 5 rulings:
 4. Treat a missing cache as a legitimate pending real smoke, as Task 5 specifies. Cost if wrong: real model behavior, resource use and full-size backward compatibility remain unknown until the explicitly chosen download and smoke.
 
 Fresh review found no Critical or Minor findings and one Important issue: transferring inputs to MPS occurred outside the runtime exception boundary, allowing an allocation failure to produce a traceback. The CLI regression reproduced that failure before the transfer moved inside the boundary; the complete suite then passed 89 tests. Core-only verification passes 88 tests with the optional native check skipped. The fresh review used the available gpt-6.1-sol model after the originally requested reviewer failed before reviewing because of a usage limit. No second review was substituted for the regression and full-suite proof.
+
+## Authorized pretrained smoke (October 17, 2026)
+
+The user explicitly chose “Download and run the smoke test”. The complete pinned Qwen3-0.6B snapshot was cached, with a verified 1,503,300,328-byte safetensors file and SHA-256 recorded in [assets.json](../examples/qwen-smoke-cpu/assets.json). The initial selective cache setup omitted `.gitattributes`, which Hub 2.2.0 requires for complete offline snapshot loading; the setup instructions now download the complete pinned ten-file snapshot.
+
+Clean production source `c655119` ran ten pilot requests on CPU float32: 7,047 input and 787 output tokens, median request latency 2.560 seconds, 28.889-second smoke wall time excluding 3.679-second model loading, and peak process memory 4.894 GiB including a passing four-token backward probe. All ten responses were valid JSON but omitted required `review_required`; 0/10 became typed proposals, and none reached semantic validation. Raw outputs and failures were retained without repair. All selected requests were initial-create events with empty histories, so this is a narrow runtime diagnostic rather than a balanced or closed-loop benchmark. [Complete evidence and replay command](../examples/qwen-smoke-cpu/README.md).
+
+Having real weights cached also exposed an order-dependent test: changing `HF_HOME` after Hub had been imported did not isolate its import-time cache constants. The missing-cache test failed before the fix, then passed in a fresh subprocess with its own empty cache and blocked network connections. Full optional suite: 89 passed. No production behavior or model prompt changed after the smoke. No adapter, optimizer step, prompt tuning, full model comparison, final holdout access, or human label review occurred.

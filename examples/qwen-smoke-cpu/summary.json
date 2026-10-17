@@ -1,0 +1,35 @@
+{
+  "purpose": "development_runtime_diagnostic_not_balanced_benchmark",
+  "requests": 10,
+  "selection": "first_ten_observations_in_dataset_order_all_initial_create_with_empty_history",
+  "json_syntax_valid": 10,
+  "schema_valid_proposals": 0,
+  "schema_invalid_proposals": 10,
+  "shared_guard_evaluations": 0,
+  "failure_codes": {
+    "MODEL_OUTPUT": 10
+  },
+  "missing_required_fields": {
+    "review_required": 10
+  },
+  "expected_action_counts": {
+    "create": 10
+  },
+  "input_tokens": 7047,
+  "output_tokens": 787,
+  "total_proposer_seconds": 26.98985216690926,
+  "median_proposer_seconds": 2.5600872710056137,
+  "wall_seconds_excluding_model_load": 28.88872679200722,
+  "model_load_seconds": 3.6785696250153705,
+  "peak_process_memory_bytes": 5254381568,
+  "backward_probe": {
+    "finite_gradients": true,
+    "loss": 9.045963287353516,
+    "seconds": 1.7282084170146845,
+    "status": "passed",
+    "tokens": 4,
+    "weights_updated": false
+  },
+  "human_reviewers": 0,
+  "adapter_status": "not_trained"
+}

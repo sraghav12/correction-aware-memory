@@ -19,8 +19,16 @@ Dataset identity: `4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763
 
 The rule matched the independently specified synthetic oracle on this pilot. The annotations already provide candidate value, date, correction reference and source authority, so this result supports a bounded deterministic implementation, not a learned-memory contribution. The generator and rule are authored within the same project; independent code paths do not constitute independent human validation.
 
-Human reviewers: **0**. Real model arms, trained adapters, external benchmarks, hardware resource-fit tests for a model, statistical model comparisons and a locked final holdout: **not run**. No confidence interval for a nonexistent between-arm effect is reported.
+Human reviewers: **0**. Complete model comparison arms, trained adapters, external benchmarks, statistical model comparisons and a locked final holdout: **not run**. A separate ten-request pretrained runtime diagnostic is recorded below. No confidence interval for a nonexistent between-arm effect is reported.
 
 Run artifacts are generated locally under `runs/`; see the README commands to reproduce. The report includes class support, denominators, both time axes and unavailable-model labels. Saved timing/memory is single-run diagnostic process information, not an inference-serving benchmark. A poor no-op arm is tested to expose missing state; fabricated error-count fixtures independently test metric arithmetic.
 
 Independent code review identified and reproduced three evaluator/data-integrity gaps. Regression tests now reject incomplete evidence, preserve/count closed-loop invalid outputs, and count semantic overwrites at future or historical boundaries. The original complete pilot result remains valid; the full pilot is rerun after these fixes before delivery.
+
+## First real Qwen runtime diagnostic
+
+The user approved downloading pinned Qwen3-0.6B weights and running ten requests. On CPU float32, the smoke finished in 28.889 seconds excluding 3.679 seconds of loading and peaked at 4.894 GiB including a passing four-token backward probe. No weights were updated and no adapter was created.
+
+All ten outputs were valid JSON but omitted required `review_required`, yielding **0/10 schema-valid proposals**. Every raw action was `update`; each selected observation was an initial fact with expected action `create`. Several responses also contained incorrect copied source/span placeholders. Raw responses were preserved without repair, and no typed proposal reached semantic validation.
+
+These first ten pilot observations all have empty histories and cover only initial-create events. They provide runtime and failure evidence, not a balanced five-action or closed-loop benchmark, comparison against the full rule pilot, or generalization result. No prompt tuning or training followed the failures. [Complete evidence, hashes, measurements and replay command](../examples/qwen-smoke-cpu/README.md).

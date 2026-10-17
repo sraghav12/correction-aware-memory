@@ -147,7 +147,7 @@ uv run python -m cam.cli report --run runs/rule --out runs/rule/report --offline
 
 **Interfaces:** `render_request(request: DecisionRequest) -> list[dict[str, str]]`; `ModelProposer(config: ModelConfig).propose(request: DecisionRequest) -> Proposal`. Inject a fake generation callable in tests. Preserve raw text, parse errors, latency and selected revision in run outputs.
 
-- [ ] **Step 1: Add failing boundary tests.** Write `test_split_and_prompt_leakage` (prompt part), `test_unknown_ids_and_malformed_json_rejected`, `test_context_overflow_is_explicit`, `test_no_cached_model_is_unavailable`, and `test_optional_ml_not_imported_by_offline_cli`. Construct a sentinel-labeled fixture and assert:
+- [x] **Step 1: Add failing boundary tests.** Write `test_split_and_prompt_leakage` (prompt part), `test_unknown_ids_and_malformed_json_rejected`, `test_context_overflow_is_explicit`, `test_no_cached_model_is_unavailable`, and `test_optional_ml_not_imported_by_offline_cli`. Construct a sentinel-labeled fixture and assert:
 
 ```python
 assert "GOLD_ACTION_SENTINEL" not in rendered_text
@@ -156,9 +156,9 @@ assert completed.returncode == 3  # unavailable explicitly requested model
 ```
 
 Also enforce `CONTEXT_LIMIT` for more than 16 assertion versions and input token overflow; neither returns a silently truncated request.
-- [ ] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_prompts.py tests/test_models.py -q`; expect missing boundary behavior, with no network access.
-- [ ] **Step 3: Implement optional inference and runtime probe.** Verify/pin compatible official library APIs and a Qwen3-0.6B model/tokenizer commit. The user must explicitly choose a download if weights are absent; offline commands never fetch them. Use `enable_thinking=False`, a single fixed prompt, 2048 input-token and 256 generated-token budgets, strict JSON parse/reject, and matched base/SFT decoding. Use a recorded deterministic nonthinking decoding baseline (`do_sample=False`) as a project default, then test it on development examples; do not describe it as Qwen's general recommendation.
-- [ ] **Step 4: Verify and, if cached weights permit, run ten development requests.** Unit tests must pass with fake generation. Real smoke output includes exact revision, CPU/MPS backend, dtype, latency, process memory, raw responses and failures. Probe a tiny forward/backward pass before promising training support. Missing weights/runtime leaves the real smoke explicitly pending. Commit `feat: add optional pinned small model proposer`.
+- [x] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_prompts.py tests/test_models.py -q`; expect missing boundary behavior, with no network access.
+- [x] **Step 3: Implement optional inference and runtime probe.** Verify/pin compatible official library APIs and a Qwen3-0.6B model/tokenizer commit. The user must explicitly choose a download if weights are absent; offline commands never fetch them. Use `enable_thinking=False`, a single fixed prompt, 2048 input-token and 256 generated-token budgets, strict JSON parse/reject, and matched base/SFT decoding. Use a recorded deterministic nonthinking decoding baseline (`do_sample=False`) as a project default, then test it on development examples; do not describe it as Qwen's general recommendation.
+- [x] **Step 4: Verify and, if cached weights permit, run ten development requests.** Unit tests must pass with fake generation. Real smoke output includes exact revision, CPU/MPS backend, dtype, latency, process memory, raw responses and failures. Probe a tiny forward/backward pass before promising training support. Missing weights/runtime leaves the real smoke explicitly pending. Commit `feat: add optional pinned small model proposer`.
 
 ## Task 6: Conditional LoRA training and adapter proof
 
@@ -220,4 +220,4 @@ Recommended execution is direct implementation with a fresh review at Release A 
 
 ## Execution status — October 17, 2026
 
-The user authorized implementation with “start working”. Tasks 1–4 and Release A Task 8 are complete, with reviewed fixes and portable evidence. After public repository publication the user requested the next step: Task 5's optional cached-only model boundary is now implemented for educational diagnostics. Its pretrained smoke remains pending absent weights and an explicit download choice. Tasks 6–7 remain deferred under the research-training gate; no pretrained model or adapter result is claimed. The current suite passes 89 tests with the optional ML extra (88 passed, one native API check skipped in the isolated core environment). See docs/progress.md for the persistent execution record.
+The user authorized implementation with “start working”. Tasks 1–4 and Release A Task 8 are complete, with reviewed fixes and portable evidence. Task 5 is complete, including the explicitly authorized pretrained download and ten-request CPU smoke: 0/10 proposals passed the schema, and the four-token backward probe passed. Raw failures and resource measurements are published without repair or prompt tuning. Tasks 6–7 remain deferred under the research-training gate; no adapter or learned-model advantage is claimed. The current suite passes 89 tests with the optional ML extra (88 passed, one native API check skipped in the isolated core environment). See docs/progress.md for the persistent execution record.

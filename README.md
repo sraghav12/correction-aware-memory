@@ -2,7 +2,7 @@
 
 A delayed report should not overwrite a newer fact. An authorized correction should revise an assertion while preserving what was known before the correction arrived.
 
-This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: verified deterministic baseline plus an optional cached-only Qwen proposer. No pretrained weights downloaded, no adapter trained, no human label review, no learned-model advantage claimed.**
+This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: verified deterministic baseline plus a real pretrained Qwen runtime smoke. The smoke produced 0/10 schema-valid proposals; raw failures are published. No adapter trained, no human label review, no learned-model advantage claimed.**
 
 ## See the behavior first
 
@@ -68,7 +68,7 @@ flowchart LR
 | Contracts, original fixtures, validated ledger, rule policy | Implemented and tested |
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
 | Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
-| Prompted Qwen3 runtime | Implemented; offline boundary tests pass; pretrained smoke pending absent weights |
+| Prompted Qwen3 runtime | Real CPU smoke complete; 0/10 schema-valid proposals; [raw evidence](examples/qwen-smoke-cpu/README.md) |
 | LoRA training and saved adapter | Deferred; no adapter exists |
 | Matched learned-model comparisons and uncertainty | Deferred; no model effect estimated |
 
@@ -84,7 +84,7 @@ After explicitly caching the approved revision and generating the pilot above:
 uv run --locked --extra ml python -m cam.cli model-smoke --config configs/base.json --out runs/qwen-smoke --offline
 ```
 
-The smoke records ten pilot/development requests, raw responses and failures, token counts, prompt hashes, backend/dtype, latency/memory, and a tiny backward compatibility probe. It never updates or saves weights. Fake-runtime tests and randomly initialized tiny-model API checks are labeled separately from pretrained Qwen results. The current real smoke is **pending**, with no pretrained model scores.
+The smoke records ten pilot/development requests, raw responses and failures, token counts, prompt hashes, backend/dtype, latency/memory, and a tiny backward compatibility probe. It never updates or saves weights. The first real CPU float32 run completed in **28.9 seconds excluding model load**, peaked at **4.89 GiB** including its passing four-token backward probe, and produced **0/10 schema-valid proposals**: every response omitted `review_required`. All ten selected requests were initial-create events, so this is a narrow runtime check, not a balanced benchmark. [Raw responses and interpretation](examples/qwen-smoke-cpu/README.md). Fake-runtime tests and randomly initialized tiny-model API checks remain distinct from this pretrained run.
 
 CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional experiment, `4` failed correctness gate. All generated artifacts stay inside the selected output directory.
 

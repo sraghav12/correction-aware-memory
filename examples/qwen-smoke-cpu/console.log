@@ -1,0 +1,3 @@
+W1017 12:07:13.196000 58555 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:00<02:11,  2.35it/s]Loading weights:  54%|█████▍    | 169/311 [00:00<00:00, 416.20it/s]Loading weights:  84%|████████▍ | 261/311 [00:00<00:00, 508.50it/s]Loading weights: 100%|██████████| 311/311 [00:00<00:00, 432.79it/s]
+{"backward_probe": {"finite_gradients": true, "loss": 9.045963287353516, "seconds": 1.7282084170146845, "status": "passed", "tokens": 4, "weights_updated": false}, "model_status": "evaluated", "requests": 10, "run": "runs/qwen-smoke-cpu", "status": "ok"}
