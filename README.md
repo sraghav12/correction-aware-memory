@@ -67,7 +67,7 @@ flowchart LR
 |---|---|
 | Contracts, original fixtures, validated ledger, rule policy | Implemented and tested |
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
-| Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
+| Human label audit | [Walkthrough](docs/human-audit-guide.md) and [50-event packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
 | Prompted Qwen3 runtime | Real CPU smoke complete; 0/10 schema-valid proposals; [raw evidence](examples/qwen-smoke-cpu/README.md) |
 | LoRA training and saved adapter | Two bounded educational runs saved/reloaded; full 20/20 overfit goal unmet |
 | Matched model comparisons and uncertainty | Five development trajectories, all five arms and paired intervals recorded; full final study deferred |
