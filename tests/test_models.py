@@ -1,6 +1,6 @@
 from dataclasses import asdict
 import json
-import socket
+import os
 import subprocess
 import sys
 
@@ -100,15 +100,28 @@ def test_unimplemented_decoding_is_rejected(settings):
         models.GenerationConfig(**settings)
 
 
-def test_no_cached_model_is_unavailable(tmp_path, monkeypatch):
-    monkeypatch.setenv("HF_HOME", str(tmp_path / "empty-cache"))
-    monkeypatch.setenv("HF_HUB_CACHE", str(tmp_path / "empty-cache/hub"))
-    def forbidden(*args, **kwargs):
-        raise AssertionError("network access attempted")
-    monkeypatch.setattr(socket, "socket", forbidden)
-    assert callable(getattr(models, "ModelProposer", None)), "cached-only runtime is missing"
-    with pytest.raises(c.RuntimeUnavailable, match="cached|optional"):
-        models.ModelProposer(models.ModelConfig(revision=REVISION))
+def test_no_cached_model_is_unavailable(tmp_path):
+    # Hub cache constants are read at import time. A fresh process must own this
+    # empty cache even when another test has imported Hub or cached real weights.
+    env = os.environ | {"HF_HOME": str(tmp_path / "empty-cache"),
+                       "HF_HUB_CACHE": str(tmp_path / "empty-cache/hub"), "HF_HUB_OFFLINE": "1"}
+    code = f'''
+import socket, sys
+def forbidden(*args, **kwargs):
+    raise AssertionError("network access attempted")
+socket.socket.connect = forbidden
+socket.create_connection = forbidden
+from cam.models import ModelProposer, ModelConfig
+from cam.contracts import RuntimeUnavailable
+try:
+    ModelProposer(ModelConfig(revision={REVISION!r}))
+except RuntimeUnavailable as error:
+    print(error)
+    sys.exit(3)
+'''
+    completed = subprocess.run([sys.executable, "-c", code], env=env, capture_output=True, text=True, timeout=30)
+    assert completed.returncode == 3, completed.stdout + completed.stderr
+    assert "cached" in completed.stdout or "optional" in completed.stdout
 
 
 def test_optional_ml_not_imported_by_offline_cli():
