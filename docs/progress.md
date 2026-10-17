@@ -59,3 +59,5 @@ On October 17 the user requested the next step and explicitly authorized creatin
 ## GitHub repository
 
 Created [sraghav12/correction-aware-memory](https://github.com/sraghav12/correction-aware-memory) as a private repository, using the declared default while no visibility preference was supplied. Local `main` was fast-forwarded to the reviewed implementation and audit packet; all 61 tests passed on that branch. The full history was pushed, `main` was confirmed as the GitHub default branch, and remote `main` matched local commit `13920d7b2f1888f1ddb1dbedafa5ec330740c35a` before this publication-record update. The 50-event review packet was verified through GitHub's contents API. No collaborators were added and no model or human-review claims changed.
+
+The user subsequently selected **Public portfolio repository**. Repository visibility was changed to public and verified through GitHub on October 17, 2026.
