@@ -5,6 +5,7 @@ import socket
 import sys
 
 import pytest
+from conftest import refresh_manifest
 
 from cam import cli
 
@@ -74,6 +75,7 @@ def test_cli_correctness_failure_exit_code(tmp_path):
     manifest = json.loads((generated / "manifest.json").read_text())
     manifest["files"]["gold.jsonl"] = hashlib.sha256((generated / "gold.jsonl").read_bytes()).hexdigest()
     (generated / "manifest.json").write_text(json.dumps(manifest))
+    refresh_manifest(generated)
     config = tmp_path / "config.json"
     write_config(config, generated / "manifest.json")
     assert cli.main(["evaluate", "--config", str(config), "--out", str(tmp_path / "bad-run"), "--offline"]) == 4

@@ -33,7 +33,7 @@ def write_report(report: EvalReport, out_dir: Path) -> Path:
         <td><strong>{escape(str(observation['value']))}</strong><p>Effective {escape(str(observation['effective_at']))}<br>Observed {escape(observation['observed_at'])}</p></td>
         <td><details><summary>{escape(observation['source_id'])}</summary><blockquote>{escape(observation['text'])}</blockquote><p>Span [{observation['evidence_start']}, {observation['evidence_end']}) · {escape(observation['authority'])}</p></details><p>{escape(decision)}</p></td></tr>''')
     metric_rows = "".join(f'<tr><th>{escape(name.replace("_", " "))}</th><td>{_display(metrics[name])}</td></tr>' for name in (
-        "state_exact_match", "stale_active_rate", "missing_state_rate", "false_overwrite_rate", "provenance_precision", "provenance_recall", "invalid_output_rate", "deterministic_qa_exact_match"))
+        "state_exact_match", "stale_active_rate", "missing_state_rate", "false_overwrite_rate", "provenance_precision", "provenance_recall", "invalid_output_rate", "parse_invalid_rate_gold_history", "parse_invalid_rate_closed_loop", "validator_rejection_rate_gold_history", "validator_rejection_rate_closed_loop", "deterministic_qa_exact_match"))
     classes = "".join(f'<tr><td>{escape(action)}</td><td>{data["support"]}</td><td>{data["precision"]:.3f}</td><td>{data["recall"]:.3f}</td><td>{data["f1"]:.3f}</td></tr>' for action, data in metrics["action_classes"].items())
     html = f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Correction-aware memory · offline experiment</title><style>

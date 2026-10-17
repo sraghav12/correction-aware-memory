@@ -1,13 +1,16 @@
 """Original synthetic world trajectories and independent expected-state oracle."""
 
-from dataclasses import asdict
+from dataclasses import asdict, fields
 from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 from pathlib import Path
 import random
 
-from cam.contracts import ContractError, DataConfig, DatasetManifest, canonical_json, digest, parse_observation, utc
+from cam.contracts import ContractError, DataConfig, DatasetManifest, canonical_json, digest, parse_observation, parse_proposal, utc
+
+
+TEMPLATE_FAMILIES = {"pilot": "pilot-notice", "train": "training-bulletin", "development": "dev-memo", "test": "test-log", "style_transfer": "heldout-dialogue"}
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -51,7 +54,7 @@ def _projection(assertions, effective):
 def _trajectory(config, index, rng):
     tid = f"{config.split}-{config.seed}-{index:04d}"
     entity = f"experiment-{tid}"
-    family = {"pilot": "pilot-notice", "train": "training-bulletin", "development": "dev-memo", "test": "test-log", "style_transfer": "heldout-dialogue"}[config.split]
+    family = TEMPLATE_FAMILIES[config.split]
     observations, labels, checkpoints, assertions = [], [], [], []
     vocabulary = ["preliminary", "published", "withdrawn"]
     rng.shuffle(vocabulary)
@@ -151,19 +154,112 @@ def generate_dataset(config: DataConfig, out_dir: Path) -> DatasetManifest:
 
 def read_dataset(manifest_path: Path):
     manifest = json.loads(manifest_path.read_text())
-    if manifest.get("schema_version") != 1:
+    if not isinstance(manifest, dict) or set(manifest) != {field.name for field in fields(DatasetManifest)}:
+        raise ContractError("invalid dataset manifest schema")
+    if type(manifest["schema_version"]) is not int or manifest["schema_version"] != 1:
         raise ContractError("unknown dataset schema")
+    DataConfig(seed=manifest["seed"], split=manifest["split"], trajectories=manifest["trajectory_count"])
+    if type(manifest["event_count"]) is not int or manifest["event_count"] <= 0:
+        raise ContractError("invalid event count")
+    if manifest["generator_version"] != "original-world-v1" or manifest["license"] != "CC0-1.0" or manifest["review_status"] != "not_human_reviewed":
+        raise ContractError("unsupported generator/license/review status; independent review requires a separate audit record")
     expected_files = {"observations.jsonl", "gold.jsonl", "checkpoints.jsonl", "groups.jsonl"}
     if set(manifest.get("files", {})) != expected_files:
         raise ContractError("invalid dataset file set")
+    if manifest["dataset_id"] != digest({"files": manifest["files"], "seed": manifest["seed"], "split": manifest["split"]}):
+        raise ContractError("dataset identity does not match content hashes, seed and split")
     loaded = {}
     for name, expected in manifest["files"].items():
         path = manifest_path.parent / name
         if hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             raise ContractError(f"dataset hash mismatch: {name}")
         loaded[name] = read_jsonl(path)
-    for observation in loaded["observations.jsonl"]:
-        parsed = parse_observation(observation)
+    observations = {}
+    previous_time = ""
+    source_registry = {}
+    for raw in loaded["observations.jsonl"]:
+        parsed = parse_observation(raw)
+        if parsed.observation_id in observations:
+            raise ContractError("duplicate observation ID")
+        if parsed.observed_at < previous_time:
+            raise ContractError("observations are not in ingestion-time order")
+        previous_time = parsed.observed_at
+        observations[parsed.observation_id] = parsed
+        existing = source_registry.get(parsed.source_id)
+        if existing and existing.source_sha256 != parsed.source_sha256:
+            raise ContractError("source identity has inconsistent text")
+        source_registry[parsed.source_id] = parsed
         if parsed.predicate != "release_state" or parsed.value not in ("preliminary", "published", "withdrawn", None):
             raise ContractError("observation outside declared predicate/value vocabulary")
+    if len(observations) != manifest["event_count"]:
+        raise ContractError("manifest event count differs from actual observations")
+    groups, aliases = {}, set()
+    for group in loaded["groups.jsonl"]:
+        if set(group) != {"trajectory_id", "entity_id", "aliases", "split", "template_family"}:
+            raise ContractError("invalid group schema")
+        if (not isinstance(group["aliases"], list) or not group["aliases"]
+                or any(not isinstance(alias, str) or not alias for alias in group["aliases"])):
+            raise ContractError("invalid aliases")
+        if group["trajectory_id"] in groups or aliases.intersection(group["aliases"]):
+            raise ContractError("duplicate/connected groups are not separated")
+        if group["split"] != manifest["split"] or group["template_family"] != TEMPLATE_FAMILIES[manifest["split"]]:
+            raise ContractError("group split/template membership differs from manifest")
+        groups[group["trajectory_id"]] = group
+        aliases.update(group["aliases"])
+    if len(groups) != manifest["trajectory_count"] or set(groups) != {o.trajectory_id for o in observations.values()}:
+        raise ContractError("manifest trajectory count/group membership mismatch")
+    for observation in observations.values():
+        if observation.entity_id != groups[observation.trajectory_id]["entity_id"]:
+            raise ContractError("observation entity differs from its group")
+    gold = {}
+    for row in loaded["gold.jsonl"]:
+        if set(row) != {"observation_id", "trajectory_id", "proposal"} or row["observation_id"] in gold:
+            raise ContractError("invalid or duplicate gold-label identity")
+        observation = observations.get(row["observation_id"])
+        if observation is None or row["trajectory_id"] != observation.trajectory_id:
+            raise ContractError("gold labels do not join to observations")
+        parse_proposal(row["proposal"])
+        gold[row["observation_id"]] = row
+    if set(gold) != set(observations):
+        raise ContractError("gold-label coverage differs from observations")
+    coverage = {oid: set() for oid in observations}
+    for row in loaded["checkpoints.jsonl"]:
+        required = {"observation_id", "trajectory_id", "entity_id", "predicate", "effective_as_of", "known_at", "expected", "changed", "obsolete_values", "query_kind"}
+        if set(row) != required or row["observation_id"] not in observations:
+            raise ContractError("invalid checkpoint ownership/schema")
+        observation = observations[row["observation_id"]]
+        if (row["trajectory_id"], row["entity_id"], row["predicate"]) != (observation.trajectory_id, observation.entity_id, observation.predicate):
+            raise ContractError("checkpoint key/group differs from observation")
+        effective, known = utc(row["effective_as_of"]), utc(row["known_at"])
+        if known != observation.observed_at:
+            raise ContractError("generated checkpoint includes unavailable knowledge time")
+        if effective in coverage[observation.observation_id]:
+            raise ContractError("duplicate checkpoint would inflate denominators")
+        coverage[observation.observation_id].add(effective)
+        expected_kind = "current" if effective == known else "historical_or_future"
+        if row["query_kind"] != expected_kind or type(row["changed"]) is not bool:
+            raise ContractError("invalid checkpoint kind/change flag")
+        expected = row["expected"]
+        if not isinstance(expected, dict) or set(expected) != {"version_id", "value", "status", "effective_at", "effective_until", "source_ids"}:
+            raise ContractError("invalid expected-state schema")
+        if expected["status"] not in ("active", "retracted", "absent") or expected["value"] not in ("preliminary", "published", "withdrawn", None):
+            raise ContractError("invalid expected-state value/status")
+        if not isinstance(expected["source_ids"], list) or len(set(expected["source_ids"])) != len(expected["source_ids"]):
+            raise ContractError("invalid expected provenance set")
+        for source in expected["source_ids"]:
+            if source not in source_registry or source_registry[source].observed_at > known or source_registry[source].entity_id != observation.entity_id:
+                raise ContractError("expected provenance is unknown, future or belongs to another key")
+        for key in ("effective_at", "effective_until"):
+            if expected[key] is not None:
+                utc(expected[key])
+        if not isinstance(row["obsolete_values"], list) or any(value not in ("preliminary", "published", "withdrawn", None) for value in row["obsolete_values"]):
+            raise ContractError("invalid obsolete-value set")
+    boundaries = {tid: set() for tid in groups}
+    for observation in observations.values():
+        proposal = parse_proposal(gold[observation.observation_id]["proposal"])
+        if proposal.action in ("create", "supersede", "update") and observation.effective_at is not None:
+            boundaries[observation.trajectory_id].add(observation.effective_at)
+        times = boundaries[observation.trajectory_id]
+        if not times or coverage[observation.observation_id] != {observation.observed_at, min(times), max(times)}:
+            raise ContractError("checkpoint coverage is incomplete for the generated world format")
     return manifest, loaded

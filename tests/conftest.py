@@ -52,3 +52,12 @@ def apply_case(store, case_dir):
     proposals = [json.loads(line) for line in (case_dir / "gold.jsonl").read_text().splitlines()]
     return [store.commit(store.snapshot(parse_observation(o)), parse_proposal(p))
             for o, p in zip(observations, proposals, strict=True)]
+
+
+def refresh_manifest(directory):
+    path = directory / "manifest.json"
+    manifest = json.loads(path.read_text())
+    manifest["files"] = {name: hashlib.sha256((directory / name).read_bytes()).hexdigest() for name in manifest["files"]}
+    identity = {"files": manifest["files"], "seed": manifest["seed"], "split": manifest["split"]}
+    manifest["dataset_id"] = hashlib.sha256(json.dumps(identity, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
+    path.write_text(json.dumps(manifest))

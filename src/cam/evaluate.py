@@ -1,7 +1,7 @@
 """Separate one-step proposal scoring and closed-loop state evaluation."""
 
 from collections import Counter, defaultdict
-from dataclasses import asdict
+from dataclasses import asdict, is_dataclass
 import hashlib
 import json
 from pathlib import Path
@@ -13,7 +13,7 @@ import time
 
 from cam.contracts import ContractError, EvalConfig, EvalReport, RuntimeUnavailable, canonical_json, parse_observation, parse_proposal
 from cam.data import prepare_output, read_dataset, write_json, write_jsonl
-from cam.policy import propose_rule
+from cam.policy import propose_rule, validate
 from cam.store import Store
 
 
@@ -28,7 +28,8 @@ def _rate(numerator, denominator):
 def _compute_metrics(records: list[dict]) -> dict:
     states = [r for r in records if r["kind"] == "state"]
     opportunities = [r for r in records if r["kind"] == "opportunity"]
-    proposals = [r for r in records if r["kind"] == "proposal"]
+    all_proposals = [r for r in records if r["kind"] == "proposal"]
+    proposals = [r for r in all_proposals if r.get("track", "gold_history") == "gold_history"]
     per_class = {}
     for action in ("create", "reinforce", "supersede", "update", "no_op"):
         tp = sum(r["expected_action"] == r.get("predicted_action") == action for r in proposals)
@@ -44,10 +45,15 @@ def _compute_metrics(records: list[dict]) -> dict:
         "missing_state_rate": _rate(sum(r["missing"] for r in states), len(states)),
         "state_exact_match": _rate(sum(r["exact"] for r in states), len(states)),
         "false_overwrite_rate": _rate(sum(r["non_mutating"] and r["semantic_changed"] for r in opportunities), sum(r["non_mutating"] for r in opportunities)),
-        "invalid_output_rate": _rate(sum(not r.get("valid", True) for r in proposals), len(proposals)),
+        "invalid_output_rate": _rate(sum(not r.get("valid", True) for r in all_proposals), len(all_proposals)),
         "provenance_precision": _rate(sum(r["provenance_tp"] for r in states), sum(r["provenance_claimed"] for r in states)),
         "provenance_recall": _rate(sum(r["provenance_tp"] for r in states), sum(r["provenance_expected"] for r in states)),
     }
+    for track in ("gold_history", "closed_loop"):
+        subset = [r for r in all_proposals if r.get("track", "gold_history") == track]
+        parsed = [r for r in subset if r.get("valid", True)]
+        result[f"parse_invalid_rate_{track}"] = _rate(sum(not r.get("valid", True) for r in subset), len(subset))
+        result[f"validator_rejection_rate_{track}"] = _rate(sum(r.get("validator_rejected", False) for r in parsed), len(parsed))
     for kind in ("current", "historical_or_future"):
         subset = [r for r in states if r.get("query_kind") == kind]
         result[f"state_exact_match_{kind}"] = _rate(sum(r["exact"] for r in subset), len(subset))
@@ -61,12 +67,21 @@ def _semantic(view):
 
 def _predict(proposer, request):
     started = time.perf_counter()
+    raw = None
     try:
-        proposal = proposer(request)
-        proposal = parse_proposal(asdict(proposal))
-        return proposal, None, time.perf_counter() - started
+        raw = proposer(request)
+        if is_dataclass(raw):
+            raw = asdict(raw)
+        payload = json.loads(raw) if isinstance(raw, str) else raw
+        proposal = parse_proposal(payload)
+        return proposal, None, time.perf_counter() - started, raw
     except (ContractError, TypeError, ValueError) as error:
-        return None, str(error), time.perf_counter() - started
+        # Preserve the original returned payload, including malformed model text.
+        try:
+            canonical_json(raw)
+        except TypeError:
+            raw = {"unserializable_type": type(raw).__name__, "representation": repr(raw)}
+        return None, str(error), time.perf_counter() - started, raw
 
 
 def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
@@ -92,33 +107,44 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             observation = parse_observation(raw)
             expected_proposal = parse_proposal(gold[observation.observation_id]["proposal"])
             request = reference.snapshot(observation)
-            one_step, parse_error, latency = _predict(proposer, request)
+            one_step, parse_error, latency, raw_output = _predict(proposer, request)
+            one_step_codes = validate(request, one_step) if one_step else []
             latencies.append(latency)
-            records.append({"kind": "proposal", "trajectory_id": observation.trajectory_id,
-                            "expected_action": expected_proposal.action, "predicted_action": one_step.action if one_step else None,
-                            "valid": one_step is not None})
+            records.append({"kind": "proposal", "track": "gold_history", "trajectory_id": observation.trajectory_id,
+                            "expected_action": expected_proposal.action, "predicted_action": one_step.action if one_step and not one_step_codes else None,
+                            "valid": one_step is not None, "validator_rejected": bool(one_step_codes)})
             predictions.append({"track": "gold_history", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(request),
-                                "proposal": asdict(one_step) if one_step else None, "parse_error": parse_error, "latency_seconds": latency})
+                                "proposal": asdict(one_step) if one_step else None, "raw_output": raw_output,
+                                "validation_codes": one_step_codes, "parse_error": parse_error, "latency_seconds": latency})
             accepted = reference.commit(request, expected_proposal)
             if accepted.status != "committed":
                 raise CorrectnessError(f"independent gold proposal rejected: {observation.observation_id}: {accepted.validation_codes}")
             live_request = memory.snapshot(observation)
-            before = memory.view(observation.entity_id, observation.predicate, effective_as_of=observation.observed_at, known_at=observation.observed_at)
-            closed_loop, parse_error, latency = _predict(proposer, live_request)
+            # Check every possibly affected boundary, including future and historical facts.
+            boundaries = {version.effective_at for version in live_request.candidate_versions}
+            if observation.effective_at is not None:
+                boundaries.add(observation.effective_at)
+            def semantic_timeline():
+                return tuple((boundary, _semantic(memory.view(observation.entity_id, observation.predicate,
+                             effective_as_of=boundary, known_at=observation.observed_at))) for boundary in sorted(boundaries))
+            before = semantic_timeline()
+            closed_loop, parse_error, latency, raw_output = _predict(proposer, live_request)
             latencies.append(latency)
             committed = memory.commit(live_request, closed_loop) if closed_loop else None
             guard_rejections += int(committed is not None and committed.status == "rejected")
             mechanical_total += 1
             mechanical_valid += int(closed_loop is not None and "EVIDENCE_MISMATCH" not in (committed.validation_codes if committed else ()))
+            records.append({"kind": "proposal", "track": "closed_loop", "trajectory_id": observation.trajectory_id,
+                            "valid": closed_loop is not None, "validator_rejected": committed is not None and committed.status == "rejected"})
             predictions.append({"track": "closed_loop", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(live_request),
-                                "proposal": asdict(closed_loop) if closed_loop else None, "parse_error": parse_error,
+                                "proposal": asdict(closed_loop) if closed_loop else None, "raw_output": raw_output, "parse_error": parse_error,
                                 "commit": asdict(committed) if committed else None, "latency_seconds": latency})
-            after = memory.view(observation.entity_id, observation.predicate, effective_as_of=observation.observed_at, known_at=observation.observed_at)
+            after = semantic_timeline()
             records.append({"kind": "opportunity", "trajectory_id": observation.trajectory_id,
                             "non_mutating": expected_proposal.action in ("no_op", "reinforce"),
-                            "semantic_changed": _semantic(before) != _semantic(after)})
+                            "semantic_changed": before != after})
             for checkpoint in checkpoints[observation.observation_id]:
                 selected = memory.view(observation.entity_id, observation.predicate, effective_as_of=checkpoint["effective_as_of"], known_at=checkpoint["known_at"])
                 expected = checkpoint["expected"]

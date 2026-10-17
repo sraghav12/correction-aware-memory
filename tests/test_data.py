@@ -5,6 +5,7 @@ import pytest
 
 from cam import data
 from cam import contracts
+from conftest import refresh_manifest
 
 
 def test_seed_reproduces_manifest(tmp_path):
@@ -59,3 +60,30 @@ def test_manifest_tamper_and_output_overwrite_rejected(tmp_path):
         data.read_dataset(out / "manifest.json")
     with pytest.raises(contracts.ContractError, match="empty"):
         data.generate_dataset(contracts.DataConfig(), out)
+
+
+@pytest.mark.parametrize("failure", ["identity", "counts", "gold_join", "checkpoint_coverage", "duplicate_observation", "group_membership", "checkpoint_key", "future_knowledge"])
+def test_dataset_integrity_rejects_false_correctness_evidence(tmp_path, failure):
+    out = tmp_path / "data"
+    data.generate_dataset(contracts.DataConfig(trajectories=3), out)
+    manifest_path = out / "manifest.json"
+    if failure in ("identity", "counts"):
+        manifest = json.loads(manifest_path.read_text())
+        if failure == "identity":
+            manifest["dataset_id"] = "0" * 64
+        else:
+            manifest.update(trajectory_count=999, event_count=999)
+        manifest_path.write_text(json.dumps(manifest))
+    else:
+        filename = {"gold_join": "gold.jsonl", "checkpoint_coverage": "checkpoints.jsonl", "duplicate_observation": "observations.jsonl", "group_membership": "groups.jsonl", "checkpoint_key": "checkpoints.jsonl", "future_knowledge": "checkpoints.jsonl"}[failure]
+        rows = data.read_jsonl(out / filename)
+        if failure == "gold_join": rows.pop()
+        elif failure == "checkpoint_coverage": rows = rows[:1]
+        elif failure == "duplicate_observation": rows.append(rows[0])
+        elif failure == "group_membership": rows[0]["split"] = "test"
+        elif failure == "checkpoint_key": rows[0]["entity_id"] = "wrong-entity"
+        elif failure == "future_knowledge": rows[0]["known_at"] = "2027-01-01T00:00:00Z"
+        data.write_jsonl(out / filename, rows)
+        refresh_manifest(out)
+    with pytest.raises(contracts.ContractError):
+        data.read_dataset(manifest_path)
