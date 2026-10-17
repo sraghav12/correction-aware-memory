@@ -211,6 +211,39 @@ class DatasetManifest:
 
 
 @dataclass(frozen=True)
+class ModelConfig:
+    revision: str
+    model_id: str = "Qwen/Qwen3-0.6B"
+    device: str = "cpu"
+    adapter_path: str | None = None
+
+    def __post_init__(self):
+        if self.model_id != "Qwen/Qwen3-0.6B" or not isinstance(self.revision, str) or not re.fullmatch(r"[0-9a-f]{40}", self.revision):
+            raise ContractError("Qwen3-0.6B requires a pinned 40-hex model/tokenizer revision")
+        if self.device not in ("cpu", "mps"):
+            raise ContractError("device must be cpu or mps; there is no automatic fallback")
+        if self.adapter_path is not None and (not isinstance(self.adapter_path, str) or not Path(self.adapter_path).is_dir()):
+            raise ContractError("adapter_path must identify an existing checkpoint directory")
+
+
+@dataclass(frozen=True)
+class GenerationConfig:
+    max_input_tokens: int = 2048
+    max_new_tokens: int = 256
+    enable_thinking: bool = False
+    do_sample: bool = False
+    decoding: str = "unconstrained"
+
+    def __post_init__(self):
+        if type(self.max_input_tokens) is not int or not 1 <= self.max_input_tokens <= 2048:
+            raise ContractError("max_input_tokens must be in 1..2048")
+        if type(self.max_new_tokens) is not int or not 1 <= self.max_new_tokens <= 256:
+            raise ContractError("max_new_tokens must be in 1..256")
+        if self.enable_thinking is not False or self.do_sample is not False or self.decoding != "unconstrained":
+            raise ContractError("only deterministic, nonthinking, unconstrained decoding is implemented")
+
+
+@dataclass(frozen=True)
 class EvalConfig:
     data: DataConfig
     output_dir: Path
@@ -227,6 +260,52 @@ class EvalReport:
     manifest: dict
 
 
+@dataclass(frozen=True)
+class TrainConfig:
+    data: DataConfig
+    output_dir: Path
+    model: ModelConfig
+    development_manifest: Path | None = None
+    generation: GenerationConfig = field(default_factory=GenerationConfig)
+    gate: str = "training_not_justified"
+    rank: int = 16
+    alpha: int = 32
+    dropout: float = 0.05
+    learning_rate: float = 2e-4
+    epochs: int = 3
+    microbatch: int = 1
+    accumulation: int = 16
+    max_sequence: int = 2048
+    max_examples: int = 20
+    seed: int = 11
+
+    def __post_init__(self):
+        if self.data.split != "train":
+            raise ContractError("adapter optimization requires the train split")
+        if self.gate not in ("training_not_justified", "educational_imitation_only"):
+            raise ContractError("only the bounded educational gate is implemented; research training is not authorized")
+        limits = {"rank": (1, 16), "alpha": (1, 64), "epochs": (1, 3), "accumulation": (1, 16),
+                  "max_sequence": (1, 2048), "max_examples": (5, 20)}
+        for name, (low, high) in limits.items():
+            value = getattr(self, name)
+            if type(value) is not int or not low <= value <= high:
+                raise ContractError(f"invalid bounded smoke {name}")
+        if self.max_examples % 5 or self.microbatch != 1 or type(self.microbatch) is not int or type(self.seed) is not int:
+            raise ContractError("smoke requires a five-action balanced sample, microbatch 1 and an integer seed")
+        if not isinstance(self.dropout, (int, float)) or not 0 <= self.dropout < 1:
+            raise ContractError("invalid dropout")
+        if not isinstance(self.learning_rate, (int, float)) or not 0 < self.learning_rate <= 0.01:
+            raise ContractError("invalid learning rate")
+        if self.model.adapter_path is not None:
+            raise ContractError("smoke training starts from the pinned base, not an existing adapter")
+
+
+@dataclass(frozen=True)
+class TrainingManifest:
+    output_dir: Path
+    metadata: dict
+
+
 def load_config(path: Path, output_dir: Path) -> EvalConfig:
     raw = json.loads(path.read_text())
     allowed = {"schema_version", "data", "proposer", "generation", "training", "evaluation"}
@@ -236,7 +315,7 @@ def load_config(path: Path, output_dir: Path) -> EvalConfig:
         "data": {"manifest", "split", "seed", "trajectories"},
         "proposer": {"kind", "model_id", "revision", "adapter_path", "device"},
         "generation": {"max_input_tokens", "max_new_tokens", "enable_thinking", "do_sample", "decoding"},
-        "training": {"gate", "rank", "alpha", "dropout", "learning_rate", "epochs", "microbatch", "accumulation", "max_sequence", "seed"},
+        "training": {"gate", "rank", "alpha", "dropout", "learning_rate", "epochs", "microbatch", "accumulation", "max_sequence", "max_examples", "seed", "development_manifest"},
         "evaluation": {"seeds", "bootstrap_count", "qa_mode"},
     }
     for key, keys in schemas.items():
@@ -248,8 +327,13 @@ def load_config(path: Path, output_dir: Path) -> EvalConfig:
         settings["manifest"] = (path.parent / settings["manifest"]).resolve()
     data = DataConfig(**settings)
     proposer = raw.get("proposer", {"kind": "rule"})
+    if proposer.get("adapter_path"):
+        proposer["adapter_path"] = str((path.parent / proposer["adapter_path"]).resolve())
     if proposer.get("kind") not in ("rule", "qwen"):
         raise ContractError("unknown proposer")
     if proposer.get("kind") == "qwen" and not re.fullmatch(r"[0-9a-f]{40}", proposer.get("revision") or ""):
         raise ContractError("model runs require a pinned 40-hex revision")
-    return EvalConfig(data, output_dir, proposer, raw.get("generation", {}), raw.get("training", {}), raw.get("evaluation", {}))
+    training = dict(raw.get("training", {}))
+    if training.get("development_manifest"):
+        training["development_manifest"] = (path.parent / training["development_manifest"]).resolve()
+    return EvalConfig(data, output_dir, proposer, raw.get("generation", {}), training, raw.get("evaluation", {}))

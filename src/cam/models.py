@@ -2,45 +2,13 @@
 
 from dataclasses import asdict, dataclass
 import importlib.metadata
+import hashlib
 import json
-import re
+from pathlib import Path
 import time
 
-from cam.contracts import ContractError, DecisionRequest, Proposal, RuntimeUnavailable, digest, parse_proposal
+from cam.contracts import ContractError, DecisionRequest, GenerationConfig, ModelConfig, Proposal, RuntimeUnavailable, digest, parse_proposal
 from cam.prompts import render_request
-
-
-@dataclass(frozen=True)
-class ModelConfig:
-    revision: str
-    model_id: str = "Qwen/Qwen3-0.6B"
-    device: str = "cpu"
-    adapter_path: str | None = None
-
-    def __post_init__(self):
-        if self.model_id != "Qwen/Qwen3-0.6B" or not isinstance(self.revision, str) or not re.fullmatch(r"[0-9a-f]{40}", self.revision):
-            raise ContractError("Qwen3-0.6B requires a pinned 40-hex model/tokenizer revision")
-        if self.device not in ("cpu", "mps"):
-            raise ContractError("device must be cpu or mps; there is no automatic fallback")
-        if self.adapter_path is not None:
-            raise ContractError("adapter loading awaits the training task")
-
-
-@dataclass(frozen=True)
-class GenerationConfig:
-    max_input_tokens: int = 2048
-    max_new_tokens: int = 256
-    enable_thinking: bool = False
-    do_sample: bool = False
-    decoding: str = "unconstrained"
-
-    def __post_init__(self):
-        if type(self.max_input_tokens) is not int or not 1 <= self.max_input_tokens <= 2048:
-            raise ContractError("max_input_tokens must be in 1..2048")
-        if type(self.max_new_tokens) is not int or not 1 <= self.max_new_tokens <= 256:
-            raise ContractError("max_new_tokens must be in 1..256")
-        if self.enable_thinking is not False or self.do_sample is not False or self.decoding != "unconstrained":
-            raise ContractError("only deterministic, nonthinking, unconstrained decoding is implemented")
 
 
 @dataclass(frozen=True)
@@ -53,6 +21,7 @@ class PreparedInput:
 class GenerationOutput:
     text: str
     output_tokens: int
+    token_ids: tuple[int, ...] = ()
 
 
 class ModelOutputError(ContractError):
@@ -114,11 +83,32 @@ def from_eval_config(config):
     return ModelProposer(ModelConfig(**settings), GenerationConfig(**config.generation))
 
 
+def validate_adapter(config):
+    checkpoint = Path(config.adapter_path)
+    try:
+        metadata = json.loads((checkpoint.parent / "manifest.json").read_text())
+        base = metadata["model"]
+        if (base["model_id"], base["revision"], base["tokenizer_revision"]) != (config.model_id, config.revision, config.revision):
+            raise ContractError("adapter base revision does not match selected model/tokenizer")
+        if metadata["status"] != "trained" or metadata["gate"] != "educational_imitation_only" or not all(
+                metadata["verification"].get(key) is True for key in ("base_unchanged", "adapter_changed", "reload_match")):
+            raise ContractError("adapter lacks successful training/reload proof")
+        for name in ("adapter_config.json", "adapter_model.safetensors"):
+            key = "adapter/" + name
+            if hashlib.sha256((checkpoint / name).read_bytes()).hexdigest() != metadata["adapter_files"][key]:
+                raise ContractError("adapter hash mismatch")
+    except (OSError, KeyError, TypeError, ValueError) as error:
+        raise ContractError(f"invalid adapter artifact: {error}") from error
+    return {"adapter_status": "trained_educational", "adapter_files": metadata["adapter_files"],
+            "training_gate": metadata["gate"]}
+
+
 class HuggingFaceRuntime:
     """No network permission is implied by selecting a model. All loads are local."""
 
     def __init__(self, config: ModelConfig):
         started = time.perf_counter()
+        adapter_metadata = validate_adapter(config) if config.adapter_path else {"adapter_status": "not_trained"}
         try:
             from huggingface_hub import snapshot_download
         except ImportError as error:
@@ -136,10 +126,13 @@ class HuggingFaceRuntime:
             self.tokenizer = AutoTokenizer.from_pretrained(snapshot, local_files_only=True, trust_remote_code=False)
             self.model = AutoModelForCausalLM.from_pretrained(snapshot, local_files_only=True,
                         trust_remote_code=False, use_safetensors=True, dtype=torch.float32).to(config.device)
+            if config.adapter_path:
+                from peft import PeftModel
+                self.model = PeftModel.from_pretrained(self.model, config.adapter_path, is_trainable=False, local_files_only=True)
             self.model.eval()
         except (ImportError, OSError, RuntimeError, ValueError) as error:
             raise RuntimeUnavailable(f"cached model runtime unavailable: {error}") from error
-        self.metadata = {"backend": config.device, "dtype": "float32", "real_model": True,
+        self.metadata = {**adapter_metadata, "backend": config.device, "dtype": "float32", "real_model": True,
                          "load_seconds": time.perf_counter() - started,
                          "packages": {name: importlib.metadata.version(name) for name in ("torch", "transformers", "huggingface-hub")}}
 
@@ -156,7 +149,7 @@ class HuggingFaceRuntime:
                             temperature=None, top_p=None, top_k=None, num_beams=1,
                             pad_token_id=self.tokenizer.eos_token_id, use_cache=True)
             tokens = output[0, prepared.token_count:]
-            return GenerationOutput(self.tokenizer.decode(tokens, skip_special_tokens=True), len(tokens))
+            return GenerationOutput(self.tokenizer.decode(tokens, skip_special_tokens=True), len(tokens), tuple(tokens.tolist()))
         except RuntimeError as error:
             raise RuntimeUnavailable(f"generation failed on requested {self.device} backend: {error}") from error
 

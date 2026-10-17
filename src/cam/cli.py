@@ -75,7 +75,10 @@ def main(argv=None) -> int:
             if args.command == "generate":
                 result = asdict(generate_dataset(config.data, args.out))
             elif args.command == "train":
-                raise RuntimeUnavailable("Adapter training is gated in this offline release. The annotated pilot is solved by rules; human label review and a justified model experiment remain pending.")
+                from cam.train import from_eval_config, train_adapter
+                trained = train_adapter(from_eval_config(config))
+                result = {"run": str(args.out), "training_status": trained.metadata["status"],
+                          "verification": trained.metadata["verification"], "overfit_achieved": trained.metadata["overfit_achieved"]}
             elif args.command == "model-smoke":
                 from cam.smoke import model_smoke
                 result = model_smoke(config)

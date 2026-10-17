@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "data": {"manifest": "../data/generated/sft-development/manifest.json", "split": "development", "seed": 11, "trajectories": 5},
+  "proposer": {"kind": "rule"},
+  "generation": {"max_input_tokens": 2048, "max_new_tokens": 256, "enable_thinking": false, "do_sample": false, "decoding": "unconstrained"},
+  "training": {"gate": "training_not_justified"},
+  "evaluation": {"seeds": [11], "qa_mode": "deterministic"}
+}

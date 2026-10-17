@@ -218,3 +218,49 @@ def test_device_transfer_failure_returns_unavailable_cli(tmp_path, monkeypatch, 
     response = json.loads(capsys.readouterr().out)
     assert response["status"] == "unavailable"
     assert "MPS allocation failed" in response["error"]
+
+
+@pytest.mark.parametrize("problem", ["base", "hash", "proof"])
+def test_adapter_integrity_checked_before_runtime_load(tmp_path, problem):
+    import hashlib
+    checkpoint = tmp_path / "adapter"
+    checkpoint.mkdir()
+    (checkpoint / "adapter_config.json").write_text("{}")
+    (checkpoint / "adapter_model.safetensors").write_bytes(b"unit-test-artifact")
+    metadata = {"schema_version": 1, "status": "trained", "gate": "educational_imitation_only",
+                "model": {"model_id": "Qwen/Qwen3-0.6B", "revision": REVISION, "tokenizer_revision": REVISION},
+                "verification": {"base_unchanged": True, "adapter_changed": True, "reload_match": True},
+                "adapter_files": {"adapter/" + p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in checkpoint.iterdir()}}
+    if problem == "base":
+        metadata["model"]["revision"] = "b" * 40
+    elif problem == "hash":
+        (checkpoint / "adapter_model.safetensors").write_bytes(b"tampered")
+    else:
+        metadata["verification"]["reload_match"] = False
+    (tmp_path / "manifest.json").write_text(json.dumps(metadata))
+    assert callable(getattr(models, "validate_adapter", None)), "adapter provenance validation is missing"
+    with pytest.raises(c.ContractError, match="adapter"):
+        models.validate_adapter(models.ModelConfig(revision=REVISION, adapter_path=str(checkpoint)))
+
+
+def test_evaluator_records_verified_adapter_status(tmp_path):
+    from cam import data, evaluate as evaluation
+    generated = tmp_path / "data"
+    data.generate_dataset(c.DataConfig(trajectories=2), generated)
+    runtime = FakeRuntime("raw invalid output")
+    runtime.metadata = {**runtime.metadata, "adapter_status": "trained_educational"}
+    report = evaluation.evaluate(c.EvalConfig(c.DataConfig(manifest=generated / "manifest.json"), tmp_path / "run"), proposer=build(runtime))
+    assert report.manifest["adapter_status"] == "trained_educational"
+
+
+def test_smoke_records_verified_adapter_status(tmp_path, monkeypatch):
+    from cam import data
+    from cam.smoke import model_smoke
+    generated = tmp_path / "data"
+    data.generate_dataset(c.DataConfig(trajectories=3), generated)
+    runtime = FakeRuntime("raw invalid output")
+    runtime.metadata = {**runtime.metadata, "adapter_status": "trained_educational"}
+    monkeypatch.setattr(models, "from_eval_config", lambda config: build(runtime))
+    out = tmp_path / "smoke"
+    model_smoke(c.EvalConfig(c.DataConfig(manifest=generated / "manifest.json"), out, proposer={"kind": "qwen"}))
+    assert json.loads((out / "manifest.json").read_text())["adapter_status"] == "trained_educational"

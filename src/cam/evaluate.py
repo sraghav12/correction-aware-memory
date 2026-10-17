@@ -199,7 +199,7 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
     resolved = json.loads(canonical_json(config))
     run_manifest = {"schema_version": 1, "dataset": manifest, **run_environment(), "model": runtime,
                     "review_status": manifest["review_status"], "model_status": model_status,
-                    "adapter_status": "not_trained", "tracks": ["gold_history", "closed_loop"]}
+                    "adapter_status": runtime.get("adapter_status", "not_trained"), "tracks": ["gold_history", "closed_loop"]}
     write_json(config.output_dir / "resolved-config.json", resolved)
     write_json(config.output_dir / "manifest.json", run_manifest)
     write_json(config.output_dir / "metrics.json", metrics)

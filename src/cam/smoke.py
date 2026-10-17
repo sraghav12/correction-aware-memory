@@ -42,7 +42,7 @@ def model_smoke(config):
     write_jsonl(config.output_dir / "predictions.jsonl", rows)
     status, runtime = model_identity(proposer)
     run = {"schema_version": 1, "purpose": "development_runtime_probe", "dataset": manifest,
-           **run_environment(), "model_status": status, "model": runtime, "adapter_status": "not_trained",
+           **run_environment(), "model_status": status, "model": runtime, "adapter_status": runtime.get("adapter_status", "not_trained"),
            "review_status": manifest["review_status"], "requests": len(rows),
            "backward_probe": proposer.runtime.probe_backward(), "wall_seconds": time.perf_counter() - started,
            "peak_process_memory_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if platform.system() == "Darwin" else 1024)}
