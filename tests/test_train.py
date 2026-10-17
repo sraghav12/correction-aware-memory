@@ -134,7 +134,7 @@ import torch
 from transformers import Qwen3Config, Qwen3ForCausalLM
 from peft import PeftModel
 from cam import contracts as c
-from cam.train import configure_lora, parameter_digest, optimize
+from cam.train import configure_lora, parameter_digest, optimize, save_adapter
 from cam.models import ModelConfig
 from pathlib import Path
 def forbidden(*args, **kwargs):
@@ -158,7 +158,11 @@ model.eval()
 inputs=torch.tensor([[3,4]])
 with torch.inference_mode():
     expected=model.generate(inputs,max_new_tokens=4,do_sample=False)
-model.save_pretrained(sys.argv[1],safe_serialization=True)
+import peft.utils.save_and_load as saving
+def no_hub_metadata(*args, **kwargs):
+    raise AssertionError("offline adapter saving queried Hub metadata")
+saving.check_file_exists_on_hf_hub = no_hub_metadata
+save_adapter(model,sys.argv[1])
 fresh=Qwen3ForCausalLM(cfg)
 fresh.load_state_dict(state)
 reloaded=PeftModel.from_pretrained(fresh,sys.argv[1],is_trainable=False,local_files_only=True).eval()

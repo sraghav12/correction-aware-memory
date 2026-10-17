@@ -149,6 +149,12 @@ def optimize(model, examples, settings, torch, *, log_path=None):
     return epochs
 
 
+def save_adapter(model, checkpoint):
+    # Only q/v LoRA matrices were trained; vocabulary and embeddings never change.
+    # PEFT's automatic embedding check otherwise probes remote Hub metadata.
+    model.save_pretrained(checkpoint, safe_serialization=True, save_embedding_layers=False)
+
+
 def _train_adapter(settings: TrainConfig):
     if settings.gate != "educational_imitation_only":
         raise RuntimeUnavailable("training gate is training_not_justified; no optimization performed")
@@ -197,7 +203,7 @@ def _train_adapter(settings: TrainConfig):
     if not base_unchanged or not adapter_changed:
         raise CorrectnessError("adapter optimization did not preserve the base and change adapter weights")
     checkpoint = settings.output_dir / "adapter"
-    runtime.model.save_pretrained(checkpoint, safe_serialization=True)
+    save_adapter(runtime.model, checkpoint)
     saved_outputs = [runtime.generate(runtime.prepare(render_request(row["request"])), settings.generation) for row in probes]
     training_outputs = []
     for row, tokens in zip(corpus, encoded, strict=True):

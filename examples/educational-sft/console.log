@@ -1,0 +1,6 @@
+W1017 12:40:20.643000 64404 .venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<07:01,  1.36s/it]Loading weights:  70%|███████   | 219/311 [00:01<00:00, 207.37it/s]Loading weights: 100%|██████████| 311/311 [00:01<00:00, 174.21it/s]
+/Users/sragh/Downloads/Projects/correction-aware-memory/.venv/lib/python3.12/site-packages/peft/utils/save_and_load.py:313: UserWarning: Could not find a config file in Qwen/Qwen3-0.6B - will assume that the vocabulary was not modified.
+  warnings.warn(
+Loading weights:   0%|          | 0/311 [00:00<?, ?it/s]Loading weights:   0%|          | 1/311 [00:01<05:30,  1.06s/it]Loading weights:  68%|██████▊   | 210/311 [00:01<00:00, 245.73it/s]Loading weights: 100%|██████████| 311/311 [00:01<00:00, 194.17it/s]
+{"overfit_achieved": false, "run": "runs/educational-sft", "status": "ok", "training_status": "trained", "verification": {"adapter_changed": true, "base_unchanged": true, "reload_match": true}}

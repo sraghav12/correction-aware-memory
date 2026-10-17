@@ -1,0 +1,17 @@
+{
+  "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+  "event_count": 44,
+  "files": {
+    "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+    "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+    "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+    "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+  },
+  "generator_version": "original-world-v1",
+  "license": "CC0-1.0",
+  "review_status": "not_human_reviewed",
+  "schema_version": 1,
+  "seed": 11,
+  "split": "development",
+  "trajectory_count": 5
+}

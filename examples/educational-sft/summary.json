@@ -1,0 +1,30 @@
+{
+  "purpose": "educational_imitation_only",
+  "optimization_executed": true,
+  "examples": 20,
+  "action_support": {
+    "create": 4,
+    "no_op": 4,
+    "reinforce": 4,
+    "supersede": 4,
+    "update": 4
+  },
+  "initial_completion_loss": 0.6753510892391205,
+  "final_completion_loss": 0.07849849164485931,
+  "optimizer_steps": 6,
+  "schema_valid_training_outputs": 19,
+  "guard_valid_training_outputs": 15,
+  "parsed_training_action_matches": 5,
+  "exact_canonical_training_targets": 2,
+  "overfit_achieved": false,
+  "verification": {
+    "adapter_changed": true,
+    "base_unchanged": true,
+    "reload_match": true
+  },
+  "wall_seconds_excluding_model_load": 279.55349966703216,
+  "peak_process_memory_bytes": 7426703360,
+  "matched_base_comparison_run": false,
+  "human_reviewers": 0,
+  "research_advantage_claim": false
+}

@@ -1,6 +1,6 @@
 # Educational correction-memory LoRA
 
-Status at the implementation checkpoint: the bounded training path is implemented and tested with a tiny randomly initialized local model. The real pinned-Qwen optimization and adapter proof have not yet run at this source checkpoint; update this card only from saved artifacts.
+Status: [the default real pinned-Qwen run](../examples/educational-sft/README.md) trained, saved and reloaded a LoRA adapter with unchanged base weights and identical development token arrays. Its loss fell from .675351 to .078498, but only 2/20 canonical training targets matched exactly; the overfit acceptance criterion failed. One originally permitted development adjustment, accumulation one instead of sixteen with all other settings/data fixed, is registered for a separate bounded run.
 
 This follows Task 6 of the [original folder 1 brief](superpowers/handoffs/correction-aware-memory.md), after the [drift audit](drift-audit.md). Purpose is **educational structured-rule imitation**, not a learned-memory advantage over the transparent rule, external-teacher distillation, novel memory method, or research training campaign. Actual human label reviewers remain zero.
 
