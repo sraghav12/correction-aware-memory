@@ -56,8 +56,8 @@ Dependency order: **1 → 2 → 3 → 4 → Release A/training gate → 5 → 6 
 
 **Interfaces:** `parse_observation(payload: dict) -> Observation`; `parse_proposal(payload: dict) -> Proposal`; `ContractError(ValueError)`. Preserve all fields and five actions in the handoff. Test fixtures `observation_payload: dict`, `proposal_payload: dict`, and `canonical_case_dir: Path` provide the first canonical observation/proposal and its directory. Gold stays outside observation payloads.
 
-- [ ] **Step 1: Establish the isolated test environment.** Recheck instructions/status, create only the independent repository, explicitly use Python 3.12, declare core/test dependencies, and lock them. Add optional ML extras later. Verify `uv run --python 3.12 python --version`; expect 3.12.x. Verify pytest discovery works before interpreting a missing implementation as a valid failing test.
-- [ ] **Step 2: Add failing contract tests.** Write `test_actions_and_utc_schema`, `test_span_hash_and_unknown_fields`, `test_same_id_changed_metadata_is_distinct_payload`. Check fixed UTC parsing, null values, required trust metadata, exact Unicode offsets, and full-payload hashing. Representative assertions:
+- [x] **Step 1: Establish the isolated test environment.** Recheck instructions/status, create only the independent repository, explicitly use Python 3.12, declare core/test dependencies, and lock them. Add optional ML extras later. Verify `uv run --python 3.12 python --version`; expect 3.12.x. Verify pytest discovery works before interpreting a missing implementation as a valid failing test.
+- [x] **Step 2: Add failing contract tests.** Write `test_actions_and_utc_schema`, `test_span_hash_and_unknown_fields`, `test_same_id_changed_metadata_is_distinct_payload`. Check fixed UTC parsing, null values, required trust metadata, exact Unicode offsets, and full-payload hashing. Representative assertions:
 
 ```python
 assert parse_observation(observation_payload).authority == "official"
@@ -67,9 +67,9 @@ with pytest.raises(ContractError):
     parse_proposal({**proposal_payload, "sql": "DELETE FROM versions"})
 ```
 
-- [ ] **Step 3: Run the focused tests.** `uv run python -m pytest tests/test_contracts.py -q`; expect missing parser/validation behavior. Environment failures are setup failures, not the intended red result.
-- [ ] **Step 4: Implement contracts and 12 fixture cases.** Cover the four-event canonical trace plus reinforcement, duplicate replay, revision conflict, historical correction, future-effective state, retraction, informal conflict, equal-time conflict, injection, and Unicode evidence. Compute source hashes from exact UTF-8 text; compare canonical full-payload hashes for identity. Keep schema parsing separate from policy judgment.
-- [ ] **Step 5: Verify and commit.** Rerun focused tests; expect PASS. Inspect fixture data and imports for private information or mandatory ML dependencies. Commit `feat: define correction memory contracts`.
+- [x] **Step 3: Run the focused tests.** `uv run python -m pytest tests/test_contracts.py -q`; expect missing parser/validation behavior. Environment failures are setup failures, not the intended red result.
+- [x] **Step 4: Implement contracts and 12 fixture cases.** Cover the four-event canonical trace plus reinforcement, duplicate replay, revision conflict, historical correction, future-effective state, retraction, informal conflict, equal-time conflict, injection, and Unicode evidence. Compute source hashes from exact UTF-8 text; compare canonical full-payload hashes for identity. Keep schema parsing separate from policy judgment.
+- [x] **Step 5: Verify and commit.** Rerun focused tests; expect PASS. Inspect fixture data and imports for private information or mandatory ML dependencies. Commit `feat: define correction memory contracts`.
 
 ## Task 2: Validated immutable ledger and temporal queries
 
@@ -77,7 +77,7 @@ with pytest.raises(ContractError):
 
 **Interfaces:** `Store(path: Path)`; `snapshot(observation: Observation) -> DecisionRequest`; `commit(request: DecisionRequest, proposal: Proposal) -> CommitResult`; `view(entity_id: str, predicate: str, *, effective_as_of: str, known_at: str) -> FactView`; `validate(request: DecisionRequest, proposal: Proposal) -> list[str]`. Test-only `apply_case(store: Store, case_dir: Path) -> list[CommitResult]` reads explicit expected proposals, snapshots and commits them; it never calls the rule policy.
 
-- [ ] **Step 1: Add failing store tests.** Write `test_bitemporal_correction_and_change`, `test_duplicate_and_revision_conflict`, `test_rejected_attempt_allows_new_snapshot_retry`, `test_invalid_proposal_is_atomic`, `test_retraction_does_not_revive_old_value`, `test_future_effective_notice`, `test_observed_time_high_water_mark`. Replay the canonical fixture with `apply_case` and assert:
+- [x] **Step 1: Add failing store tests.** Write `test_bitemporal_correction_and_change`, `test_duplicate_and_revision_conflict`, `test_rejected_attempt_allows_new_snapshot_retry`, `test_invalid_proposal_is_atomic`, `test_retraction_does_not_revive_old_value`, `test_future_effective_notice`, `test_observed_time_high_water_mark`. Replay the canonical fixture with `apply_case` and assert:
 
 ```python
 assert store.view("experiment-17", "release_state", effective_as_of="2026-10-08T00:00:00Z", known_at="2026-10-09T00:00:00Z").value == "published"
@@ -86,9 +86,9 @@ assert store.view("experiment-17", "release_state", effective_as_of="2026-10-02T
 ```
 
 Also compare persisted original rows before/after correction; replay duplicates; submit two requests from one revision at the same observed timestamp; assert only one mutation initially succeeds and no orphan support exists. Retrying the rejected immutable observation with a fresh snapshot must succeed, preserve the rejected event, and return a distinct attempt event; repeating the exact rejected attempt returns its original rejection. Once committed, observation replay returns its original committed result. Changed metadata under the same observation ID must fail even with the same source hash. Reinforcement with new support advances revision without setting `fact_state_changed`.
-- [ ] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_store.py -q`; expect missing store/transaction behavior.
-- [ ] **Step 3: Implement the transaction boundary and validator together.** Append observations/events/versions/support; enforce immutable source registry, action preconditions, observed-time order, idempotency, exact source/span/value/date membership, and compare-and-swap revision inside the SQLite transaction. Separate the unique canonical request/proposal attempt key from observation identity and its committed-result pointer; rejected attempts remain auditable and do not block a valid retry. Derive both temporal views by replay; cached projections must be rebuildable. Apply every contract clarification in the design.
-- [ ] **Step 4: Verify and commit.** `uv run python -m pytest tests/test_contracts.py tests/test_store.py -q`; expect PASS including rollback and immutable-history assertions. Commit `feat: persist validated temporal memory`.
+- [x] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_store.py -q`; expect missing store/transaction behavior.
+- [x] **Step 3: Implement the transaction boundary and validator together.** Append observations/events/versions/support; enforce immutable source registry, action preconditions, observed-time order, idempotency, exact source/span/value/date membership, and compare-and-swap revision inside the SQLite transaction. Separate the unique canonical request/proposal attempt key from observation identity and its committed-result pointer; rejected attempts remain auditable and do not block a valid retry. Derive both temporal views by replay; cached projections must be rebuildable. Apply every contract clarification in the design.
+- [x] **Step 4: Verify and commit.** `uv run python -m pytest tests/test_contracts.py tests/test_store.py -q`; expect PASS including rollback and immutable-history assertions. Commit `feat: persist validated temporal memory`.
 
 ## Task 3: Conservative rule proposer and adversarial replay
 
@@ -96,7 +96,7 @@ Also compare persisted original rows before/after correction; replay duplicates;
 
 **Interfaces:** `propose_rule(request: DecisionRequest) -> Proposal`; consume the same `validate`, `Store.snapshot`, and `Store.commit` as every later arm.
 
-- [ ] **Step 1: Add failing policy tests.** Write `test_canonical_actions`, `test_late_stale_is_no_op`, `test_injection_and_forged_provenance`, `test_equal_time_conflict_requires_review`, `test_informal_cannot_overwrite`, `test_reinforcement_deduplicates_support`, `test_same_value_later_boundary_requires_review`, and `test_context_limit_counts_correction_versions`. For canonical chronological snapshots:
+- [x] **Step 1: Add failing policy tests.** Write `test_canonical_actions`, `test_late_stale_is_no_op`, `test_injection_and_forged_provenance`, `test_equal_time_conflict_requires_review`, `test_informal_cannot_overwrite`, `test_reinforcement_deduplicates_support`, `test_same_value_later_boundary_requires_review`, and `test_context_limit_counts_correction_versions`. For canonical chronological snapshots:
 
 ```python
 assert actions == ["create", "supersede", "no_op", "update"]
@@ -106,9 +106,9 @@ assert forged_commit.status == "rejected"
 ```
 
 `actions` is collected by proposing/committing each canonical observation in sequence. `stale_proposal` is observation 3; ambiguous and forged results come from their named fixtures. Explicitly test old-but-true repetition after a newer boundary and rejected mutation with fabricated evidence/source/target.
-- [ ] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_policy.py -q`; expect missing proposer behavior.
-- [ ] **Step 3: Implement the action table.** Use supplied metadata and current candidate history; do not interpret injected instructions or infer authority from prose. Same-boundary authorized correction targets the current lineage head, including historical boundaries. Unsupported historical insertion/equal-time conflicts require review. No additional action or extraction subsystem.
-- [ ] **Step 4: Verify and commit.** `uv run python -m pytest tests/test_contracts.py tests/test_store.py tests/test_policy.py -q`; expect PASS and zero fixture invariant violations. Save the canonical trace for the next milestone. Commit `feat: propose conservative correction memory actions`.
+- [x] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_policy.py -q`; expect missing proposer behavior.
+- [x] **Step 3: Implement the action table.** Use supplied metadata and current candidate history; do not interpret injected instructions or infer authority from prose. Same-boundary authorized correction targets the current lineage head, including historical boundaries. Unsupported historical insertion/equal-time conflicts require review. No additional action or extraction subsystem.
+- [x] **Step 4: Verify and commit.** `uv run python -m pytest tests/test_contracts.py tests/test_store.py tests/test_policy.py -q`; expect PASS and zero fixture invariant violations. Save the canonical trace for the next milestone. Commit `feat: propose conservative correction memory actions`.
 
 ## Task 4: Independent pilot, honest scoring, and working offline report
 
@@ -116,7 +116,7 @@ assert forged_commit.status == "rejected"
 
 **Interfaces:** `generate_dataset(config: DataConfig, out_dir: Path) -> DatasetManifest`; `evaluate(config: EvalConfig) -> EvalReport`; `write_report(report: EvalReport, out_dir: Path) -> Path`; internal scorer `_compute_metrics(records: list[dict]) -> dict`. `records` are joined scoring records containing predictions, committed checkpoints, and oracle labels after inference; they are never model inputs. Config parsing uses handoff `schema_version=1` and its declared sections. CLI merges the explicit `--out` path into typed runtime config.
 
-- [ ] **Step 1: Add failing generation/scoring tests.** Write `test_seed_reproduces_manifest`, `test_split_and_prompt_leakage` (data part), `test_reference_oracle_is_not_policy_call`, `test_all_actions_and_stale_cases_present`, `test_metric_denominators_on_known_errors`, `test_zero_denominator_is_null`, and `test_always_no_op_has_missing_state`. A test-only hand-counted scoring fixture has 4 changed checkpoints, one obsolete selection, 5 non-mutating opportunities and one false overwrite:
+- [x] **Step 1: Add failing generation/scoring tests.** Write `test_seed_reproduces_manifest`, `test_split_and_prompt_leakage` (data part), `test_reference_oracle_is_not_policy_call`, `test_all_actions_and_stale_cases_present`, `test_metric_denominators_on_known_errors`, `test_zero_denominator_is_null`, and `test_always_no_op_has_missing_state`. A test-only hand-counted scoring fixture has 4 changed checkpoints, one obsolete selection, 5 non-mutating opportunities and one false overwrite:
 
 ```python
 assert metrics["stale_active_rate"] == {"numerator": 1, "denominator": 4, "value": 0.25}
@@ -125,9 +125,9 @@ assert empty_metrics["stale_active_rate"] == {"numerator": 0, "denominator": 0, 
 ```
 
 These arithmetic fixtures test the scorer independently; they do not assert that an impossible guarded mutation occurred. Separately verify actual replay counts by hand and that an always-no-op proposer exposes missing state. Add `test_offline_end_to_end_without_ml` and `test_report_matches_run_counts` using a socket/network-denial fixture and an environment with only core/test dependencies.
-- [ ] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_data.py tests/test_evaluate.py tests/test_cli.py -q`; expect missing pipeline behavior.
-- [ ] **Step 3: Implement Release A.** Generate world timelines before rendering documents; derive oracle actions/checkpoints without importing/calling `propose_rule`, `validate`, or `Store.view`. Split entity/alias groups and template families before augmentation; pilot stays development-only. Generate 50 pilot trajectories of 6–10 events. Implement separate gold-history one-step proposal scoring and independent closed-loop state replay, with explicit track tags on saved outputs; fixed gold action labels are used only with gold-history requests. Build `check`, `generate`, `evaluate` (rule only), and `report` now, rather than postponing the usable demo until training finishes. Save `resolved-config.json`, `manifest.json`, `predictions.jsonl`, `checkpoints.jsonl`, `metrics.json`, the SQLite ledger, hashes, and provenance under the explicit run directory. Report values and text must be HTML-escaped.
-- [ ] **Step 4: Verify the complete offline path.** Run the following from a clean core/test environment; each command must exit 0, and repeated generation/replay must preserve dataset hashes and projected states. Runtime timestamps can differ.
+- [x] **Step 2: Confirm failure.** `uv run python -m pytest tests/test_data.py tests/test_evaluate.py tests/test_cli.py -q`; expect missing pipeline behavior.
+- [x] **Step 3: Implement Release A.** Generate world timelines before rendering documents; derive oracle actions/checkpoints without importing/calling `propose_rule`, `validate`, or `Store.view`. Split entity/alias groups and template families before augmentation; pilot stays development-only. Generate 50 pilot trajectories of 6–10 events. Implement separate gold-history one-step proposal scoring and independent closed-loop state replay, with explicit track tags on saved outputs; fixed gold action labels are used only with gold-history requests. Build `check`, `generate`, `evaluate` (rule only), and `report` now, rather than postponing the usable demo until training finishes. Save `resolved-config.json`, `manifest.json`, `predictions.jsonl`, `checkpoints.jsonl`, `metrics.json`, the SQLite ledger, hashes, and provenance under the explicit run directory. Report values and text must be HTML-escaped.
+- [x] **Step 4: Verify the complete offline path.** Run the following from a clean core/test environment; each command must exit 0, and repeated generation/replay must preserve dataset hashes and projected states. Runtime timestamps can differ.
 
 ```bash
 uv run python -m pytest tests -q
@@ -137,7 +137,7 @@ uv run python -m cam.cli evaluate --config configs/offline.json --out runs/rule 
 uv run python -m cam.cli report --run runs/rule --out runs/rule/report --offline
 ```
 
-- [ ] **Step 5: Audit and record the training gate.** Prepare a readable 50-event audit sample covering every action; the user or another actual human reviews it when available. Record reviewer identity/count, disagreements and exclusions honestly. Write `research_training`, `educational_imitation_only`, or `training_not_justified` with pilot evidence in `docs/methods.md`. Without human review, mark labels unaudited and scientific validation pending; do not pretend the agent's review is independent human evidence. Commit `feat: release offline memory benchmark and report`.
+- [x] **Step 5: Audit and record the training gate.** Prepare a readable 50-event audit sample covering every action; the user or another actual human reviews it when available. Record reviewer identity/count, disagreements and exclusions honestly. Write `research_training`, `educational_imitation_only`, or `training_not_justified` with pilot evidence in `docs/methods.md`. Without human review, mark labels unaudited and scientific validation pending; do not pretend the agent's review is independent human evidence. Commit `feat: release offline memory benchmark and report`.
 
 **Milestone acceptance:** an outsider can run the commands and inspect the canonical correction trace. Record observed rule results without treating a perfect annotated-input score as a learned-memory contribution.
 
@@ -216,3 +216,8 @@ Coverage: Tasks 1–3 implement schemas, invariants, time semantics and action p
 Estimated active effort and stopping gates are in the design: Release A 14–24 hours; full conditional scope 32–60 hours, approximately 4–8 weeks at 8–10 hours/week devoted to this project. Compute duration is unmeasured. The next concrete action is Task 1, followed by the smallest validated canonical trace; no model download is needed to start.
 
 Recommended execution is direct implementation with a fresh review at Release A and before the final release. The user has requested planning, so no implementation, dependency installation, repository creation, training, or publishing is authorized by this document alone.
+
+
+## Execution status — October 17, 2026
+
+The user authorized implementation with “start working”. Tasks 1–4 are complete. Tasks 5–7 are deferred under the design’s explicit Release A training stop condition; no learned-model work is claimed. Task 8 packages Release A and awaits final code review. See docs/progress.md for the persistent execution record.

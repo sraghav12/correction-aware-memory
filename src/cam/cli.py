@@ -53,6 +53,9 @@ def main(argv=None) -> int:
     check = commands.add_parser("check")
     check.add_argument("--fixtures", type=Path, required=True)
     check.add_argument("--offline", action="store_true")
+    demo = commands.add_parser("demo")
+    demo.add_argument("--out", type=Path, required=True)
+    demo.add_argument("--offline", action="store_true")
     report = commands.add_parser("report")
     report.add_argument("--run", type=Path, required=True)
     report.add_argument("--out", type=Path, required=True)
@@ -61,6 +64,9 @@ def main(argv=None) -> int:
         args = parser.parse_args(argv)
         if args.command == "check":
             result = _check_fixtures(args.fixtures)
+        elif args.command == "demo":
+            from cam.demo import canonical_trace
+            result = {"trace": str(canonical_trace(args.out))}
         elif args.command == "report":
             saved = EvalReport(args.run, json.loads((args.run / "metrics.json").read_text()), json.loads((args.run / "manifest.json").read_text()))
             result = {"report": str(write_report(saved, args.out))}

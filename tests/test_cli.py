@@ -107,3 +107,12 @@ def test_output_directory_boundary(tmp_path):
     assert cli.main(["generate", "--config", str(config), "--out", str(target), "--offline"]) == 2
     assert set(tmp_path.rglob("*")) == before
     assert keep.read_text() == "keep me"
+
+
+def test_demo_distinguishes_true_time_from_known_time(tmp_path):
+    out = tmp_path / "demo"
+    assert cli.main(["demo", "--out", str(out), "--offline"]) == 0
+    trace = json.loads((out / "trace.json").read_text())
+    assert [row["proposal"]["action"] for row in trace["events"]] == ["create", "supersede", "no_op", "update"]
+    assert [row["selected"]["value"] for row in trace["queries"]] == ["published", "withdrawn", "preliminary"]
+    assert trace["events"][2]["commit"]["fact_state_changed"] is False

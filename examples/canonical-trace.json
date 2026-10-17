@@ -1,0 +1,207 @@
+{
+  "adapter_status": "not_trained",
+  "events": [
+    {
+      "commit": {
+        "after_revision": 1,
+        "before_revision": 0,
+        "event_id": "e:1",
+        "fact_state_changed": true,
+        "status": "committed",
+        "validation_codes": []
+      },
+      "observation": {
+        "authority": "official",
+        "correction_authorized": false,
+        "corrects_observation_id": null,
+        "effective_at": "2026-10-01T00:00:00Z",
+        "entity_id": "experiment-17",
+        "evidence_end": 48,
+        "evidence_start": 0,
+        "observation_id": "o1",
+        "observed_at": "2026-10-01T00:00:00Z",
+        "predicate": "release_state",
+        "source_id": "source-o1",
+        "source_sha256": "7d75245d147053275cfae9a9eafcf8e023843408f4ec9b9b029a6ea7cdd69f71",
+        "text": "Release state: preliminary, effective October 1.",
+        "trajectory_id": "t1",
+        "value": "preliminary"
+      },
+      "proposal": {
+        "action": "create",
+        "effective_at": "2026-10-01T00:00:00.000000Z",
+        "evidence_end": 48,
+        "evidence_start": 0,
+        "reason_code": "initial_fact",
+        "review_required": false,
+        "source_id": "source-o1",
+        "target_version_id": null,
+        "value": "preliminary"
+      }
+    },
+    {
+      "commit": {
+        "after_revision": 2,
+        "before_revision": 1,
+        "event_id": "e:2",
+        "fact_state_changed": true,
+        "status": "committed",
+        "validation_codes": []
+      },
+      "observation": {
+        "authority": "official",
+        "correction_authorized": false,
+        "corrects_observation_id": null,
+        "effective_at": "2026-10-07T00:00:00Z",
+        "entity_id": "experiment-17",
+        "evidence_end": 46,
+        "evidence_start": 0,
+        "observation_id": "o8",
+        "observed_at": "2026-10-08T00:00:00Z",
+        "predicate": "release_state",
+        "source_id": "source-o8",
+        "source_sha256": "8667b7a1347728e526266ac2ad70d8bdef7ca7d632362636040387308524e093",
+        "text": "Release state: published, effective October 7.",
+        "trajectory_id": "t1",
+        "value": "published"
+      },
+      "proposal": {
+        "action": "supersede",
+        "effective_at": "2026-10-07T00:00:00.000000Z",
+        "evidence_end": 46,
+        "evidence_start": 0,
+        "reason_code": "new_effective_state",
+        "review_required": false,
+        "source_id": "source-o8",
+        "target_version_id": "v:o1",
+        "value": "published"
+      }
+    },
+    {
+      "commit": {
+        "after_revision": 2,
+        "before_revision": 2,
+        "event_id": "e:3",
+        "fact_state_changed": false,
+        "status": "committed",
+        "validation_codes": []
+      },
+      "observation": {
+        "authority": "official",
+        "correction_authorized": false,
+        "corrects_observation_id": null,
+        "effective_at": "2026-10-01T00:00:00Z",
+        "entity_id": "experiment-17",
+        "evidence_end": 48,
+        "evidence_start": 0,
+        "observation_id": "o9",
+        "observed_at": "2026-10-09T00:00:00Z",
+        "predicate": "release_state",
+        "source_id": "source-o9",
+        "source_sha256": "7d75245d147053275cfae9a9eafcf8e023843408f4ec9b9b029a6ea7cdd69f71",
+        "text": "Release state: preliminary, effective October 1.",
+        "trajectory_id": "t1",
+        "value": "preliminary"
+      },
+      "proposal": {
+        "action": "no_op",
+        "effective_at": null,
+        "evidence_end": 48,
+        "evidence_start": 0,
+        "reason_code": "stale",
+        "review_required": false,
+        "source_id": "source-o9",
+        "target_version_id": null,
+        "value": null
+      }
+    },
+    {
+      "commit": {
+        "after_revision": 3,
+        "before_revision": 2,
+        "event_id": "e:4",
+        "fact_state_changed": true,
+        "status": "committed",
+        "validation_codes": []
+      },
+      "observation": {
+        "authority": "official",
+        "correction_authorized": true,
+        "corrects_observation_id": "o8",
+        "effective_at": "2026-10-07T00:00:00Z",
+        "entity_id": "experiment-17",
+        "evidence_end": 46,
+        "evidence_start": 0,
+        "observation_id": "o10",
+        "observed_at": "2026-10-10T00:00:00Z",
+        "predicate": "release_state",
+        "source_id": "source-o10",
+        "source_sha256": "792e40152378fc19a4c45f0b1371371db7059dd815eb56bfaf1dc1d70e36b8e5",
+        "text": "Release state: withdrawn, effective October 7.",
+        "trajectory_id": "t1",
+        "value": "withdrawn"
+      },
+      "proposal": {
+        "action": "update",
+        "effective_at": "2026-10-07T00:00:00.000000Z",
+        "evidence_end": 46,
+        "evidence_start": 0,
+        "reason_code": "authorized_correction",
+        "review_required": false,
+        "source_id": "source-o10",
+        "target_version_id": "v:o8",
+        "value": "withdrawn"
+      }
+    }
+  ],
+  "model_status": "not_run",
+  "queries": [
+    {
+      "effective_as_of": "2026-10-08T00:00:00Z",
+      "known_at": "2026-10-09T00:00:00Z",
+      "selected": {
+        "effective_at": "2026-10-07T00:00:00.000000Z",
+        "effective_until": null,
+        "source_ids": [
+          "source-o8"
+        ],
+        "status": "active",
+        "value": "published",
+        "version_id": "v:o8"
+      },
+      "value": "published"
+    },
+    {
+      "effective_as_of": "2026-10-08T00:00:00Z",
+      "known_at": "2026-10-10T00:00:00Z",
+      "selected": {
+        "effective_at": "2026-10-07T00:00:00.000000Z",
+        "effective_until": null,
+        "source_ids": [
+          "source-o10"
+        ],
+        "status": "active",
+        "value": "withdrawn",
+        "version_id": "v:o10"
+      },
+      "value": "withdrawn"
+    },
+    {
+      "effective_as_of": "2026-10-02T00:00:00Z",
+      "known_at": "2026-10-10T00:00:00Z",
+      "selected": {
+        "effective_at": "2026-10-01T00:00:00.000000Z",
+        "effective_until": "2026-10-07T00:00:00.000000Z",
+        "source_ids": [
+          "source-o1"
+        ],
+        "status": "active",
+        "value": "preliminary",
+        "version_id": "v:o1"
+      },
+      "value": "preliminary"
+    }
+  ],
+  "review_status": "not_human_reviewed",
+  "schema_version": 1
+}
