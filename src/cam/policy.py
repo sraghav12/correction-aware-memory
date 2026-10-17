@@ -59,3 +59,47 @@ def validate(request: DecisionRequest, proposal: Proposal) -> list[str]:
     if observation.value is None and proposal.reason_code != "retraction":
         errors.append("RETRACTION_REASON_REQUIRED")
     return errors
+
+
+def propose_rule(request: DecisionRequest) -> Proposal:
+    observation = request.observation
+
+    def proposal(action, target=None, reason="initial_fact", review=False):
+        return Proposal(action, target, None if action == "no_op" else observation.value,
+                        None if action == "no_op" else observation.effective_at,
+                        observation.source_id, observation.evidence_start, observation.evidence_end,
+                        reason, review)
+
+    def ignore(reason, review=False):
+        return proposal("no_op", reason=reason, review=review)
+
+    if len(request.candidate_versions) > 16:
+        raise ContractError("CONTEXT_LIMIT")
+    if any(observation.observation_id in version.observation_ids for version in request.candidate_versions):
+        return ignore("duplicate")
+    if observation.authority != "official":
+        return ignore("untrusted", True)
+    if observation.effective_at is None:
+        return ignore("ambiguous", True)
+    timeline = heads(request.candidate_versions)
+    if observation.corrects_observation_id:
+        referenced = next((version for version in request.candidate_versions
+                           if observation.corrects_observation_id in version.observation_ids), None)
+        if not observation.correction_authorized:
+            return ignore("untrusted", True)
+        if referenced is None or referenced.effective_at != observation.effective_at:
+            return ignore("ambiguous", True)
+        target = timeline[observation.effective_at]
+        return proposal("update", target.version_id, "retraction" if observation.value is None else "authorized_correction")
+    if not timeline:
+        return ignore("retraction_unsupported", True) if observation.value is None else proposal("create")
+    latest = timeline[max(timeline)]
+    if observation.effective_at < latest.effective_at:
+        return ignore("stale") if observation.effective_at in timeline else ignore("ambiguous", True)
+    if observation.effective_at == latest.effective_at:
+        if observation.value == latest.value:
+            return proposal("reinforce", latest.version_id, "retraction" if observation.value is None else "same_fact")
+        return ignore("ambiguous", True)
+    if observation.value == latest.value:
+        return ignore("ambiguous", True)
+    return proposal("supersede", latest.version_id, "retraction" if observation.value is None else "new_effective_state")

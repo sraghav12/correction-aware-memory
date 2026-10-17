@@ -11,7 +11,7 @@
   "case_id": "duplicate",
   "files": {
     "checkpoints.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "gold.jsonl": "8c5b06bab43c8b0995afb71a0f49c5d3fe1f99d01c6b06638fbd07caabf22c70",
+    "gold.jsonl": "8cd8abd13745247f7aa054d1eada532577a5990cfd895d8b46260d3f18232e38",
     "observations.jsonl": "06cff1045923139593a217b70a55af24bf32575e1c42f2a9a5a260e7daa7f7bc"
   },
   "license": "CC0-1.0",
