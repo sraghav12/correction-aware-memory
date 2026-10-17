@@ -1,0 +1,11 @@
+# Original synthetic correction trajectories
+
+Version: `original-world-v1`. Generator seed: 11 for the first pilot. All entities, sources, and text are synthetic. Fixture/generator text is original AI-assisted work, designated CC0-1.0; no external benchmark text or personal records are included. Source hashes cover exact UTF-8 text; offsets count Unicode code points.
+
+The pilot contains 50 trajectories, each 6–10 observations. World transitions and expected states are specified before document rendering, without using the production proposer, validator or temporal view. Cases include reinforcement, real changes, authorized historical corrections, stale arrivals, future notices, retractions, conflicts, informal/injected instructions, and missing effective dates. Candidate values, dates, and authority are supplied annotations: this is not end-to-end text extraction.
+
+Entities/aliases and template families are assigned to splits before rendering. `pilot` is development-only forever. Train/development/test/style-transfer generation uses disjoint entity identifiers and template families. No locked final test set has been created or inspected. No paraphrase augmentation or training has occurred. The first trajectory guarantees action coverage; later event sequences vary under the fixed seed.
+
+Every dataset manifest records artifact hashes, generator version, seed, split, counts, license and review status. The loader verifies exact hashes and predicate/value vocabulary. Keep `manifest.json`, observations, separate gold proposals, checkpoints and group records together. Dataset identity is independent of output-directory names.
+
+Human reviewers: **0**. Labels are AI-authored and programmatically cross-checked, not independently human validated. `label-audit.jsonl` and `label-audit.md` in each run prepare up to 50 stratified pilot events with source, expected operation and checkpoints. Human reviewer/verdict fields start null. Record real disagreements/exclusions before scientific claims; the full training gate remains provisional until review. Synthetic coverage does not establish real-world generalization or novelty.

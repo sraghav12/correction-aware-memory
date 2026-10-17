@@ -1,19 +1,31 @@
 """Strict public contracts for atomic correction memory."""
 
-from dataclasses import asdict, dataclass, fields, is_dataclass
+from dataclasses import asdict, dataclass, field, fields, is_dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
 import re
+from pathlib import Path
 
 
 class ContractError(ValueError):
     """Invalid envelope, schema, or immutable identity."""
 
 
+class RuntimeUnavailable(RuntimeError):
+    """A requested optional experiment is unavailable in this release."""
+
+
 def canonical_json(value) -> str:
     return json.dumps(asdict(value) if is_dataclass(value) else value,
-                      sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+                      sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False,
+                      default=_json_default)
+
+
+def _json_default(value):
+    if isinstance(value, Path):
+        return str(value)
+    raise TypeError(f"unsupported JSON type: {type(value).__name__}")
 
 
 def digest(value) -> str:
@@ -168,3 +180,76 @@ def parse_proposal(payload: dict) -> Proposal:
         if raw["reason_code"] not in ("stale", "ambiguous", "untrusted", "irrelevant", "duplicate", "retraction_unsupported"):
             raise ContractError("unknown no_op reason")
     return Proposal(**raw)
+
+
+@dataclass(frozen=True)
+class DataConfig:
+    manifest: Path | None = None
+    split: str = "pilot"
+    seed: int = 11
+    trajectories: int = 50
+
+    def __post_init__(self):
+        if self.split not in ("pilot", "train", "development", "test", "style_transfer"):
+            raise ContractError("unknown split")
+        if type(self.seed) is not int or type(self.trajectories) is not int or not 1 <= self.trajectories <= 10000:
+            raise ContractError("invalid seed or trajectory count")
+
+
+@dataclass(frozen=True)
+class DatasetManifest:
+    schema_version: int
+    dataset_id: str
+    seed: int
+    split: str
+    trajectory_count: int
+    event_count: int
+    files: dict[str, str]
+    generator_version: str = "original-world-v1"
+    license: str = "CC0-1.0"
+    review_status: str = "not_human_reviewed"
+
+
+@dataclass(frozen=True)
+class EvalConfig:
+    data: DataConfig
+    output_dir: Path
+    proposer: dict = field(default_factory=lambda: {"kind": "rule"})
+    generation: dict = field(default_factory=dict)
+    training: dict = field(default_factory=dict)
+    evaluation: dict = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class EvalReport:
+    run_dir: Path
+    metrics: dict
+    manifest: dict
+
+
+def load_config(path: Path, output_dir: Path) -> EvalConfig:
+    raw = json.loads(path.read_text())
+    allowed = {"schema_version", "data", "proposer", "generation", "training", "evaluation"}
+    if not isinstance(raw, dict) or set(raw) - allowed or type(raw.get("schema_version")) is not int or raw["schema_version"] != 1:
+        raise ContractError("unknown config fields or schema_version")
+    schemas = {
+        "data": {"manifest", "split", "seed", "trajectories"},
+        "proposer": {"kind", "model_id", "revision", "adapter_path", "device"},
+        "generation": {"max_input_tokens", "max_new_tokens", "enable_thinking", "do_sample", "decoding"},
+        "training": {"gate", "rank", "alpha", "dropout", "learning_rate", "epochs", "microbatch", "accumulation", "max_sequence", "seed"},
+        "evaluation": {"seeds", "bootstrap_count", "qa_mode"},
+    }
+    for key, keys in schemas.items():
+        section = raw.get(key, {})
+        if not isinstance(section, dict) or set(section) - keys:
+            raise ContractError(f"unknown {key} config fields")
+    settings = dict(raw.get("data", {}))
+    if settings.get("manifest"):
+        settings["manifest"] = (path.parent / settings["manifest"]).resolve()
+    data = DataConfig(**settings)
+    proposer = raw.get("proposer", {"kind": "rule"})
+    if proposer.get("kind") not in ("rule", "qwen"):
+        raise ContractError("unknown proposer")
+    if proposer.get("kind") == "qwen" and not re.fullmatch(r"[0-9a-f]{40}", proposer.get("revision") or ""):
+        raise ContractError("model runs require a pinned 40-hex revision")
+    return EvalConfig(data, output_dir, proposer, raw.get("generation", {}), raw.get("training", {}), raw.get("evaluation", {}))
