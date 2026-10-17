@@ -1,0 +1,20 @@
+{
+  "allowed_predicates": {
+    "release_state": [
+      "preliminary",
+      "published",
+      "withdrawn",
+      null
+    ]
+  },
+  "author": "AI-assisted; not independently human reviewed",
+  "case_id": "injection",
+  "files": {
+    "checkpoints.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gold.jsonl": "301be2e668b1bc5290402778b7472060c5259b6d1ff460d43110f49adde97100",
+    "observations.jsonl": "d2e573f99053f3e33a7def52a769f7f9e55b6d0bce20a17776f03f75d104a71c"
+  },
+  "license": "CC0-1.0",
+  "origin": "original synthetic fixture",
+  "schema_version": 1
+}

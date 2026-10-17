@@ -1,0 +1,3 @@
+{"action": "create", "effective_at": "2026-10-01T00:00:00Z", "evidence_end": 48, "evidence_start": 0, "reason_code": "initial_fact", "review_required": false, "source_id": "source-o1", "target_version_id": null, "value": "preliminary"}
+{"action": "supersede", "effective_at": "2026-10-07T00:00:00Z", "evidence_end": 46, "evidence_start": 0, "reason_code": "new_effective_state", "review_required": false, "source_id": "source-o8", "target_version_id": "v:o1", "value": "published"}
+{"action": "update", "effective_at": "2026-10-01T00:00:00Z", "evidence_end": 46, "evidence_start": 0, "reason_code": "authorized_correction", "review_required": false, "source_id": "source-hc", "target_version_id": "v:o1", "value": "withdrawn"}

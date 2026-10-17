@@ -1,0 +1,20 @@
+{
+  "allowed_predicates": {
+    "release_state": [
+      "preliminary",
+      "published",
+      "withdrawn",
+      null
+    ]
+  },
+  "author": "AI-assisted; not independently human reviewed",
+  "case_id": "canonical",
+  "files": {
+    "checkpoints.jsonl": "c391e18646aeb5af083496c480631a5260ec49239363f510b10c78c0c5a93fb1",
+    "gold.jsonl": "3a87fd34bea9d9e24068c258b0a3ee3572250e36036ecf43afca9ee577a248e9",
+    "observations.jsonl": "1fb530f59139eae036a228a2a3d225cbf065b76b14109736524dbe04a563bf72"
+  },
+  "license": "CC0-1.0",
+  "origin": "original synthetic fixture",
+  "schema_version": 1
+}

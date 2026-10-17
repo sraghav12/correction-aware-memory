@@ -1,0 +1,2 @@
+{"action": "create", "effective_at": "2026-10-01T00:00:00Z", "evidence_end": 48, "evidence_start": 0, "reason_code": "initial_fact", "review_required": false, "source_id": "source-o1", "target_version_id": null, "value": "preliminary"}
+{"action": "supersede", "effective_at": "2026-10-15T00:00:00Z", "evidence_end": 47, "evidence_start": 0, "reason_code": "new_effective_state", "review_required": false, "source_id": "source-f", "target_version_id": "v:o1", "value": "published"}

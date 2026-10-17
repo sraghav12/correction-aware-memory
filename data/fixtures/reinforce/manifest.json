@@ -1,0 +1,20 @@
+{
+  "allowed_predicates": {
+    "release_state": [
+      "preliminary",
+      "published",
+      "withdrawn",
+      null
+    ]
+  },
+  "author": "AI-assisted; not independently human reviewed",
+  "case_id": "reinforce",
+  "files": {
+    "checkpoints.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gold.jsonl": "5eedc6450f684379f8bc0ce3146f4c6d308012cf8c97268f5af9c6f24e774a1d",
+    "observations.jsonl": "0f4387e45dc85d6f9851c1b5807e4cc93a7df16395dc3204890e1fe90fd8d07d"
+  },
+  "license": "CC0-1.0",
+  "origin": "original synthetic fixture",
+  "schema_version": 1
+}
