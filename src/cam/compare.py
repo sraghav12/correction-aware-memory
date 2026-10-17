@@ -24,7 +24,7 @@ def compare(config_path: Path, output_dir: Path, *, proposer_factories=None):
         raise ContractError("comparison requires named arms, a reference and an integer seed")
     # Validate the statistics budget and all configs/data before preparing output or loading models.
     _bootstrap_details([(0, 1, 0, 1)], seed=raw["seed"], resamples=raw["bootstrap_count"])
-    configs, manifests, model_pins, training_seeds = {}, {}, set(), set()
+    configs, manifests, model_pins, training_seeds, adapter_notes = {}, {}, set(), set(), []
     for name, path in raw["arms"].items():
         config = load_config((config_path.parent / path).resolve(), output_dir / name)
         if config.data.split not in ("pilot", "development"):
@@ -50,6 +50,10 @@ def compare(config_path: Path, output_dir: Path, *, proposer_factories=None):
                 validate_adapter(model)
                 training = json.loads((Path(model.adapter_path).parent / "manifest.json").read_text())
                 training_seeds.add(training["seed"])
+                if training.get("overfit_achieved") is False:
+                    adapter_notes.append(f"overfit acceptance not achieved by configured adapter: {name}")
+                if training.get("development_dataset", {}).get("dataset_id") == manifests[name]["dataset_id"]:
+                    adapter_notes.append(f"configured adapter {name}: reload probes used this development dataset")
         configs[name] = config
     identities = {digest(m) for m in manifests.values()}
     budgets = {canonical_json(GenerationConfig(**c.generation)) for c in configs.values()}
@@ -60,9 +64,10 @@ def compare(config_path: Path, output_dir: Path, *, proposer_factories=None):
         "dataset": next(iter(manifests.values())), **run_environment(), "prompt_system_sha256": hashlib.sha256(SYSTEM.encode()).hexdigest(),
         "primary": "pooled stale_active_rate arm-minus-reference; negative favors arm only with missing/false-overwrite non-regression",
         "constraints": ["missing_state_rate", "false_overwrite_rate"], "warmup": "none; first calls retained",
-        "reviewers": 0, "training_seed_variation": "not estimable from one training seed", "final_test_accessed": False,
-        "limitations": ["exploratory synthetic annotated development data", "two development probes previously inspected",
-                        "neither educational adapter passed twenty-target overfit", "no human label review",
+        "reviewers": 0, "training_seed_variation": ("not applicable; no configured adapters" if not training_seeds
+                         else "not estimable from one training seed" if len(training_seeds) == 1
+                         else "not estimated; training seeds remain separate arm metadata"), "final_test_accessed": False,
+        "limitations": ["exploratory synthetic annotated development data", *adapter_notes, "no human label review",
                         "no final generalization or research-superiority claim", "intervals conditional on this tiny development sample",
                         "equal-token/no-correction research controls and guard-removal sandbox deferred; unconstrained decoding only"]}
     write_json(output_dir / "registration.json", registration)

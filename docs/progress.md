@@ -122,3 +122,5 @@ Source `adede561089be63b0cab064d46440174a28d6505` ran the prospectively committe
 | sft-default | 0.261 | 0.277 | 14/103 | 0/38 | 87/103 |
 
 [Complete evidence and reproduction](../examples/development-comparison/README.md).
+
+Final review independently replayed all 440 calls and checked 64 intervals, 69 hashes, the registration digest, ten SQLite ledgers and the binding original brief. The initial Astra review stopped at a usage limit before a verdict; an available fresh reviewer completed the review. It found no experiment/evidence defect and one reusable-report issue: other configurations inherited this run's adapter-specific disclosures. Two regression cases failed before the fix; disclosures now come from configured checkpoint metadata, and zero-adapter reports make no adapter-experiment claims. Final suite: **132 passed with ML dependencies; 130 passed and two optional native checks skipped in an isolated core environment**. The original five-arm evidence remains unchanged. Full scientific-study requirements and human label review remain pending.

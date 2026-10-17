@@ -269,6 +269,31 @@ def test_comparison_cli_creates_replayable_reports(tmp_path, capsys):
     assert (out / "comparison.md").exists()
 
 
+def test_comparison_disclosures_do_not_invent_adapter_experiments(tmp_path):
+    from cam import compare as comparison
+    out = tmp_path / "run"
+    result = comparison.compare(comparison_fixture(tmp_path), out)
+    assert result["training_seed_count"] == 0
+    assert not any("reload probe" in text or "overfit" in text for text in result["limitations"])
+    registration = json.loads((out / "registration.json").read_text())
+    assert registration["training_seed_variation"] == "not applicable; no configured adapters"
+    assert "Neither adapter passed" not in (out / "index.html").read_text()
+
+
+def test_comparison_discloses_actual_adapter_metadata(tmp_path):
+    from pathlib import Path
+    from cam import compare as comparison
+    from cam.policy import propose_rule
+    artifact = Path(__file__).resolve().parents[1] / "examples/educational-sft"
+    data_settings = {"manifest": str(artifact / "dataset/development/manifest.json"), "split": "development", "seed": 11}
+    path = comparison_fixture(tmp_path, base={"data": data_settings}, sft={"data": data_settings,
+        "proposer": {"kind": "qwen", "revision": "c1899de289a04d12100db370d81485cdf75e47ca", "adapter_path": str(artifact / "adapter")}})
+    result = comparison.compare(path, tmp_path / "run", proposer_factories={"sft": lambda config: propose_rule})
+    assert result["training_seeds"] == [11]
+    assert any("overfit acceptance not achieved" in text and "sft" in text for text in result["limitations"])
+    assert any("reload probes used this development dataset" in text and "sft" in text for text in result["limitations"])
+
+
 def test_seed_variation_not_pooled_as_events(tmp_path):
     from cam import compare as comparison
     path = comparison_fixture(tmp_path, sft={"evaluation": {"seeds": [11, 22], "qa_mode": "deterministic"}})
