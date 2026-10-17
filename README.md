@@ -67,7 +67,7 @@ flowchart LR
 |---|---|
 | Contracts, original fixtures, validated ledger, rule policy | Implemented and tested |
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
-| Human label audit | Prepared; 0 actual human reviewers |
+| Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
 | Prompted Qwen3 runtime | Deferred; not implemented/evaluated |
 | LoRA training and saved adapter | Deferred; no adapter exists |
 | Matched learned-model comparisons and uncertainty | Deferred; no model effect estimated |
@@ -78,8 +78,10 @@ CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional 
 
 ## Inspect the evidence
 
-Each run contains raw requests/proposals for both tracks, commit/rejection results, checkpoint scores, per-trajectory metrics, current and gold-history SQLite ledgers, resolved configuration, dataset identity, code commit/dirty status, dependency-lock hash and environment. `label-audit.jsonl` and `label-audit.md` prepare 50 stratified pilot events; reviewer/verdict fields start null. [Canonical example](examples/canonical-trace.json) · [Complete portable smoke run](examples/smoke/README.md) is a committed model-free trace.
+Each run contains raw requests/proposals for both tracks, commit/rejection results, checkpoint scores, per-trajectory metrics, current and gold-history SQLite ledgers, resolved configuration, dataset identity, code commit/dirty status, dependency-lock hash and environment. `label-audit.jsonl` and `label-audit.md` prepare 50 stratified pilot events; reviewer/verdict fields start null. Inspect the committed [canonical trace](examples/canonical-trace.json) or [complete portable smoke run](examples/smoke/README.md).
+
+The [pilot review packet](audits/pilot-seed11/review.md) includes the exact source, supplied trust/correction metadata, prior assertion history, expected proposal, and temporal checkpoints for each of 50 events. Record actual human decisions in [review.csv](audits/pilot-seed11/review.csv); the [audit manifest](audits/pilot-seed11/manifest.json) binds the sample to its dataset and source commit. These verdict fields are intentionally empty until reviewed.
 
 The task plan and execution record are under [docs/superpowers](docs/superpowers/plans/2026-10-17-correction-aware-memory.md) and [docs/progress.md](docs/progress.md). Code is MIT-licensed; original synthetic data is designated CC0-1.0. This project is not a full MEMORA/PSD reproduction or a validated novel memory method. [Related work and remaining novelty audit](docs/novelty-audit.md).
 
-**Next concrete task:** review the 50-event pilot audit, record disagreements, then decide whether an educational Qwen3-0.6B SFT experiment provides useful evidence beyond this deterministic milestone.
+**Next concrete task:** work through the [50-event pilot audit](audits/pilot-seed11/review.md), record disagreements in its CSV, then decide whether an educational Qwen3-0.6B SFT experiment provides useful evidence beyond this deterministic milestone.

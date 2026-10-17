@@ -51,3 +51,7 @@ Fixed source commit `8201fb6d13c4d1ebb265cbeb081b9b2767a50045` was checked out c
 A committed two-trajectory smoke run includes original synthetic dataset, raw outputs, ledgers, metrics and HTML. Its relative-path replay configuration reproduced all non-resource metrics exactly. Full local artifacts are in `runs/verified-rule/`; the original development run remains preserved in `runs/rule/`. Artifact hash inventories are saved. Browser verification checked layout and source-evidence expansion.
 
 The feature branch remains local and unmerged. No publishing or external messages occurred. Next action: conduct the actual 50-event label audit, then decide whether an educational small-model imitation experiment is useful.
+
+## Next-step audit preparation
+
+On October 17 the user requested the next step and explicitly authorized creating a GitHub repository and pushing updates. A portable `audits/pilot-seed11/` packet now contains 50 events (10 per action), exact evidence, prior assertion context, expected proposals/checkpoints, a blank human review CSV, and a hashed manifest tied to dataset `4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763d48` and source commit `8201fb6`. No human verdicts were invented; actual reviewer count remains zero. Repository creation and push are verified separately before reporting completion.

@@ -1,0 +1,22 @@
+{
+  "action_counts": {
+    "create": 10,
+    "no_op": 10,
+    "reinforce": 10,
+    "supersede": 10,
+    "update": 10
+  },
+  "actual_human_reviewers": 0,
+  "dataset_id": "4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763d48",
+  "files": {
+    "events.jsonl": "8de49de10e1960e21b64243557774b0b027e996419b4d1f48f3dbf4a75dfac85",
+    "review.csv": "bdd17b9badc522d2dc6aeb1a0e118122af005e777bbff6e4f1414d9e83577312",
+    "review.md": "f19d18b8fcfde5630aa4e4f339a3732fcd0d2e2a87e80fa49c4130f63e84cc06"
+  },
+  "generator_seed": 11,
+  "review_status": "pending_human_review",
+  "sample_count": 50,
+  "schema_version": 1,
+  "selection": "first 10 pilot events per action; development only",
+  "source_code_commit": "8201fb6d13c4d1ebb265cbeb081b9b2767a50045"
+}
