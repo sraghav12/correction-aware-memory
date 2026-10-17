@@ -181,3 +181,27 @@ def test_model_smoke_rejects_holdout_before_loading_runtime(tmp_path, monkeypatc
     monkeypatch.setattr(models, "from_eval_config", forbidden)
     assert cli.main(["model-smoke", "--config", str(config), "--out", str(tmp_path / "run")]) == 2
     assert "development" in capsys.readouterr().out
+
+
+def test_device_transfer_failure_returns_unavailable_cli(tmp_path, monkeypatch, capsys):
+    from cam import cli, data
+
+    class FailingTensor:
+        def to(self, device):
+            raise RuntimeError("MPS allocation failed")
+
+    runtime = models.HuggingFaceRuntime.__new__(models.HuggingFaceRuntime)
+    runtime.device = "mps"
+    runtime.metadata = {"backend": "mps", "dtype": "fake", "real_model": False}
+    runtime.prepare = lambda messages: models.PreparedInput({"input_ids": FailingTensor()}, 4)
+    proposer = models.ModelProposer(models.ModelConfig(revision=REVISION, device="mps"), runtime=runtime)
+    generated = tmp_path / "data"
+    data.generate_dataset(c.DataConfig(trajectories=2), generated)
+    config = tmp_path / "base.json"
+    config.write_text(json.dumps({"schema_version": 1, "data": {"manifest": str(generated / "manifest.json")},
+                                  "proposer": {"kind": "qwen", "revision": REVISION, "device": "mps"}}))
+    monkeypatch.setattr(models, "from_eval_config", lambda config: proposer)
+    assert cli.main(["evaluate", "--config", str(config), "--out", str(tmp_path / "run")]) == 3
+    response = json.loads(capsys.readouterr().out)
+    assert response["status"] == "unavailable"
+    assert "MPS allocation failed" in response["error"]

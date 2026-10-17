@@ -149,8 +149,8 @@ class HuggingFaceRuntime:
         return PreparedInput(encoded, encoded["input_ids"].shape[-1])
 
     def generate(self, prepared, generation):
-        encoded = {name: value.to(self.device) for name, value in prepared.payload.items()}
         try:
+            encoded = {name: value.to(self.device) for name, value in prepared.payload.items()}
             with self.torch.inference_mode():
                 output = self.model.generate(**encoded, max_new_tokens=generation.max_new_tokens, do_sample=False,
                             temperature=None, top_p=None, top_k=None, num_beams=1,
