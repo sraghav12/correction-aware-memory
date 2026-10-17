@@ -1,0 +1,5042 @@
+{
+  "arms": {
+    "base": {
+      "diagnostic": false,
+      "manifest": {
+        "adapter_status": "not_trained",
+        "dataset": {
+          "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+          "event_count": 44,
+          "files": {
+            "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+            "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+            "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+            "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+          },
+          "generator_version": "original-world-v1",
+          "license": "CC0-1.0",
+          "review_status": "not_human_reviewed",
+          "schema_version": 1,
+          "seed": 11,
+          "split": "development",
+          "trajectory_count": 5
+        },
+        "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+        "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+        "git_dirty": false,
+        "machine": "arm64",
+        "model": {
+          "adapter_path": null,
+          "adapter_status": "not_trained",
+          "backend": "cpu",
+          "device": "cpu",
+          "dtype": "float32",
+          "generation": {
+            "decoding": "unconstrained",
+            "do_sample": false,
+            "enable_thinking": false,
+            "max_input_tokens": 2048,
+            "max_new_tokens": 256
+          },
+          "load_seconds": 4.390619500016328,
+          "model_id": "Qwen/Qwen3-0.6B",
+          "packages": {
+            "huggingface-hub": "2.2.0",
+            "torch": "2.14.1",
+            "transformers": "5.20.1"
+          },
+          "real_model": true,
+          "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+        },
+        "model_status": "evaluated",
+        "platform": "macOS-27.0.1-arm64-arm-64bit",
+        "python": "3.12.9",
+        "review_status": "not_human_reviewed",
+        "schema_version": 1,
+        "tracks": [
+          "gold_history",
+          "closed_loop"
+        ]
+      },
+      "metrics": {
+        "action_classes": {
+          "create": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 5
+          },
+          "no_op": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 16
+          },
+          "reinforce": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 10
+          },
+          "supersede": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 10
+          },
+          "update": {
+            "f1": 0.25,
+            "precision": 0.2,
+            "predicted": 5,
+            "recall": 0.3333333333333333,
+            "support": 3
+          }
+        },
+        "action_macro_f1": 0.05,
+        "checkpoint_count": 103,
+        "correctness_gate_passed": false,
+        "deterministic_qa_exact_match": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "erroneous_mutations_among_commits": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null
+        },
+        "false_overwrite_rate": {
+          "denominator": 26,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "guard_rejections": 0,
+        "guard_valid_action_macro_f1": 0.0,
+        "invalid_output_rate": {
+          "denominator": 88,
+          "numerator": 83,
+          "value": 0.9431818181818182
+        },
+        "invariant_violations": 0,
+        "mechanical_provenance_validity": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "missing_state_rate": {
+          "denominator": 103,
+          "numerator": 103,
+          "value": 1.0
+        },
+        "observation_count": 44,
+        "parse_invalid_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 44,
+          "value": 1.0
+        },
+        "parse_invalid_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 39,
+          "value": 0.8863636363636364
+        },
+        "provenance_precision": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null
+        },
+        "provenance_recall": {
+          "denominator": 205,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "resources": {
+          "backend": "cpu",
+          "model_load_seconds": 4.390619500016328,
+          "model_runtime_evaluated": true,
+          "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+          "peak_process_memory_bytes": 3666329600,
+          "proposer_calls": 88,
+          "proposer_p50_seconds": 4.03208283346612,
+          "proposer_p95_seconds": 6.570956791983917,
+          "tokens": {
+            "input_tokens": 86781,
+            "output_tokens": 6751
+          },
+          "tracks": {
+            "closed_loop": {
+              "end_to_end": {
+                "p50_seconds": 3.668243416992482,
+                "p95_seconds": 4.413193750020582,
+                "total_seconds": 164.5386387509061
+              },
+              "model_only": {
+                "p50_seconds": 3.665919000020949,
+                "p95_seconds": 4.412030958046671,
+                "total_seconds": 164.44754362897947
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 30756,
+                "output_tokens": 3308
+              }
+            },
+            "gold_history": {
+              "end_to_end": {
+                "p50_seconds": 5.20906018698588,
+                "p95_seconds": 6.743425666994881,
+                "total_seconds": 222.06057916895952
+              },
+              "model_only": {
+                "p50_seconds": 5.207184249506099,
+                "p95_seconds": 6.740684791002423,
+                "total_seconds": 221.93245761888102
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 56025,
+                "output_tokens": 3443
+              }
+            }
+          },
+          "wall_seconds": 386.8360670420225,
+          "warmup_policy": "none; first call retained"
+        },
+        "stale_active_rate": {
+          "denominator": 38,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "state_exact_match": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "state_exact_match_current": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "state_exact_match_historical_or_future": {
+          "denominator": 59,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "trajectory_count": 5,
+        "validator_rejection_rate_closed_loop": {
+          "denominator": 0,
+          "numerator": 0,
+          "value": null
+        },
+        "validator_rejection_rate_gold_history": {
+          "denominator": 5,
+          "numerator": 5,
+          "value": 1.0
+        }
+      },
+      "per_trajectory": {
+        "development-11-0000": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "update": {
+              "f1": 0.4,
+              "precision": 0.3333333333333333,
+              "predicted": 3,
+              "recall": 0.5,
+              "support": 2
+            }
+          },
+          "action_macro_f1": 0.08,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "false_overwrite_rate": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.0,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 15,
+            "value": 0.8333333333333334
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 6,
+            "value": 0.6666666666666666
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 31,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 3,
+            "numerator": 3,
+            "value": 1.0
+          }
+        },
+        "development-11-0001": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 5
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "false_overwrite_rate": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.0,
+          "invalid_output_rate": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "missing_state_rate": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 72,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          }
+        },
+        "development-11-0002": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 2
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 5
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 2,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "false_overwrite_rate": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.0,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 16,
+            "value": 0.8888888888888888
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 7,
+            "value": 0.7777777777777778
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 33,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 13,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 2,
+            "numerator": 2,
+            "value": 1.0
+          }
+        },
+        "development-11-0003": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 3
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "false_overwrite_rate": {
+            "denominator": 7,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.0,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "missing_state_rate": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 44,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          }
+        },
+        "development-11-0004": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            }
+          },
+          "action_macro_f1": 0.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "false_overwrite_rate": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.0,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "missing_state_rate": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 25,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 11,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          }
+        }
+      },
+      "status": "evaluated"
+    },
+    "latest-arrival": {
+      "diagnostic": true,
+      "manifest": {
+        "adapter_status": "not_trained",
+        "dataset": {
+          "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+          "event_count": 44,
+          "files": {
+            "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+            "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+            "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+            "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+          },
+          "generator_version": "original-world-v1",
+          "license": "CC0-1.0",
+          "review_status": "not_human_reviewed",
+          "schema_version": 1,
+          "seed": 11,
+          "split": "development",
+          "trajectory_count": 5
+        },
+        "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+        "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+        "git_dirty": false,
+        "machine": "arm64",
+        "model": {},
+        "model_status": "diagnostic",
+        "platform": "macOS-27.0.1-arm64-arm-64bit",
+        "python": "3.12.9",
+        "review_status": "not_human_reviewed",
+        "schema_version": 1,
+        "tracks": [
+          "gold_history",
+          "closed_loop"
+        ]
+      },
+      "metrics": {
+        "action_classes": {
+          "create": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 5,
+            "recall": 1.0,
+            "support": 5
+          },
+          "no_op": {
+            "f1": 0.6666666666666666,
+            "precision": 1.0,
+            "predicted": 8,
+            "recall": 0.5,
+            "support": 16
+          },
+          "reinforce": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 10,
+            "recall": 1.0,
+            "support": 10
+          },
+          "supersede": {
+            "f1": 0.6451612903225806,
+            "precision": 0.47619047619047616,
+            "predicted": 21,
+            "recall": 1.0,
+            "support": 10
+          },
+          "update": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 3
+          }
+        },
+        "action_macro_f1": 0.6623655913978495,
+        "checkpoint_count": 103,
+        "correctness_gate_passed": false,
+        "deterministic_qa_exact_match": {
+          "denominator": 103,
+          "numerator": 91,
+          "value": 0.883495145631068
+        },
+        "erroneous_mutations_among_commits": {
+          "denominator": 33,
+          "numerator": 1,
+          "value": 0.030303030303030304
+        },
+        "false_overwrite_rate": {
+          "denominator": 26,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "guard_rejections": 11,
+        "guard_valid_action_macro_f1": 0.7228070175438596,
+        "invalid_output_rate": {
+          "denominator": 88,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "invariant_violations": 0,
+        "mechanical_provenance_validity": {
+          "denominator": 44,
+          "numerator": 44,
+          "value": 1.0
+        },
+        "missing_state_rate": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "observation_count": 44,
+        "parse_invalid_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "parse_invalid_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "provenance_precision": {
+          "denominator": 207,
+          "numerator": 193,
+          "value": 0.9323671497584541
+        },
+        "provenance_recall": {
+          "denominator": 205,
+          "numerator": 193,
+          "value": 0.9414634146341463
+        },
+        "resources": {
+          "backend": "custom-callable",
+          "model_load_seconds": null,
+          "model_runtime_evaluated": false,
+          "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+          "peak_process_memory_bytes": 3704209408,
+          "proposer_calls": 88,
+          "proposer_p50_seconds": 1.1728989193215966e-05,
+          "proposer_p95_seconds": 2.824998227879405e-05,
+          "tokens": null,
+          "tracks": {
+            "closed_loop": {
+              "end_to_end": {
+                "p50_seconds": 1.0791467502713203e-05,
+                "p95_seconds": 1.4124962035566568e-05,
+                "total_seconds": 0.0004955820622853935
+              },
+              "model_only": null,
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": null
+            },
+            "gold_history": {
+              "end_to_end": {
+                "p50_seconds": 1.6228994354605675e-05,
+                "p95_seconds": 3.166601527482271e-05,
+                "total_seconds": 0.0010496631730347872
+              },
+              "model_only": null,
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": null
+            }
+          },
+          "wall_seconds": 0.18149395799264312,
+          "warmup_policy": "none; first call retained"
+        },
+        "stale_active_rate": {
+          "denominator": 38,
+          "numerator": 12,
+          "value": 0.3157894736842105
+        },
+        "state_exact_match": {
+          "denominator": 103,
+          "numerator": 91,
+          "value": 0.883495145631068
+        },
+        "state_exact_match_current": {
+          "denominator": 44,
+          "numerator": 39,
+          "value": 0.8863636363636364
+        },
+        "state_exact_match_historical_or_future": {
+          "denominator": 59,
+          "numerator": 52,
+          "value": 0.8813559322033898
+        },
+        "trajectory_count": 5,
+        "validator_rejection_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 11,
+          "value": 0.25
+        },
+        "validator_rejection_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 12,
+          "value": 0.2727272727272727
+        }
+      },
+      "per_trajectory": {
+        "development-11-0000": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.6666666666666666,
+              "precision": 1.0,
+              "predicted": 2,
+              "recall": 0.5,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.33333333333333337,
+              "precision": 0.2,
+              "predicted": 5,
+              "recall": 1.0,
+              "support": 1
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 2
+            }
+          },
+          "action_macro_f1": 0.6,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 12,
+            "value": 0.5
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.7333333333333333,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 33,
+            "numerator": 19,
+            "value": 0.5757575757575758
+          },
+          "provenance_recall": {
+            "denominator": 31,
+            "numerator": 19,
+            "value": 0.6129032258064516
+          },
+          "stale_active_rate": {
+            "denominator": 15,
+            "numerator": 12,
+            "value": 0.8
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 12,
+            "value": 0.5
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 4,
+            "value": 0.4444444444444444
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 8,
+            "value": 0.5333333333333333
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 4,
+            "value": 0.4444444444444444
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 4,
+            "value": 0.4444444444444444
+          }
+        },
+        "development-11-0001": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.888888888888889,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 0.8,
+              "support": 5
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 4
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.5777777777777777,
+          "deterministic_qa_exact_match": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.5777777777777777,
+          "invalid_output_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 72,
+            "numerator": 72,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 72,
+            "numerator": 72,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 1,
+            "value": 0.1
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 1,
+            "value": 0.1
+          }
+        },
+        "development-11-0002": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.6666666666666666,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.5,
+              "support": 2
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.9090909090909091,
+              "precision": 0.8333333333333334,
+              "predicted": 6,
+              "recall": 1.0,
+              "support": 5
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.7151515151515151,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.7333333333333333,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 33,
+            "numerator": 33,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 33,
+            "numerator": 33,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 13,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 15,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 1,
+            "value": 0.1111111111111111
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 1,
+            "value": 0.1111111111111111
+          }
+        },
+        "development-11-0003": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.4,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.25,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 3,
+              "recall": 1.0,
+              "support": 3
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 3,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.48,
+          "deterministic_qa_exact_match": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 7,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.48,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 44,
+            "numerator": 44,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 44,
+            "numerator": 44,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 3,
+            "value": 0.375
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 3,
+            "value": 0.375
+          }
+        },
+        "development-11-0004": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.8,
+              "precision": 0.6666666666666666,
+              "predicted": 6,
+              "recall": 1.0,
+              "support": 4
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            }
+          },
+          "action_macro_f1": 0.5599999999999999,
+          "deterministic_qa_exact_match": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 6,
+            "numerator": 1,
+            "value": 0.16666666666666666
+          },
+          "false_overwrite_rate": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.5714285714285714,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 25,
+            "numerator": 25,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 25,
+            "numerator": 25,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 11,
+            "numerator": 11,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 2,
+            "value": 0.25
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 3,
+            "value": 0.375
+          }
+        }
+      },
+      "status": "evaluated"
+    },
+    "rule": {
+      "diagnostic": false,
+      "manifest": {
+        "adapter_status": "not_trained",
+        "dataset": {
+          "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+          "event_count": 44,
+          "files": {
+            "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+            "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+            "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+            "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+          },
+          "generator_version": "original-world-v1",
+          "license": "CC0-1.0",
+          "review_status": "not_human_reviewed",
+          "schema_version": 1,
+          "seed": 11,
+          "split": "development",
+          "trajectory_count": 5
+        },
+        "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+        "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+        "git_dirty": false,
+        "machine": "arm64",
+        "model": {},
+        "model_status": "not_run",
+        "platform": "macOS-27.0.1-arm64-arm-64bit",
+        "python": "3.12.9",
+        "review_status": "not_human_reviewed",
+        "schema_version": 1,
+        "tracks": [
+          "gold_history",
+          "closed_loop"
+        ]
+      },
+      "metrics": {
+        "action_classes": {
+          "create": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 5,
+            "recall": 1.0,
+            "support": 5
+          },
+          "no_op": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 16,
+            "recall": 1.0,
+            "support": 16
+          },
+          "reinforce": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 10,
+            "recall": 1.0,
+            "support": 10
+          },
+          "supersede": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 10,
+            "recall": 1.0,
+            "support": 10
+          },
+          "update": {
+            "f1": 1.0,
+            "precision": 1.0,
+            "predicted": 3,
+            "recall": 1.0,
+            "support": 3
+          }
+        },
+        "action_macro_f1": 1.0,
+        "checkpoint_count": 103,
+        "correctness_gate_passed": true,
+        "deterministic_qa_exact_match": {
+          "denominator": 103,
+          "numerator": 103,
+          "value": 1.0
+        },
+        "erroneous_mutations_among_commits": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "false_overwrite_rate": {
+          "denominator": 26,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "guard_rejections": 0,
+        "guard_valid_action_macro_f1": 1.0,
+        "invalid_output_rate": {
+          "denominator": 88,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "invariant_violations": 0,
+        "mechanical_provenance_validity": {
+          "denominator": 44,
+          "numerator": 44,
+          "value": 1.0
+        },
+        "missing_state_rate": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "observation_count": 44,
+        "parse_invalid_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "parse_invalid_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "provenance_precision": {
+          "denominator": 205,
+          "numerator": 205,
+          "value": 1.0
+        },
+        "provenance_recall": {
+          "denominator": 205,
+          "numerator": 205,
+          "value": 1.0
+        },
+        "resources": {
+          "backend": "python-rules",
+          "model_load_seconds": null,
+          "model_runtime_evaluated": false,
+          "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+          "peak_process_memory_bytes": 44236800,
+          "proposer_calls": 88,
+          "proposer_p50_seconds": 1.258301199413836e-05,
+          "proposer_p95_seconds": 2.7709000278264284e-05,
+          "tokens": null,
+          "tracks": {
+            "closed_loop": {
+              "end_to_end": {
+                "p50_seconds": 1.0625022696331143e-05,
+                "p95_seconds": 1.6542035154998302e-05,
+                "total_seconds": 0.0005117082037031651
+              },
+              "model_only": null,
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": null
+            },
+            "gold_history": {
+              "end_to_end": {
+                "p50_seconds": 1.5271012671291828e-05,
+                "p95_seconds": 3.208301495760679e-05,
+                "total_seconds": 0.0008014136692509055
+              },
+              "model_only": null,
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": null
+            }
+          },
+          "wall_seconds": 0.1540900839609094,
+          "warmup_policy": "none; first call retained"
+        },
+        "stale_active_rate": {
+          "denominator": 38,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "state_exact_match": {
+          "denominator": 103,
+          "numerator": 103,
+          "value": 1.0
+        },
+        "state_exact_match_current": {
+          "denominator": 44,
+          "numerator": 44,
+          "value": 1.0
+        },
+        "state_exact_match_historical_or_future": {
+          "denominator": 59,
+          "numerator": 59,
+          "value": 1.0
+        },
+        "trajectory_count": 5,
+        "validator_rejection_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "validator_rejection_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        }
+      },
+      "per_trajectory": {
+        "development-11-0000": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "update": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 2,
+              "recall": 1.0,
+              "support": 2
+            }
+          },
+          "action_macro_f1": 1.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 1.0,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 31,
+            "numerator": 31,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 31,
+            "numerator": 31,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 15,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0001": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 5,
+              "recall": 1.0,
+              "support": 5
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 4
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.6,
+          "deterministic_qa_exact_match": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.6,
+          "invalid_output_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 72,
+            "numerator": 72,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 72,
+            "numerator": 72,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0002": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 2,
+              "recall": 1.0,
+              "support": 2
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 5,
+              "recall": 1.0,
+              "support": 5
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.8,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.8,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 33,
+            "numerator": 33,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 33,
+            "numerator": 33,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 13,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 15,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0003": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 3,
+              "recall": 1.0,
+              "support": 3
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.6,
+          "deterministic_qa_exact_match": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 7,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.6,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 44,
+            "numerator": 44,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 44,
+            "numerator": 44,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0004": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "reinforce": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 4
+            },
+            "update": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            }
+          },
+          "action_macro_f1": 1.0,
+          "deterministic_qa_exact_match": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 1.0,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 25,
+            "numerator": 25,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 25,
+            "numerator": 25,
+            "value": 1.0
+          },
+          "stale_active_rate": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 11,
+            "numerator": 11,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          }
+        }
+      },
+      "status": "evaluated"
+    },
+    "sft-adjusted": {
+      "diagnostic": false,
+      "manifest": {
+        "adapter_status": "trained_educational",
+        "dataset": {
+          "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+          "event_count": 44,
+          "files": {
+            "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+            "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+            "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+            "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+          },
+          "generator_version": "original-world-v1",
+          "license": "CC0-1.0",
+          "review_status": "not_human_reviewed",
+          "schema_version": 1,
+          "seed": 11,
+          "split": "development",
+          "trajectory_count": 5
+        },
+        "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+        "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+        "git_dirty": false,
+        "machine": "arm64",
+        "model": {
+          "adapter_files": {
+            "adapter/adapter_config.json": "f6819af3901d181f91252f6a8737c18de8fab5289ef6456488cf94ad98d9ae31",
+            "adapter/adapter_model.safetensors": "43a78c332736f8469b6d9fb60d1bc9baf3da9bdaf2d7d797780138af9791f21b"
+          },
+          "adapter_path": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft-overfit/adapter",
+          "adapter_status": "trained_educational",
+          "backend": "cpu",
+          "device": "cpu",
+          "dtype": "float32",
+          "generation": {
+            "decoding": "unconstrained",
+            "do_sample": false,
+            "enable_thinking": false,
+            "max_input_tokens": 2048,
+            "max_new_tokens": 256
+          },
+          "load_seconds": 2.165554917010013,
+          "model_id": "Qwen/Qwen3-0.6B",
+          "packages": {
+            "huggingface-hub": "2.2.0",
+            "torch": "2.14.1",
+            "transformers": "5.20.1"
+          },
+          "real_model": true,
+          "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "training_gate": "educational_imitation_only"
+        },
+        "model_status": "evaluated",
+        "platform": "macOS-27.0.1-arm64-arm-64bit",
+        "python": "3.12.9",
+        "review_status": "not_human_reviewed",
+        "schema_version": 1,
+        "tracks": [
+          "gold_history",
+          "closed_loop"
+        ]
+      },
+      "metrics": {
+        "action_classes": {
+          "create": {
+            "f1": 0.9090909090909091,
+            "precision": 0.8333333333333334,
+            "predicted": 6,
+            "recall": 1.0,
+            "support": 5
+          },
+          "no_op": {
+            "f1": 0.38095238095238093,
+            "precision": 0.8,
+            "predicted": 5,
+            "recall": 0.25,
+            "support": 16
+          },
+          "reinforce": {
+            "f1": 0.22222222222222224,
+            "precision": 0.25,
+            "predicted": 8,
+            "recall": 0.2,
+            "support": 10
+          },
+          "supersede": {
+            "f1": 0.5555555555555556,
+            "precision": 0.625,
+            "predicted": 8,
+            "recall": 0.5,
+            "support": 10
+          },
+          "update": {
+            "f1": 0.3,
+            "precision": 0.17647058823529413,
+            "predicted": 17,
+            "recall": 1.0,
+            "support": 3
+          }
+        },
+        "action_macro_f1": 0.4735642135642135,
+        "checkpoint_count": 103,
+        "correctness_gate_passed": false,
+        "deterministic_qa_exact_match": {
+          "denominator": 103,
+          "numerator": 29,
+          "value": 0.2815533980582524
+        },
+        "erroneous_mutations_among_commits": {
+          "denominator": 12,
+          "numerator": 1,
+          "value": 0.08333333333333333
+        },
+        "false_overwrite_rate": {
+          "denominator": 26,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "guard_rejections": 32,
+        "guard_valid_action_macro_f1": 0.5125541125541125,
+        "invalid_output_rate": {
+          "denominator": 88,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "invariant_violations": 0,
+        "mechanical_provenance_validity": {
+          "denominator": 44,
+          "numerator": 44,
+          "value": 1.0
+        },
+        "missing_state_rate": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "observation_count": 44,
+        "parse_invalid_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "parse_invalid_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "provenance_precision": {
+          "denominator": 103,
+          "numerator": 84,
+          "value": 0.8155339805825242
+        },
+        "provenance_recall": {
+          "denominator": 205,
+          "numerator": 84,
+          "value": 0.4097560975609756
+        },
+        "resources": {
+          "backend": "cpu",
+          "model_load_seconds": 2.165554917010013,
+          "model_runtime_evaluated": true,
+          "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+          "peak_process_memory_bytes": 3704209408,
+          "proposer_calls": 88,
+          "proposer_p50_seconds": 4.257969499536557,
+          "proposer_p95_seconds": 5.285819209006149,
+          "tokens": {
+            "input_tokens": 100098,
+            "output_tokens": 8496
+          },
+          "tracks": {
+            "closed_loop": {
+              "end_to_end": {
+                "p50_seconds": 4.142012812488247,
+                "p95_seconds": 4.663829957949929,
+                "total_seconds": 180.53575179399922
+              },
+              "model_only": {
+                "p50_seconds": 4.140652708505513,
+                "p95_seconds": 4.662102082977071,
+                "total_seconds": 180.47004920698237
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 44073,
+                "output_tokens": 4321
+              }
+            },
+            "gold_history": {
+              "end_to_end": {
+                "p50_seconds": 4.456838166457601,
+                "p95_seconds": 5.504754749999847,
+                "total_seconds": 197.763395540067
+              },
+              "model_only": {
+                "p50_seconds": 4.455234187480528,
+                "p95_seconds": 5.502566083043348,
+                "total_seconds": 197.6812635419774
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 56025,
+                "output_tokens": 4175
+              }
+            }
+          },
+          "wall_seconds": 378.53380395803833,
+          "warmup_policy": "none; first call retained"
+        },
+        "stale_active_rate": {
+          "denominator": 38,
+          "numerator": 15,
+          "value": 0.39473684210526316
+        },
+        "state_exact_match": {
+          "denominator": 103,
+          "numerator": 75,
+          "value": 0.7281553398058253
+        },
+        "state_exact_match_current": {
+          "denominator": 44,
+          "numerator": 32,
+          "value": 0.7272727272727273
+        },
+        "state_exact_match_historical_or_future": {
+          "denominator": 59,
+          "numerator": 43,
+          "value": 0.7288135593220338
+        },
+        "trajectory_count": 5,
+        "validator_rejection_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 32,
+          "value": 0.7272727272727273
+        },
+        "validator_rejection_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 30,
+          "value": 0.6818181818181818
+        }
+      },
+      "per_trajectory": {
+        "development-11-0000": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.6666666666666666,
+              "precision": 1.0,
+              "predicted": 2,
+              "recall": 0.5,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "update": {
+              "f1": 0.6666666666666666,
+              "precision": 0.5,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 2
+            }
+          },
+          "action_macro_f1": 0.4666666666666666,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 17,
+            "value": 0.7083333333333334
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 4,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.5333333333333333,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 31,
+            "numerator": 24,
+            "value": 0.7741935483870968
+          },
+          "stale_active_rate": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 15,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 5,
+            "value": 0.5555555555555556
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 4,
+            "value": 0.4444444444444444
+          }
+        },
+        "development-11-0001": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.33333333333333337,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.2,
+              "support": 5
+            },
+            "reinforce": {
+              "f1": 0.28571428571428575,
+              "precision": 0.3333333333333333,
+              "predicted": 3,
+              "recall": 0.25,
+              "support": 4
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 5,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.3238095238095238,
+          "deterministic_qa_exact_match": {
+            "denominator": 20,
+            "numerator": 2,
+            "value": 0.1
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.26666666666666666,
+          "invalid_output_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 72,
+            "numerator": 20,
+            "value": 0.2777777777777778
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 20,
+            "numerator": 20,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 10,
+            "numerator": 10,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 7,
+            "value": 0.7
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 8,
+            "value": 0.8
+          }
+        },
+        "development-11-0002": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.6666666666666666,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.5,
+              "support": 2
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.5,
+              "precision": 0.6666666666666666,
+              "predicted": 3,
+              "recall": 0.4,
+              "support": 5
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 3,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.4333333333333333,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 3,
+            "value": 0.125
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.3333333333333333,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 9,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 24,
+            "numerator": 14,
+            "value": 0.5833333333333334
+          },
+          "provenance_recall": {
+            "denominator": 33,
+            "numerator": 14,
+            "value": 0.42424242424242425
+          },
+          "stale_active_rate": {
+            "denominator": 13,
+            "numerator": 6,
+            "value": 0.46153846153846156
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 12,
+            "value": 0.5
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 3,
+            "value": 0.3333333333333333
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 9,
+            "value": 0.6
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 7,
+            "value": 0.7777777777777778
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 7,
+            "value": 0.7777777777777778
+          }
+        },
+        "development-11-0003": {
+          "action_classes": {
+            "create": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.4,
+              "precision": 0.5,
+              "predicted": 2,
+              "recall": 0.3333333333333333,
+              "support": 3
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 4,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.27999999999999997,
+          "deterministic_qa_exact_match": {
+            "denominator": 16,
+            "numerator": 4,
+            "value": 0.25
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 1,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 7,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.2,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 44,
+            "numerator": 16,
+            "value": 0.36363636363636365
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 16,
+            "numerator": 16,
+            "value": 1.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 7,
+            "value": 0.875
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 7,
+            "value": 0.875
+          }
+        },
+        "development-11-0004": {
+          "action_classes": {
+            "create": {
+              "f1": 0.6666666666666666,
+              "precision": 0.5,
+              "predicted": 2,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.8571428571428571,
+              "precision": 1.0,
+              "predicted": 3,
+              "recall": 0.75,
+              "support": 4
+            },
+            "update": {
+              "f1": 1.0,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 1.0,
+              "support": 1
+            }
+          },
+          "action_macro_f1": 0.5047619047619047,
+          "deterministic_qa_exact_match": {
+            "denominator": 19,
+            "numerator": 3,
+            "value": 0.15789473684210525
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 2,
+            "numerator": 1,
+            "value": 0.5
+          },
+          "false_overwrite_rate": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.48,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 8,
+            "value": 1.0
+          },
+          "missing_state_rate": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 19,
+            "numerator": 10,
+            "value": 0.5263157894736842
+          },
+          "provenance_recall": {
+            "denominator": 25,
+            "numerator": 10,
+            "value": 0.4
+          },
+          "stale_active_rate": {
+            "denominator": 10,
+            "numerator": 9,
+            "value": 0.9
+          },
+          "state_exact_match": {
+            "denominator": 19,
+            "numerator": 3,
+            "value": 0.15789473684210525
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 2,
+            "value": 0.25
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 11,
+            "numerator": 1,
+            "value": 0.09090909090909091
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 6,
+            "value": 0.75
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 4,
+            "value": 0.5
+          }
+        }
+      },
+      "status": "evaluated"
+    },
+    "sft-default": {
+      "diagnostic": false,
+      "manifest": {
+        "adapter_status": "trained_educational",
+        "dataset": {
+          "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+          "event_count": 44,
+          "files": {
+            "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+            "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+            "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+            "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+          },
+          "generator_version": "original-world-v1",
+          "license": "CC0-1.0",
+          "review_status": "not_human_reviewed",
+          "schema_version": 1,
+          "seed": 11,
+          "split": "development",
+          "trajectory_count": 5
+        },
+        "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+        "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+        "git_dirty": false,
+        "machine": "arm64",
+        "model": {
+          "adapter_files": {
+            "adapter/adapter_config.json": "9a5a074e0283ae63b32b1516180a8f55d3c36dafb4b123c579ae3114b5f65018",
+            "adapter/adapter_model.safetensors": "b9655fea14d531577321c6129aad46eb813b26533c20253dd42f2d51989e8e4c"
+          },
+          "adapter_path": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/adapter",
+          "adapter_status": "trained_educational",
+          "backend": "cpu",
+          "device": "cpu",
+          "dtype": "float32",
+          "generation": {
+            "decoding": "unconstrained",
+            "do_sample": false,
+            "enable_thinking": false,
+            "max_input_tokens": 2048,
+            "max_new_tokens": 256
+          },
+          "load_seconds": 2.4940173749928363,
+          "model_id": "Qwen/Qwen3-0.6B",
+          "packages": {
+            "huggingface-hub": "2.2.0",
+            "torch": "2.14.1",
+            "transformers": "5.20.1"
+          },
+          "real_model": true,
+          "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "tokenizer_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+          "training_gate": "educational_imitation_only"
+        },
+        "model_status": "evaluated",
+        "platform": "macOS-27.0.1-arm64-arm-64bit",
+        "python": "3.12.9",
+        "review_status": "not_human_reviewed",
+        "schema_version": 1,
+        "tracks": [
+          "gold_history",
+          "closed_loop"
+        ]
+      },
+      "metrics": {
+        "action_classes": {
+          "create": {
+            "f1": 0.28571428571428575,
+            "precision": 0.5,
+            "predicted": 2,
+            "recall": 0.2,
+            "support": 5
+          },
+          "no_op": {
+            "f1": 0.5909090909090908,
+            "precision": 0.4642857142857143,
+            "predicted": 28,
+            "recall": 0.8125,
+            "support": 16
+          },
+          "reinforce": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 1,
+            "recall": 0.0,
+            "support": 10
+          },
+          "supersede": {
+            "f1": 0.4285714285714285,
+            "precision": 0.75,
+            "predicted": 4,
+            "recall": 0.3,
+            "support": 10
+          },
+          "update": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "predicted": 0,
+            "recall": 0.0,
+            "support": 3
+          }
+        },
+        "action_macro_f1": 0.261038961038961,
+        "checkpoint_count": 103,
+        "correctness_gate_passed": false,
+        "deterministic_qa_exact_match": {
+          "denominator": 103,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "erroneous_mutations_among_commits": {
+          "denominator": 26,
+          "numerator": 1,
+          "value": 0.038461538461538464
+        },
+        "false_overwrite_rate": {
+          "denominator": 26,
+          "numerator": 2,
+          "value": 0.07692307692307693
+        },
+        "guard_rejections": 5,
+        "guard_valid_action_macro_f1": 0.27715617715617713,
+        "invalid_output_rate": {
+          "denominator": 88,
+          "numerator": 22,
+          "value": 0.25
+        },
+        "invariant_violations": 0,
+        "mechanical_provenance_validity": {
+          "denominator": 44,
+          "numerator": 31,
+          "value": 0.7045454545454546
+        },
+        "missing_state_rate": {
+          "denominator": 103,
+          "numerator": 87,
+          "value": 0.8446601941747572
+        },
+        "observation_count": 44,
+        "parse_invalid_rate_closed_loop": {
+          "denominator": 44,
+          "numerator": 13,
+          "value": 0.29545454545454547
+        },
+        "parse_invalid_rate_gold_history": {
+          "denominator": 44,
+          "numerator": 9,
+          "value": 0.20454545454545456
+        },
+        "provenance_precision": {
+          "denominator": 16,
+          "numerator": 14,
+          "value": 0.875
+        },
+        "provenance_recall": {
+          "denominator": 205,
+          "numerator": 14,
+          "value": 0.06829268292682927
+        },
+        "resources": {
+          "backend": "cpu",
+          "model_load_seconds": 2.4940173749928363,
+          "model_runtime_evaluated": true,
+          "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+          "peak_process_memory_bytes": 3704209408,
+          "proposer_calls": 88,
+          "proposer_p50_seconds": 3.789902812510263,
+          "proposer_p95_seconds": 6.114446332969237,
+          "tokens": {
+            "input_tokens": 88083,
+            "output_tokens": 6975
+          },
+          "tracks": {
+            "closed_loop": {
+              "end_to_end": {
+                "p50_seconds": 3.1300654370279517,
+                "p95_seconds": 6.059733250003774,
+                "total_seconds": 169.89036170596955
+              },
+              "model_only": {
+                "p50_seconds": 3.128720437991433,
+                "p95_seconds": 6.057414208014961,
+                "total_seconds": 169.82312841381645
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 32058,
+                "output_tokens": 3738
+              }
+            },
+            "gold_history": {
+              "end_to_end": {
+                "p50_seconds": 3.891249875014182,
+                "p95_seconds": 6.071869041013997,
+                "total_seconds": 185.82703741511796
+              },
+              "model_only": {
+                "p50_seconds": 3.8893600214796606,
+                "p95_seconds": 6.070756708038971,
+                "total_seconds": 185.73853812384186
+              },
+              "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+              "proposer_calls": 44,
+              "tokens": {
+                "input_tokens": 56025,
+                "output_tokens": 3237
+              }
+            }
+          },
+          "wall_seconds": 355.95976349996636,
+          "warmup_policy": "none; first call retained"
+        },
+        "stale_active_rate": {
+          "denominator": 38,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "state_exact_match": {
+          "denominator": 103,
+          "numerator": 14,
+          "value": 0.13592233009708737
+        },
+        "state_exact_match_current": {
+          "denominator": 44,
+          "numerator": 7,
+          "value": 0.1590909090909091
+        },
+        "state_exact_match_historical_or_future": {
+          "denominator": 59,
+          "numerator": 7,
+          "value": 0.11864406779661017
+        },
+        "trajectory_count": 5,
+        "validator_rejection_rate_closed_loop": {
+          "denominator": 31,
+          "numerator": 5,
+          "value": 0.16129032258064516
+        },
+        "validator_rejection_rate_gold_history": {
+          "denominator": 35,
+          "numerator": 3,
+          "value": 0.08571428571428572
+        }
+      },
+      "per_trajectory": {
+        "development-11-0000": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.6666666666666665,
+              "precision": 0.6,
+              "predicted": 5,
+              "recall": 0.75,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.6666666666666666,
+              "precision": 0.5,
+              "predicted": 2,
+              "recall": 1.0,
+              "support": 1
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 2
+            }
+          },
+          "action_macro_f1": 0.2666666666666666,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 1,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.3333333333333333,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 7,
+            "value": 0.3888888888888889
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 4,
+            "value": 0.4444444444444444
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 5,
+            "value": 0.5555555555555556
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 2,
+            "value": 0.2222222222222222
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 31,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 4,
+            "numerator": 3,
+            "value": 0.75
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 7,
+            "numerator": 1,
+            "value": 0.14285714285714285
+          }
+        },
+        "development-11-0001": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.7142857142857143,
+              "precision": 0.5555555555555556,
+              "predicted": 9,
+              "recall": 1.0,
+              "support": 5
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 4
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.14285714285714285,
+          "deterministic_qa_exact_match": {
+            "denominator": 20,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 9,
+            "numerator": 1,
+            "value": 0.1111111111111111
+          },
+          "guard_valid_action_macro_f1": 0.14285714285714285,
+          "invalid_output_rate": {
+            "denominator": 20,
+            "numerator": 3,
+            "value": 0.15
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 10,
+            "numerator": 8,
+            "value": 0.8
+          },
+          "missing_state_rate": {
+            "denominator": 20,
+            "numerator": 6,
+            "value": 0.3
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 10,
+            "numerator": 2,
+            "value": 0.2
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 10,
+            "numerator": 1,
+            "value": 0.1
+          },
+          "provenance_precision": {
+            "denominator": 14,
+            "numerator": 14,
+            "value": 1.0
+          },
+          "provenance_recall": {
+            "denominator": 72,
+            "numerator": 14,
+            "value": 0.19444444444444445
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 20,
+            "numerator": 14,
+            "value": 0.7
+          },
+          "state_exact_match_current": {
+            "denominator": 10,
+            "numerator": 7,
+            "value": 0.7
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 10,
+            "numerator": 7,
+            "value": 0.7
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0002": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.4444444444444445,
+              "precision": 0.2857142857142857,
+              "predicted": 7,
+              "recall": 1.0,
+              "support": 2
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.33333333333333337,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.2,
+              "support": 5
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.15555555555555559,
+          "deterministic_qa_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 6,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.15555555555555553,
+          "invalid_output_rate": {
+            "denominator": 18,
+            "numerator": 4,
+            "value": 0.2222222222222222
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 9,
+            "numerator": 6,
+            "value": 0.6666666666666666
+          },
+          "missing_state_rate": {
+            "denominator": 24,
+            "numerator": 24,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 9,
+            "numerator": 3,
+            "value": 0.3333333333333333
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 9,
+            "numerator": 1,
+            "value": 0.1111111111111111
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 33,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 13,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 9,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 15,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 6,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0003": {
+          "action_classes": {
+            "create": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.5714285714285715,
+              "precision": 0.6666666666666666,
+              "predicted": 3,
+              "recall": 0.5,
+              "support": 4
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 3
+            },
+            "supersede": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 0
+            }
+          },
+          "action_macro_f1": 0.1142857142857143,
+          "deterministic_qa_exact_match": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 6,
+            "numerator": 1,
+            "value": 0.16666666666666666
+          },
+          "false_overwrite_rate": {
+            "denominator": 7,
+            "numerator": 1,
+            "value": 0.14285714285714285
+          },
+          "guard_valid_action_macro_f1": 0.11428571428571428,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 6,
+            "value": 0.375
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 7,
+            "value": 0.875
+          },
+          "missing_state_rate": {
+            "denominator": 16,
+            "numerator": 14,
+            "value": 0.875
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 1,
+            "value": 0.125
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 5,
+            "value": 0.625
+          },
+          "provenance_precision": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_recall": {
+            "denominator": 44,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "state_exact_match": {
+            "denominator": 16,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 7,
+            "numerator": 1,
+            "value": 0.14285714285714285
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 3,
+            "numerator": 0,
+            "value": 0.0
+          }
+        },
+        "development-11-0004": {
+          "action_classes": {
+            "create": {
+              "f1": 0.6666666666666666,
+              "precision": 0.5,
+              "predicted": 2,
+              "recall": 1.0,
+              "support": 1
+            },
+            "no_op": {
+              "f1": 0.4,
+              "precision": 0.25,
+              "predicted": 4,
+              "recall": 1.0,
+              "support": 1
+            },
+            "reinforce": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 1,
+              "recall": 0.0,
+              "support": 1
+            },
+            "supersede": {
+              "f1": 0.4,
+              "precision": 1.0,
+              "predicted": 1,
+              "recall": 0.25,
+              "support": 4
+            },
+            "update": {
+              "f1": 0.0,
+              "precision": 0.0,
+              "predicted": 0,
+              "recall": 0.0,
+              "support": 1
+            }
+          },
+          "action_macro_f1": 0.29333333333333333,
+          "deterministic_qa_exact_match": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "erroneous_mutations_among_commits": {
+            "denominator": 5,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "false_overwrite_rate": {
+            "denominator": 2,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "guard_valid_action_macro_f1": 0.36,
+          "invalid_output_rate": {
+            "denominator": 16,
+            "numerator": 2,
+            "value": 0.125
+          },
+          "mechanical_provenance_validity": {
+            "denominator": 8,
+            "numerator": 6,
+            "value": 0.75
+          },
+          "missing_state_rate": {
+            "denominator": 19,
+            "numerator": 19,
+            "value": 1.0
+          },
+          "parse_invalid_rate_closed_loop": {
+            "denominator": 8,
+            "numerator": 2,
+            "value": 0.25
+          },
+          "parse_invalid_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "provenance_precision": {
+            "denominator": 0,
+            "numerator": 0,
+            "value": null
+          },
+          "provenance_recall": {
+            "denominator": 25,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "stale_active_rate": {
+            "denominator": 10,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match": {
+            "denominator": 19,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_current": {
+            "denominator": 8,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "state_exact_match_historical_or_future": {
+            "denominator": 11,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "validator_rejection_rate_closed_loop": {
+            "denominator": 6,
+            "numerator": 1,
+            "value": 0.16666666666666666
+          },
+          "validator_rejection_rate_gold_history": {
+            "denominator": 8,
+            "numerator": 2,
+            "value": 0.25
+          }
+        }
+      },
+      "status": "evaluated"
+    }
+  },
+  "contrasts": {
+    "latest-arrival": {
+      "deterministic_qa_exact_match": {
+        "difference": 0.883495145631068,
+        "interval_95": [
+          0.6756756756756757,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "erroneous_mutations_among_commits": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "false_overwrite_rate": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "invalid_output_rate": {
+        "difference": -0.9431818181818182,
+        "interval_95": [
+          -1.0,
+          -0.8804347826086957
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "mechanical_provenance_validity": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "missing_state_rate": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_closed_loop": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_gold_history": {
+        "difference": -0.8863636363636364,
+        "interval_95": [
+          -1.0,
+          -0.7608695652173914
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "provenance_precision": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "provenance_recall": {
+        "difference": 0.9414634146341463,
+        "interval_95": [
+          0.788235294117647,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "stale_active_rate": {
+        "difference": 0.3157894736842105,
+        "interval_95": [
+          0.0,
+          0.8
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 19,
+        "valid_resamples": 1981
+      },
+      "state_exact_match": {
+        "difference": 0.883495145631068,
+        "interval_95": [
+          0.6756756756756757,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_current": {
+        "difference": 0.8863636363636364,
+        "interval_95": [
+          0.6590909090909091,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_historical_or_future": {
+        "difference": 0.8813559322033898,
+        "interval_95": [
+          0.676923076923077,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "validator_rejection_rate_closed_loop": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "validator_rejection_rate_gold_history": {
+        "difference": -0.7272727272727273,
+        "interval_95": [
+          -0.8478260869565217,
+          -0.5952380952380952
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 153,
+        "valid_resamples": 1847
+      }
+    },
+    "rule": {
+      "deterministic_qa_exact_match": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "erroneous_mutations_among_commits": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "false_overwrite_rate": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "invalid_output_rate": {
+        "difference": -0.9431818181818182,
+        "interval_95": [
+          -1.0,
+          -0.8804347826086957
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "mechanical_provenance_validity": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "missing_state_rate": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_closed_loop": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_gold_history": {
+        "difference": -0.8863636363636364,
+        "interval_95": [
+          -1.0,
+          -0.7608695652173914
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "provenance_precision": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "provenance_recall": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "stale_active_rate": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 19,
+        "valid_resamples": 1981
+      },
+      "state_exact_match": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_current": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_historical_or_future": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "validator_rejection_rate_closed_loop": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "validator_rejection_rate_gold_history": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 153,
+        "valid_resamples": 1847
+      }
+    },
+    "sft-adjusted": {
+      "deterministic_qa_exact_match": {
+        "difference": 0.2815533980582524,
+        "interval_95": [
+          0.12149532710280374,
+          0.5178571428571429
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "erroneous_mutations_among_commits": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "false_overwrite_rate": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "invalid_output_rate": {
+        "difference": -0.9431818181818182,
+        "interval_95": [
+          -1.0,
+          -0.8804347826086957
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "mechanical_provenance_validity": {
+        "difference": 1.0,
+        "interval_95": [
+          1.0,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "missing_state_rate": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_closed_loop": {
+        "difference": -1.0,
+        "interval_95": [
+          -1.0,
+          -1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_gold_history": {
+        "difference": -0.8863636363636364,
+        "interval_95": [
+          -1.0,
+          -0.7608695652173914
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "provenance_precision": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "provenance_recall": {
+        "difference": 0.4097560975609756,
+        "interval_95": [
+          0.30656934306569344,
+          0.6
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "stale_active_rate": {
+        "difference": 0.39473684210526316,
+        "interval_95": [
+          0.0,
+          0.9
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 19,
+        "valid_resamples": 1981
+      },
+      "state_exact_match": {
+        "difference": 0.7281553398058253,
+        "interval_95": [
+          0.40594059405940597,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_current": {
+        "difference": 0.7272727272727273,
+        "interval_95": [
+          0.4146341463414634,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_historical_or_future": {
+        "difference": 0.7288135593220338,
+        "interval_95": [
+          0.4117647058823529,
+          1.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "validator_rejection_rate_closed_loop": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "validator_rejection_rate_gold_history": {
+        "difference": -0.31818181818181823,
+        "interval_95": [
+          -0.4666666666666667,
+          -0.18181818181818177
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 153,
+        "valid_resamples": 1847
+      }
+    },
+    "sft-default": {
+      "deterministic_qa_exact_match": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "erroneous_mutations_among_commits": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "false_overwrite_rate": {
+        "difference": 0.07692307692307693,
+        "interval_95": [
+          0.0,
+          0.11764705882352941
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "invalid_output_rate": {
+        "difference": -0.6931818181818182,
+        "interval_95": [
+          -0.8222222222222222,
+          -0.5581395348837208
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "mechanical_provenance_validity": {
+        "difference": 0.7045454545454546,
+        "interval_95": [
+          0.5681818181818182,
+          0.8181818181818182
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "missing_state_rate": {
+        "difference": -0.15533980582524276,
+        "interval_95": [
+          -0.43999999999999995,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_closed_loop": {
+        "difference": -0.7045454545454546,
+        "interval_95": [
+          -0.8181818181818181,
+          -0.5681818181818181
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "parse_invalid_rate_gold_history": {
+        "difference": -0.6818181818181818,
+        "interval_95": [
+          -0.888888888888889,
+          -0.4772727272727273
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "provenance_precision": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "provenance_recall": {
+        "difference": 0.06829268292682927,
+        "interval_95": [
+          0.0,
+          0.15328467153284672
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "stale_active_rate": {
+        "difference": 0.0,
+        "interval_95": [
+          0.0,
+          0.0
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 19,
+        "valid_resamples": 1981
+      },
+      "state_exact_match": {
+        "difference": 0.13592233009708737,
+        "interval_95": [
+          0.0,
+          0.42
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_current": {
+        "difference": 0.1590909090909091,
+        "interval_95": [
+          0.0,
+          0.44680851063829785
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "state_exact_match_historical_or_future": {
+        "difference": 0.11864406779661017,
+        "interval_95": [
+          0.0,
+          0.39622641509433965
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 0,
+        "valid_resamples": 2000
+      },
+      "validator_rejection_rate_closed_loop": {
+        "difference": null,
+        "interval_95": [
+          null,
+          null
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 2000,
+        "valid_resamples": 0
+      },
+      "validator_rejection_rate_gold_history": {
+        "difference": -0.9142857142857143,
+        "interval_95": [
+          -1.0,
+          -0.8181818181818181
+        ],
+        "method": "paired_trajectory_pooled_rate_percentile",
+        "resamples": 2000,
+        "seed": 11,
+        "trajectory_count": 5,
+        "undefined_resamples": 153,
+        "valid_resamples": 1847
+      }
+    }
+  },
+  "final_test_accessed": false,
+  "inference_seed": 11,
+  "inference_seed_count": 1,
+  "limitations": [
+    "exploratory synthetic annotated development data",
+    "two development probes previously inspected",
+    "neither educational adapter passed twenty-target overfit",
+    "no human label review",
+    "no final generalization or research-superiority claim",
+    "intervals conditional on this tiny development sample",
+    "equal-token/no-correction research controls and guard-removal sandbox deferred; unconstrained decoding only"
+  ],
+  "purpose": "exploratory_development",
+  "reference": "base",
+  "registration_sha256": "c73a3bf9d7204fa509af91f6242944646847850cb2ef1e01471d87befb176efc",
+  "schema_version": 1,
+  "seed_variation": null,
+  "training_seed_count": 1,
+  "training_seeds": [
+    11
+  ]
+}

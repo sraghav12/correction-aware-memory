@@ -1,0 +1,29 @@
+{
+  "data": {
+    "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+    "seed": 11,
+    "split": "development",
+    "trajectories": 5
+  },
+  "evaluation": {
+    "bootstrap_count": 2000,
+    "qa_mode": "deterministic",
+    "seeds": [
+      11
+    ]
+  },
+  "generation": {
+    "decoding": "unconstrained",
+    "do_sample": false,
+    "enable_thinking": false,
+    "max_input_tokens": 2048,
+    "max_new_tokens": 256
+  },
+  "output_dir": "runs/development-comparison/latest-arrival",
+  "proposer": {
+    "kind": "latest_arrival"
+  },
+  "training": {
+    "gate": "training_not_justified"
+  }
+}

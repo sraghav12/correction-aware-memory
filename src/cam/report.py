@@ -19,7 +19,7 @@ def write_comparison_report(comparison: dict, out_dir: Path) -> Path:
                "false_overwrite_rate", "erroneous_mutations_among_commits", "state_exact_match", "deterministic_qa_exact_match")
     lines = ["# Exploratory development comparison", "", "Reference: " + comparison["reference"] + ". Differences below are arm minus reference.",
              "One inference seed; training seed variation is not estimable. Final test remains unopened.", "",
-             "| Arm | Status | " + " | ".join(metrics) + " |", "|---|---|" + "---|" * len(metrics)]
+             "| Arm | Status | " + " | ".join(metric.replace("_", " ") for metric in metrics) + " |", "|---|---|" + "---|" * len(metrics)]
     html_rows = []
     for name, arm in comparison["arms"].items():
         values = []
@@ -43,10 +43,10 @@ def write_comparison_report(comparison: dict, out_dir: Path) -> Path:
     lines += ["", "## Limitations", "", *["- " + value for value in comparison["limitations"]], ""]
     (out_dir / "comparison.md").write_text("\n".join(lines))
     limits = "".join(f"<li>{escape(v)}</li>" for v in comparison["limitations"])
-    columns = "".join(f"<th>{escape(v)}</th>" for v in ("Arm", "Status", *metrics))
+    columns = "".join(f"<th>{escape(v.replace('_', ' '))}</th>" for v in ("Arm", "Status", *metrics))
     path = out_dir / "index.html"
     path.write_text(f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Correction-aware memory · development comparison</title><style>body{{font:15px/1.6 system-ui,sans-serif;margin:0;background:#f4f6f2;color:#162b36}}main{{max-width:1500px;margin:auto;padding:40px 24px}}h1{{font-size:36px;line-height:1.15}}section{{overflow:auto;background:white;border:1px solid #d7e2df;padding:20px;margin:20px 0}}table{{border-collapse:collapse;white-space:nowrap;width:100%}}td,th{{padding:12px;text-align:left;border-bottom:1px solid #d7e2df}}.notice{{padding:16px;border-left:4px solid #b27c2d;background:#fff8e9}}a{{color:#076b60}}</style>
+    <title>Correction-aware memory · development comparison</title><style>body{{font:15px/1.6 system-ui,sans-serif;margin:0;background:#f4f6f2;color:#162b36}}main{{max-width:1500px;margin:auto;padding:40px 24px}}h1{{font-size:36px;line-height:1.15}}section{{overflow:auto;background:white;border:1px solid #d7e2df;padding:20px;margin:20px 0}}table{{border-collapse:collapse;white-space:nowrap;width:100%}}td,th{{padding:12px;text-align:left;border-bottom:1px solid #d7e2df}}th{{white-space:normal}}.notice{{padding:16px;border-left:4px solid #b27c2d;background:#fff8e9}}a{{color:#076b60}}</style>
     <main><h1>Matched development comparison</h1><p class="notice">Exploratory synthetic annotated data. Zero human label reviewers. Neither adapter passed the twenty-target overfit check. Final test unopened.</p>
     <p>Reference: <strong>{escape(comparison['reference'])}</strong>. One inference seed; {comparison['training_seed_count']} distinct training seed(s). Intervals quantify trajectory resampling, not seed variation or external generalization.</p>
     <section><h2>Measured outcomes</h2><table><thead><tr>{columns}</tr></thead><tbody>{''.join(html_rows)}</tbody></table></section>

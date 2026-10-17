@@ -2,7 +2,7 @@
 
 A delayed report should not overwrite a newer fact. An authorized correction should revise an assertion while preserving what was known before the correction arrived.
 
-This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: deterministic baseline plus real, saved/reloaded educational LoRA adapters. The bounded adjustment matched 13/20 training targets, below the 20/20 overfit goal. Human label review and matched held-out comparisons remain unfinished; no learned-memory advantage is claimed.**
+This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: deterministic baseline plus real, saved/reloaded educational LoRA adapters. The bounded adjustment matched 13/20 training targets, below the 20/20 overfit goal. A matched five-trajectory development comparison is now recorded; human review and the full final study remain unfinished. No learned-memory advantage is claimed.**
 
 ## See the behavior first
 
@@ -70,7 +70,7 @@ flowchart LR
 | Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
 | Prompted Qwen3 runtime | Real CPU smoke complete; 0/10 schema-valid proposals; [raw evidence](examples/qwen-smoke-cpu/README.md) |
 | LoRA training and saved adapter | Two bounded educational runs saved/reloaded; full 20/20 overfit goal unmet |
-| Matched learned-model comparisons and uncertainty | Deferred; no model effect estimated |
+| Matched model comparisons and uncertainty | Five development trajectories, all five arms and paired intervals recorded; full final study deferred |
 
 The research-training gate is **training_not_justified**: supplied annotations let transparent rules solve this unaudited pilot. The original brief permits a tiny `educational_imitation_only` control, which has now run with a saved adapter and exact reload proof. Training is capped at twenty examples and three epochs; research training remains disabled. A learned-memory claim still needs a separately justified task and independent label review. Missing optional runtimes return exit **3**; rule results are never substituted.
 
@@ -88,9 +88,21 @@ The smoke records ten pilot/development requests, raw responses and failures, to
 
 ## Educational adapter proof
 
-Following the [original brief alignment check](docs/drift-audit.md), Task 6 now includes actual completion-only LoRA training with frozen-base hashes, preserved loss/output records and exact fresh-base reload tokens. The original default produced 2/20 exact training targets; the one allowed accumulation adjustment produced 13/20, with 20/20 schema-valid outputs and 13/20 guard-valid expected actions. Neither achieved full overfit. These are training diagnostics, with no matched prompted-base or held-out quality result.
+Following the [original brief alignment check](docs/drift-audit.md), Task 6 now includes actual completion-only LoRA training with frozen-base hashes, preserved loss/output records and exact fresh-base reload tokens. The original default produced 2/20 exact training targets; the one allowed accumulation adjustment produced 13/20, with 20/20 schema-valid outputs and 13/20 guard-valid expected actions. Neither achieved full overfit. These figures describe training-target reproduction; the separate matched development results appear below.
 
-[Default checkpoint and raw evidence](examples/educational-sft/README.md) · [Single adjustment and raw evidence](examples/educational-sft-overfit/README.md) · [Model card and reproduction](docs/model-card.md). Human reviewers remain zero, and the full comparison/statistics phase is pending.
+[Default checkpoint and raw evidence](examples/educational-sft/README.md) · [Single adjustment and raw evidence](examples/educational-sft-overfit/README.md) · [Model card and reproduction](docs/model-card.md). Human reviewers remain zero, and the full final study is pending. A later matched development comparison is linked below.
+
+## Matched development evidence
+
+| Arm | Raw action F1 | Guard-valid F1 | State exact | Stale | Missing |
+|---|---:|---:|---:|---:|---:|
+| base | 0.050 | 0.000 | 0/103 | 0/38 | 103/103 |
+| latest-arrival | 0.662 | 0.723 | 91/103 | 12/38 | 0/103 |
+| rule | 1.000 | 1.000 | 103/103 | 0/38 | 0/103 |
+| sft-adjusted | 0.474 | 0.513 | 75/103 | 15/38 | 0/103 |
+| sft-default | 0.261 | 0.277 | 14/103 | 0/38 | 87/103 |
+
+All five arms use the same 44 observations in two tracks; source `adede56`. Five trajectories and one training seed support exploratory diagnostics only. The latest-arrival arm is intentionally weak and retains all guards. [Full raw evidence, paired intervals and replay](examples/development-comparison/README.md) · [Registered settings](docs/development-comparison.md). Final test unopened; no additional training followed the comparison.
 
 CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional experiment, `4` failed correctness gate. All generated artifacts stay inside the selected output directory.
 

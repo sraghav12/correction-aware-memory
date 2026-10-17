@@ -1,0 +1,337 @@
+{
+  "base": {
+    "closed_loop": {
+      "guard_rejection_codes": {},
+      "parse_failure_codes": {
+        "MODEL_OUTPUT": 44
+      }
+    },
+    "gold_history": {
+      "guard_rejection_codes": {
+        "DATE_MISMATCH": 2,
+        "EVIDENCE_MISMATCH": 5,
+        "UNKNOWN_TARGET": 5,
+        "UNTRUSTED_SOURCE": 2
+      },
+      "parse_failure_codes": {
+        "MODEL_OUTPUT": 39
+      }
+    },
+    "gold_history_confusions": [
+      {
+        "count": 5,
+        "expected": "create",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 14,
+        "expected": "no_op",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 2,
+        "expected": "no_op",
+        "raw_predicted": "update"
+      },
+      {
+        "count": 10,
+        "expected": "reinforce",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 8,
+        "expected": "supersede",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 2,
+        "expected": "supersede",
+        "raw_predicted": "update"
+      },
+      {
+        "count": 2,
+        "expected": "update",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 1,
+        "expected": "update",
+        "raw_predicted": "update"
+      }
+    ]
+  },
+  "latest-arrival": {
+    "closed_loop": {
+      "guard_rejection_codes": {
+        "INVALID_SUPERSEDE": 11
+      },
+      "parse_failure_codes": {}
+    },
+    "gold_history": {
+      "guard_rejection_codes": {
+        "INVALID_SUPERSEDE": 12
+      },
+      "parse_failure_codes": {}
+    },
+    "gold_history_confusions": [
+      {
+        "count": 5,
+        "expected": "create",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 8,
+        "expected": "no_op",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 8,
+        "expected": "no_op",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 10,
+        "expected": "reinforce",
+        "raw_predicted": "reinforce"
+      },
+      {
+        "count": 10,
+        "expected": "supersede",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 3,
+        "expected": "update",
+        "raw_predicted": "supersede"
+      }
+    ]
+  },
+  "rule": {
+    "closed_loop": {
+      "guard_rejection_codes": {},
+      "parse_failure_codes": {}
+    },
+    "gold_history": {
+      "guard_rejection_codes": {},
+      "parse_failure_codes": {}
+    },
+    "gold_history_confusions": [
+      {
+        "count": 5,
+        "expected": "create",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 16,
+        "expected": "no_op",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 10,
+        "expected": "reinforce",
+        "raw_predicted": "reinforce"
+      },
+      {
+        "count": 10,
+        "expected": "supersede",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 3,
+        "expected": "update",
+        "raw_predicted": "update"
+      }
+    ]
+  },
+  "sft-adjusted": {
+    "closed_loop": {
+      "guard_rejection_codes": {
+        "DATE_MISMATCH": 4,
+        "INVALID_CREATE": 1,
+        "INVALID_REINFORCE": 6,
+        "INVALID_SUPERSEDE": 9,
+        "RETRACTION_REASON_REQUIRED": 3,
+        "UNAUTHORIZED_CORRECTION": 12,
+        "UNKNOWN_TARGET": 2,
+        "UNTRUSTED_SOURCE": 3
+      },
+      "parse_failure_codes": {}
+    },
+    "gold_history": {
+      "guard_rejection_codes": {
+        "DATE_MISMATCH": 5,
+        "INVALID_CREATE": 1,
+        "INVALID_REINFORCE": 6,
+        "INVALID_SUPERSEDE": 6,
+        "RETRACTION_REASON_REQUIRED": 2,
+        "UNAUTHORIZED_CORRECTION": 14,
+        "UNTRUSTED_SOURCE": 3,
+        "VALUE_MISMATCH": 1
+      },
+      "parse_failure_codes": {}
+    },
+    "gold_history_confusions": [
+      {
+        "count": 5,
+        "expected": "create",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 4,
+        "expected": "no_op",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 5,
+        "expected": "no_op",
+        "raw_predicted": "reinforce"
+      },
+      {
+        "count": 3,
+        "expected": "no_op",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 4,
+        "expected": "no_op",
+        "raw_predicted": "update"
+      },
+      {
+        "count": 1,
+        "expected": "reinforce",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 2,
+        "expected": "reinforce",
+        "raw_predicted": "reinforce"
+      },
+      {
+        "count": 7,
+        "expected": "reinforce",
+        "raw_predicted": "update"
+      },
+      {
+        "count": 1,
+        "expected": "supersede",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 1,
+        "expected": "supersede",
+        "raw_predicted": "reinforce"
+      },
+      {
+        "count": 5,
+        "expected": "supersede",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 3,
+        "expected": "supersede",
+        "raw_predicted": "update"
+      },
+      {
+        "count": 3,
+        "expected": "update",
+        "raw_predicted": "update"
+      }
+    ]
+  },
+  "sft-default": {
+    "closed_loop": {
+      "guard_rejection_codes": {
+        "DATE_MISMATCH": 2,
+        "UNKNOWN_TARGET": 4,
+        "UNTRUSTED_SOURCE": 2
+      },
+      "parse_failure_codes": {
+        "MODEL_OUTPUT": 13
+      }
+    },
+    "gold_history": {
+      "guard_rejection_codes": {
+        "DATE_MISMATCH": 1,
+        "INVALID_CREATE": 1,
+        "INVALID_SUPERSEDE": 1,
+        "UNKNOWN_TARGET": 1,
+        "UNTRUSTED_SOURCE": 1
+      },
+      "parse_failure_codes": {
+        "MODEL_OUTPUT": 9
+      }
+    },
+    "gold_history_confusions": [
+      {
+        "count": 1,
+        "expected": "create",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 3,
+        "expected": "create",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 1,
+        "expected": "create",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 2,
+        "expected": "no_op",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 13,
+        "expected": "no_op",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 1,
+        "expected": "no_op",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 3,
+        "expected": "reinforce",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 7,
+        "expected": "reinforce",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 1,
+        "expected": "supersede",
+        "raw_predicted": "create"
+      },
+      {
+        "count": 6,
+        "expected": "supersede",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 3,
+        "expected": "supersede",
+        "raw_predicted": "supersede"
+      },
+      {
+        "count": 1,
+        "expected": "update",
+        "raw_predicted": "invalid"
+      },
+      {
+        "count": 1,
+        "expected": "update",
+        "raw_predicted": "no_op"
+      },
+      {
+        "count": 1,
+        "expected": "update",
+        "raw_predicted": "reinforce"
+      }
+    ]
+  }
+}

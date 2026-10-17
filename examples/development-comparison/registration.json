@@ -1,0 +1,214 @@
+{
+  "arms": {
+    "base": "base.json",
+    "latest-arrival": "latest-arrival.json",
+    "rule": "rule.json",
+    "sft-adjusted": "sft-adjusted.json",
+    "sft-default": "sft-default.json"
+  },
+  "bootstrap_count": 2000,
+  "constraints": [
+    "missing_state_rate",
+    "false_overwrite_rate"
+  ],
+  "dataset": {
+    "dataset_id": "3bbd47549bba3ce17bfc8fa741ba3fc906daa9de065d69529ab879bfd6346996",
+    "event_count": 44,
+    "files": {
+      "checkpoints.jsonl": "4de54658484384bccc10e9f35473fa3439f78a681f8fcbf149b7472e3e18399b",
+      "gold.jsonl": "e9597a1682c75ad7208d9bb551517f6d0a18a2bf040c26d6ea7b133a293d1e2e",
+      "groups.jsonl": "b7c757ec4842644e8a42d952900f6140615b74c2216a7c635bd6ff3c7d8503e6",
+      "observations.jsonl": "fa29e9b6e5671babe12f0819e31a6269bd61a3a0647c6a1af7020f618c1cdd13"
+    },
+    "generator_version": "original-world-v1",
+    "license": "CC0-1.0",
+    "review_status": "not_human_reviewed",
+    "schema_version": 1,
+    "seed": 11,
+    "split": "development",
+    "trajectory_count": 5
+  },
+  "dependency_lock_sha256": "c0539a036b3df40e808428f56a716f1f5b1f9d83137fab2d2fe82ff684778dff",
+  "final_test_accessed": false,
+  "git_commit": "adede561089be63b0cab064d46440174a28d6505",
+  "git_dirty": false,
+  "limitations": [
+    "exploratory synthetic annotated development data",
+    "two development probes previously inspected",
+    "neither educational adapter passed twenty-target overfit",
+    "no human label review",
+    "no final generalization or research-superiority claim",
+    "intervals conditional on this tiny development sample",
+    "equal-token/no-correction research controls and guard-removal sandbox deferred; unconstrained decoding only"
+  ],
+  "machine": "arm64",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "primary": "pooled stale_active_rate arm-minus-reference; negative favors arm only with missing/false-overwrite non-regression",
+  "prompt_system_sha256": "e3639a520b770cdd4fbdd0000cc02079897a7f62d9bdc68abf3cdd6a32c8fcbc",
+  "purpose": "exploratory_development",
+  "python": "3.12.9",
+  "reference": "base",
+  "resolved_arms": {
+    "base": {
+      "data": {
+        "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+        "seed": 11,
+        "split": "development",
+        "trajectories": 5
+      },
+      "evaluation": {
+        "bootstrap_count": 2000,
+        "qa_mode": "deterministic",
+        "seeds": [
+          11
+        ]
+      },
+      "generation": {
+        "decoding": "unconstrained",
+        "do_sample": false,
+        "enable_thinking": false,
+        "max_input_tokens": 2048,
+        "max_new_tokens": 256
+      },
+      "output_dir": "runs/development-comparison/base",
+      "proposer": {
+        "device": "cpu",
+        "kind": "qwen",
+        "model_id": "Qwen/Qwen3-0.6B",
+        "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+      },
+      "training": {
+        "gate": "training_not_justified"
+      }
+    },
+    "latest-arrival": {
+      "data": {
+        "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+        "seed": 11,
+        "split": "development",
+        "trajectories": 5
+      },
+      "evaluation": {
+        "bootstrap_count": 2000,
+        "qa_mode": "deterministic",
+        "seeds": [
+          11
+        ]
+      },
+      "generation": {
+        "decoding": "unconstrained",
+        "do_sample": false,
+        "enable_thinking": false,
+        "max_input_tokens": 2048,
+        "max_new_tokens": 256
+      },
+      "output_dir": "runs/development-comparison/latest-arrival",
+      "proposer": {
+        "kind": "latest_arrival"
+      },
+      "training": {
+        "gate": "training_not_justified"
+      }
+    },
+    "rule": {
+      "data": {
+        "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+        "seed": 11,
+        "split": "development",
+        "trajectories": 5
+      },
+      "evaluation": {
+        "bootstrap_count": 2000,
+        "qa_mode": "deterministic",
+        "seeds": [
+          11
+        ]
+      },
+      "generation": {
+        "decoding": "unconstrained",
+        "do_sample": false,
+        "enable_thinking": false,
+        "max_input_tokens": 2048,
+        "max_new_tokens": 256
+      },
+      "output_dir": "runs/development-comparison/rule",
+      "proposer": {
+        "kind": "rule"
+      },
+      "training": {
+        "gate": "training_not_justified"
+      }
+    },
+    "sft-adjusted": {
+      "data": {
+        "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+        "seed": 11,
+        "split": "development",
+        "trajectories": 5
+      },
+      "evaluation": {
+        "bootstrap_count": 2000,
+        "qa_mode": "deterministic",
+        "seeds": [
+          11
+        ]
+      },
+      "generation": {
+        "decoding": "unconstrained",
+        "do_sample": false,
+        "enable_thinking": false,
+        "max_input_tokens": 2048,
+        "max_new_tokens": 256
+      },
+      "output_dir": "runs/development-comparison/sft-adjusted",
+      "proposer": {
+        "adapter_path": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft-overfit/adapter",
+        "device": "cpu",
+        "kind": "qwen",
+        "model_id": "Qwen/Qwen3-0.6B",
+        "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+      },
+      "training": {
+        "gate": "training_not_justified"
+      }
+    },
+    "sft-default": {
+      "data": {
+        "manifest": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/dataset/development/manifest.json",
+        "seed": 11,
+        "split": "development",
+        "trajectories": 5
+      },
+      "evaluation": {
+        "bootstrap_count": 2000,
+        "qa_mode": "deterministic",
+        "seeds": [
+          11
+        ]
+      },
+      "generation": {
+        "decoding": "unconstrained",
+        "do_sample": false,
+        "enable_thinking": false,
+        "max_input_tokens": 2048,
+        "max_new_tokens": 256
+      },
+      "output_dir": "runs/development-comparison/sft-default",
+      "proposer": {
+        "adapter_path": "/Users/sragh/Downloads/Projects/correction-aware-memory/examples/educational-sft/adapter",
+        "device": "cpu",
+        "kind": "qwen",
+        "model_id": "Qwen/Qwen3-0.6B",
+        "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+      },
+      "training": {
+        "gate": "training_not_justified"
+      }
+    }
+  },
+  "reviewers": 0,
+  "schema_version": 1,
+  "seed": 11,
+  "training_seed_variation": "not estimable from one training seed",
+  "warmup": "none; first calls retained"
+}

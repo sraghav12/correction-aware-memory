@@ -42,3 +42,15 @@ HF_HUB_OFFLINE=1 uv run --locked --extra ml python -m cam.cli train --config con
 Training requires the already cached complete pinned base snapshot. No automatic download or paid fallback is used. Optional dependencies remain outside the offline core. The implementation uses [PEFT LoRA](https://huggingface.co/docs/peft/en/package_reference/lora) with a small explicit PyTorch loop so masking, sequence bounds and accumulation behavior are visible. Research development selection, frozen full comparison splits, manual audits and trajectory uncertainty remain separate milestones.
 
 For direct replay from the committed dataset/corpus package, use either artifact's `replay-config.json` and a fresh `--out`. For inference, keep `manifest.json` beside the `adapter/` directory; the public loader verifies base/tokenizer pins, successful training/reload proof and both checkpoint file hashes. Actual production sources were clean `06c159e` and `4e012c1`, respectively. After the default run, saving was made explicitly embedding-free to prevent PEFT's automatic remote config check; this changed save-time network behavior, not training math or the recorded default adapter. Both actual runs used `HF_HUB_OFFLINE=1`.
+
+## Exploratory matched development evidence
+
+| Arm | Raw action F1 | Guard-valid F1 | State exact | Stale | Missing |
+|---|---:|---:|---:|---:|---:|
+| base | 0.050 | 0.000 | 0/103 | 0/38 | 103/103 |
+| latest-arrival | 0.662 | 0.723 | 91/103 | 12/38 | 0/103 |
+| rule | 1.000 | 1.000 | 103/103 | 0/38 | 0/103 |
+| sft-adjusted | 0.474 | 0.513 | 75/103 | 15/38 | 0/103 |
+| sft-default | 0.261 | 0.277 | 14/103 | 0/38 | 87/103 |
+
+[Full results and paired intervals](../examples/development-comparison/README.md) use five trajectories,44 observations,88 calls per arm and one training seed. This separates training-target reproduction from the adapters’ behavior on unseen synthetic development trajectories; two development reload probes had already been inspected. No additional tuning or full-study/generalization claim followed.

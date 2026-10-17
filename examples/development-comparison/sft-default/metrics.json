@@ -1,0 +1,181 @@
+{
+  "action_classes": {
+    "create": {
+      "f1": 0.28571428571428575,
+      "precision": 0.5,
+      "predicted": 2,
+      "recall": 0.2,
+      "support": 5
+    },
+    "no_op": {
+      "f1": 0.5909090909090908,
+      "precision": 0.4642857142857143,
+      "predicted": 28,
+      "recall": 0.8125,
+      "support": 16
+    },
+    "reinforce": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 1,
+      "recall": 0.0,
+      "support": 10
+    },
+    "supersede": {
+      "f1": 0.4285714285714285,
+      "precision": 0.75,
+      "predicted": 4,
+      "recall": 0.3,
+      "support": 10
+    },
+    "update": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 3
+    }
+  },
+  "action_macro_f1": 0.261038961038961,
+  "checkpoint_count": 103,
+  "correctness_gate_passed": false,
+  "deterministic_qa_exact_match": {
+    "denominator": 103,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "erroneous_mutations_among_commits": {
+    "denominator": 26,
+    "numerator": 1,
+    "value": 0.038461538461538464
+  },
+  "false_overwrite_rate": {
+    "denominator": 26,
+    "numerator": 2,
+    "value": 0.07692307692307693
+  },
+  "guard_rejections": 5,
+  "guard_valid_action_macro_f1": 0.27715617715617713,
+  "invalid_output_rate": {
+    "denominator": 88,
+    "numerator": 22,
+    "value": 0.25
+  },
+  "invariant_violations": 0,
+  "mechanical_provenance_validity": {
+    "denominator": 44,
+    "numerator": 31,
+    "value": 0.7045454545454546
+  },
+  "missing_state_rate": {
+    "denominator": 103,
+    "numerator": 87,
+    "value": 0.8446601941747572
+  },
+  "observation_count": 44,
+  "parse_invalid_rate_closed_loop": {
+    "denominator": 44,
+    "numerator": 13,
+    "value": 0.29545454545454547
+  },
+  "parse_invalid_rate_gold_history": {
+    "denominator": 44,
+    "numerator": 9,
+    "value": 0.20454545454545456
+  },
+  "provenance_precision": {
+    "denominator": 16,
+    "numerator": 14,
+    "value": 0.875
+  },
+  "provenance_recall": {
+    "denominator": 205,
+    "numerator": 14,
+    "value": 0.06829268292682927
+  },
+  "resources": {
+    "backend": "cpu",
+    "model_load_seconds": 2.4940173749928363,
+    "model_runtime_evaluated": true,
+    "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+    "peak_process_memory_bytes": 3704209408,
+    "proposer_calls": 88,
+    "proposer_p50_seconds": 3.789902812510263,
+    "proposer_p95_seconds": 6.114446332969237,
+    "tokens": {
+      "input_tokens": 88083,
+      "output_tokens": 6975
+    },
+    "tracks": {
+      "closed_loop": {
+        "end_to_end": {
+          "p50_seconds": 3.1300654370279517,
+          "p95_seconds": 6.059733250003774,
+          "total_seconds": 169.89036170596955
+        },
+        "model_only": {
+          "p50_seconds": 3.128720437991433,
+          "p95_seconds": 6.057414208014961,
+          "total_seconds": 169.82312841381645
+        },
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": {
+          "input_tokens": 32058,
+          "output_tokens": 3738
+        }
+      },
+      "gold_history": {
+        "end_to_end": {
+          "p50_seconds": 3.891249875014182,
+          "p95_seconds": 6.071869041013997,
+          "total_seconds": 185.82703741511796
+        },
+        "model_only": {
+          "p50_seconds": 3.8893600214796606,
+          "p95_seconds": 6.070756708038971,
+          "total_seconds": 185.73853812384186
+        },
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": {
+          "input_tokens": 56025,
+          "output_tokens": 3237
+        }
+      }
+    },
+    "wall_seconds": 355.95976349996636,
+    "warmup_policy": "none; first call retained"
+  },
+  "stale_active_rate": {
+    "denominator": 38,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "state_exact_match": {
+    "denominator": 103,
+    "numerator": 14,
+    "value": 0.13592233009708737
+  },
+  "state_exact_match_current": {
+    "denominator": 44,
+    "numerator": 7,
+    "value": 0.1590909090909091
+  },
+  "state_exact_match_historical_or_future": {
+    "denominator": 59,
+    "numerator": 7,
+    "value": 0.11864406779661017
+  },
+  "trajectory_count": 5,
+  "validator_rejection_rate_closed_loop": {
+    "denominator": 31,
+    "numerator": 5,
+    "value": 0.16129032258064516
+  },
+  "validator_rejection_rate_gold_history": {
+    "denominator": 35,
+    "numerator": 3,
+    "value": 0.08571428571428572
+  }
+}

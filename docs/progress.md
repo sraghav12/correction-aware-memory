@@ -11,7 +11,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 | 4. Independent offline pilot/report | Complete | 49 cumulative tests passed; commit 7fe75e7 |
 | 5. Prompted model runtime | Complete, including real CPU smoke | Ten pretrained requests recorded; 0/10 schema-valid, four-token backward passed; raw evidence committed |
 | 6. LoRA training | Bounded educational proof complete; full overfit unmet | Two actual saved/reloaded adapters; default2/20 and one adjustment13/20 canonical targets; no research campaign |
-| 7. Learned-arm comparisons/statistics | Deferred | No learned arms or model effect |
+| 7. Learned-arm comparisons/statistics | Bounded exploratory development run complete; full study unfinished | Five arms,5 trajectories/44 observations,paired trajectory intervals; no final-test access |
 | 8. Release A package | Complete | Canonical demo, portable smoke run, 61 tests, clean-checkout fixed-code replay |
 
 ## Decisions made
@@ -108,3 +108,17 @@ Task6 execution rulings and costs:
 Full matched development comparison, the remaining original metrics/controls, actual human audits and a locked final study remain unfinished. The original handoff and its input/output scope have not been changed.
 
 Fresh whole-branch review found no Critical or Important findings and independently verified all forty artifact hashes, reconstructed requests/targets, masks, checkpoint tensors, loss aggregates and disclosed metrics. One Minor diagnostic issue was reproduced and fixed: frozen inference checkpoints now explicitly skip the backward probe without entering training mode. Final verification: **112 tests passed with the ML extra; 110 passed and two optional native checks skipped in an isolated core environment**. The original brief remains byte-identical; neither training control meets the twenty-target overfit criterion.
+
+## Task 7 exploratory development milestone (October 17, 2026)
+
+Source `adede561089be63b0cab064d46440174a28d6505` ran the prospectively committed five-arm configuration with a clean tree. Each arm completed 88 calls on 44 observations, using identical gold-history requests and independent closed-loop stores. All 2,000-resample paired rate contrasts retain undefined draws. Human reviewers 0; one distinct training seed; two development reload probes previously seen; no final test or additional training. Full research controls/splits/audit/final-study requirements remain unchecked.
+
+| Arm | Raw action F1 | Guard-valid F1 | State exact | Stale | Missing |
+|---|---:|---:|---:|---:|---:|
+| base | 0.050 | 0.000 | 0/103 | 0/38 | 103/103 |
+| latest-arrival | 0.662 | 0.723 | 91/103 | 12/38 | 0/103 |
+| rule | 1.000 | 1.000 | 103/103 | 0/38 | 0/103 |
+| sft-adjusted | 0.474 | 0.513 | 75/103 | 15/38 | 0/103 |
+| sft-default | 0.261 | 0.277 | 14/103 | 0/38 | 87/103 |
+
+[Complete evidence and reproduction](../examples/development-comparison/README.md).

@@ -1,0 +1,39 @@
+{
+  "arms": {
+    "base": {
+      "all_nonresource_metrics_equal": true,
+      "portable_config_verified": true,
+      "recorded_calls_replayed": 88
+    },
+    "latest-arrival": {
+      "all_nonresource_metrics_equal": true,
+      "portable_config_verified": true,
+      "recorded_calls_replayed": 88
+    },
+    "rule": {
+      "all_nonresource_metrics_equal": true,
+      "portable_config_verified": true,
+      "recorded_calls_replayed": 88
+    },
+    "sft-adjusted": {
+      "all_nonresource_metrics_equal": true,
+      "portable_config_verified": true,
+      "recorded_calls_replayed": 88
+    },
+    "sft-default": {
+      "all_nonresource_metrics_equal": true,
+      "portable_config_verified": true,
+      "recorded_calls_replayed": 88
+    }
+  },
+  "final_test_accessed": false,
+  "human_label_reviewers": 0,
+  "local_links": "verified",
+  "method": "programmatic recorded-proposal replay without model calls; independent raw count and pooled-draw checks",
+  "original_run_files_byte_identical": 59,
+  "paired_rate_intervals_recomputed": 64,
+  "resamples_per_interval": 2000,
+  "runtime_source": "adede561089be63b0cab064d46440174a28d6505",
+  "sqlite_ledgers_integrity_checked": 10,
+  "total_recorded_calls_replayed": 440
+}

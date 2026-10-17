@@ -1,0 +1,164 @@
+{
+  "action_classes": {
+    "create": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 5,
+      "recall": 1.0,
+      "support": 5
+    },
+    "no_op": {
+      "f1": 0.6666666666666666,
+      "precision": 1.0,
+      "predicted": 8,
+      "recall": 0.5,
+      "support": 16
+    },
+    "reinforce": {
+      "f1": 1.0,
+      "precision": 1.0,
+      "predicted": 10,
+      "recall": 1.0,
+      "support": 10
+    },
+    "supersede": {
+      "f1": 0.6451612903225806,
+      "precision": 0.47619047619047616,
+      "predicted": 21,
+      "recall": 1.0,
+      "support": 10
+    },
+    "update": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 3
+    }
+  },
+  "action_macro_f1": 0.6623655913978495,
+  "checkpoint_count": 103,
+  "correctness_gate_passed": false,
+  "deterministic_qa_exact_match": {
+    "denominator": 103,
+    "numerator": 91,
+    "value": 0.883495145631068
+  },
+  "erroneous_mutations_among_commits": {
+    "denominator": 33,
+    "numerator": 1,
+    "value": 0.030303030303030304
+  },
+  "false_overwrite_rate": {
+    "denominator": 26,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "guard_rejections": 11,
+  "guard_valid_action_macro_f1": 0.7228070175438596,
+  "invalid_output_rate": {
+    "denominator": 88,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "invariant_violations": 0,
+  "mechanical_provenance_validity": {
+    "denominator": 44,
+    "numerator": 44,
+    "value": 1.0
+  },
+  "missing_state_rate": {
+    "denominator": 103,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "observation_count": 44,
+  "parse_invalid_rate_closed_loop": {
+    "denominator": 44,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "parse_invalid_rate_gold_history": {
+    "denominator": 44,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "provenance_precision": {
+    "denominator": 207,
+    "numerator": 193,
+    "value": 0.9323671497584541
+  },
+  "provenance_recall": {
+    "denominator": 205,
+    "numerator": 193,
+    "value": 0.9414634146341463
+  },
+  "resources": {
+    "backend": "custom-callable",
+    "model_load_seconds": null,
+    "model_runtime_evaluated": false,
+    "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+    "peak_process_memory_bytes": 3704209408,
+    "proposer_calls": 88,
+    "proposer_p50_seconds": 1.1728989193215966e-05,
+    "proposer_p95_seconds": 2.824998227879405e-05,
+    "tokens": null,
+    "tracks": {
+      "closed_loop": {
+        "end_to_end": {
+          "p50_seconds": 1.0791467502713203e-05,
+          "p95_seconds": 1.4124962035566568e-05,
+          "total_seconds": 0.0004955820622853935
+        },
+        "model_only": null,
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": null
+      },
+      "gold_history": {
+        "end_to_end": {
+          "p50_seconds": 1.6228994354605675e-05,
+          "p95_seconds": 3.166601527482271e-05,
+          "total_seconds": 0.0010496631730347872
+        },
+        "model_only": null,
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": null
+      }
+    },
+    "wall_seconds": 0.18149395799264312,
+    "warmup_policy": "none; first call retained"
+  },
+  "stale_active_rate": {
+    "denominator": 38,
+    "numerator": 12,
+    "value": 0.3157894736842105
+  },
+  "state_exact_match": {
+    "denominator": 103,
+    "numerator": 91,
+    "value": 0.883495145631068
+  },
+  "state_exact_match_current": {
+    "denominator": 44,
+    "numerator": 39,
+    "value": 0.8863636363636364
+  },
+  "state_exact_match_historical_or_future": {
+    "denominator": 59,
+    "numerator": 52,
+    "value": 0.8813559322033898
+  },
+  "trajectory_count": 5,
+  "validator_rejection_rate_closed_loop": {
+    "denominator": 44,
+    "numerator": 11,
+    "value": 0.25
+  },
+  "validator_rejection_rate_gold_history": {
+    "denominator": 44,
+    "numerator": 12,
+    "value": 0.2727272727272727
+  }
+}

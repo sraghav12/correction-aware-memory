@@ -1,0 +1,181 @@
+{
+  "action_classes": {
+    "create": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 5
+    },
+    "no_op": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 16
+    },
+    "reinforce": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 10
+    },
+    "supersede": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "predicted": 0,
+      "recall": 0.0,
+      "support": 10
+    },
+    "update": {
+      "f1": 0.25,
+      "precision": 0.2,
+      "predicted": 5,
+      "recall": 0.3333333333333333,
+      "support": 3
+    }
+  },
+  "action_macro_f1": 0.05,
+  "checkpoint_count": 103,
+  "correctness_gate_passed": false,
+  "deterministic_qa_exact_match": {
+    "denominator": 103,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "erroneous_mutations_among_commits": {
+    "denominator": 0,
+    "numerator": 0,
+    "value": null
+  },
+  "false_overwrite_rate": {
+    "denominator": 26,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "guard_rejections": 0,
+  "guard_valid_action_macro_f1": 0.0,
+  "invalid_output_rate": {
+    "denominator": 88,
+    "numerator": 83,
+    "value": 0.9431818181818182
+  },
+  "invariant_violations": 0,
+  "mechanical_provenance_validity": {
+    "denominator": 44,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "missing_state_rate": {
+    "denominator": 103,
+    "numerator": 103,
+    "value": 1.0
+  },
+  "observation_count": 44,
+  "parse_invalid_rate_closed_loop": {
+    "denominator": 44,
+    "numerator": 44,
+    "value": 1.0
+  },
+  "parse_invalid_rate_gold_history": {
+    "denominator": 44,
+    "numerator": 39,
+    "value": 0.8863636363636364
+  },
+  "provenance_precision": {
+    "denominator": 0,
+    "numerator": 0,
+    "value": null
+  },
+  "provenance_recall": {
+    "denominator": 205,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "resources": {
+    "backend": "cpu",
+    "model_load_seconds": 4.390619500016328,
+    "model_runtime_evaluated": true,
+    "peak_memory_scope": "process lifetime high-water mark; includes prior arms",
+    "peak_process_memory_bytes": 3666329600,
+    "proposer_calls": 88,
+    "proposer_p50_seconds": 4.03208283346612,
+    "proposer_p95_seconds": 6.570956791983917,
+    "tokens": {
+      "input_tokens": 86781,
+      "output_tokens": 6751
+    },
+    "tracks": {
+      "closed_loop": {
+        "end_to_end": {
+          "p50_seconds": 3.668243416992482,
+          "p95_seconds": 4.413193750020582,
+          "total_seconds": 164.5386387509061
+        },
+        "model_only": {
+          "p50_seconds": 3.665919000020949,
+          "p95_seconds": 4.412030958046671,
+          "total_seconds": 164.44754362897947
+        },
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": {
+          "input_tokens": 30756,
+          "output_tokens": 3308
+        }
+      },
+      "gold_history": {
+        "end_to_end": {
+          "p50_seconds": 5.20906018698588,
+          "p95_seconds": 6.743425666994881,
+          "total_seconds": 222.06057916895952
+        },
+        "model_only": {
+          "p50_seconds": 5.207184249506099,
+          "p95_seconds": 6.740684791002423,
+          "total_seconds": 221.93245761888102
+        },
+        "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+        "proposer_calls": 44,
+        "tokens": {
+          "input_tokens": 56025,
+          "output_tokens": 3443
+        }
+      }
+    },
+    "wall_seconds": 386.8360670420225,
+    "warmup_policy": "none; first call retained"
+  },
+  "stale_active_rate": {
+    "denominator": 38,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "state_exact_match": {
+    "denominator": 103,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "state_exact_match_current": {
+    "denominator": 44,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "state_exact_match_historical_or_future": {
+    "denominator": 59,
+    "numerator": 0,
+    "value": 0.0
+  },
+  "trajectory_count": 5,
+  "validator_rejection_rate_closed_loop": {
+    "denominator": 0,
+    "numerator": 0,
+    "value": null
+  },
+  "validator_rejection_rate_gold_history": {
+    "denominator": 5,
+    "numerator": 5,
+    "value": 1.0
+  }
+}

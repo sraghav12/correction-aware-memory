@@ -19,7 +19,7 @@ Dataset identity: `4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763
 
 The rule matched the independently specified synthetic oracle on this pilot. The annotations already provide candidate value, date, correction reference and source authority, so this result supports a bounded deterministic implementation, not a learned-memory contribution. The generator and rule are authored within the same project; independent code paths do not constitute independent human validation.
 
-Human reviewers: **0**. Complete matched model comparison arms, external benchmarks, statistical model comparisons and a locked final holdout: **not run**. Separate pretrained-runtime and educational-adapter diagnostics are recorded below. No confidence interval for a nonexistent between-arm effect is reported.
+Human reviewers: **0**. At the first rule-only milestone, no between-model comparison had run. The later bounded development comparison is recorded below; external benchmarks and a locked final study remain unexecuted.
 
 Run artifacts are generated locally under `runs/`; see the README commands to reproduce. The report includes class support, denominators, both time axes and unavailable-model labels. Saved timing/memory is single-run diagnostic process information, not an inference-serving benchmark. A poor no-op arm is tested to expose missing state; fabricated error-count fixtures independently test metric arithmetic.
 
@@ -39,4 +39,24 @@ Actual CPU float32 optimization and fresh-base reload passed for two adapters: t
 
 Same-example eval completion loss fell from .675351 to .078498 (default) and .015978 (adjustment). Full base parameters stayed unchanged, adapter parameters changed, and both saved checkpoints reproduced exact token IDs on two fixed development requests. The actual 9,189,904-byte adapter files and full corpus/loss/output/proof records are published. CPU wall time excluding initial load was 279.553/273.234 seconds; peak process memory was 6.917/7.093 GiB.
 
-These are training diagnostics, not held-out operation accuracy or a matched prompted-base comparison. Guard acceptance alone can hide wrong abstentions; raw label match alone can hide a wrong target. Reload equality proves serialization, not memory quality. No full campaign or additional tuning followed the single adjustment. [Default evidence](../examples/educational-sft/README.md) · [Adjustment evidence](../examples/educational-sft-overfit/README.md) · [Model card](model-card.md).
+These training diagnostics are separate from the matched development replay below. Guard acceptance alone can hide wrong abstentions; raw label match alone can hide a wrong target. Reload equality proves serialization, not memory quality. No full campaign or additional tuning followed the single adjustment. [Default evidence](../examples/educational-sft/README.md) · [Adjustment evidence](../examples/educational-sft-overfit/README.md) · [Model card](model-card.md).
+
+## Matched exploratory development comparison
+
+All five arms completed on the same five development trajectories, 44 observations and two separate scoring passes (88 calls per arm). Original full research splits, style transfer and final evaluation remain unexecuted. CPU float32 and identical pinned model/tokenizer, unchanged prompt, 2,048/256 token budgets and greedy strict parse/reject apply to all three model arms. The rule and weak latest-arrival diagnostic use the same guard; each arm starts fresh independent stores.
+
+| Arm | Raw action F1 | Guard-valid F1 | State exact | Stale | Missing |
+|---|---:|---:|---:|---:|---:|
+| base | 0.050 | 0.000 | 0/103 | 0/38 | 103/103 |
+| latest-arrival | 0.662 | 0.723 | 91/103 | 12/38 | 0/103 |
+| rule | 1.000 | 1.000 | 103/103 | 0/38 | 0/103 |
+| sft-adjusted | 0.474 | 0.513 | 75/103 | 15/38 | 0/103 |
+| sft-default | 0.261 | 0.277 | 14/103 | 0/38 | 87/103 |
+
+Raw action F1 scores parsed labels before semantic guards; guard-valid F1 additionally rejects invalid targets/evidence/actions. Schema-invalid outputs count as incorrect in both. The earlier rule-only result is unaffected by this distinction. Zero stale state with high missing state cannot support a safety claim.
+
+Primary contrast is pooled stale rate, arm minus prompted base, with missing-state and false-overwrite constraints. The saved report includes all rate contrasts, 95% paired whole-trajectory percentile intervals, supports/denominators and zero-denominator draw counts (2,000 resamples, seed11). These intervals condition on five synthetic development trajectories, not independent training runs or external generalization. Actual distinct adapter training seeds = one; two development probes were previously inspected. No checkpoint selection, prompt changes, additional training or final-test access followed this comparison.
+
+[Full comparison, intervals and replay evidence](../examples/development-comparison/README.md) · [Prospective settings and definitions](development-comparison.md). Human label reviewers remain zero; both adapters still fail the twenty-target overfit requirement. The full controlled research study remains unfinished.
+
+In the adjusted adapter, exact deterministic value-plus-source QA matched 29/103 checkpoints, versus 75/103 for semantic state alone. Missing provenance support remains a separate failure. Its stale-rate contrast against the empty base was +15/38 (95% conditional interval [0.0, 0.9]); 19 of 2,000 draws had zero changed-checkpoint denominator and remain explicitly undefined. This is no primary stale-rate improvement.
