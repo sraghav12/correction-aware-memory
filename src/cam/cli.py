@@ -45,7 +45,7 @@ def _check_fixtures(root):
 def main(argv=None) -> int:
     parser = Parser(description="Auditable correction-aware memory, offline first")
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("generate", "evaluate", "train"):
+    for name in ("generate", "evaluate", "train", "model-smoke"):
         sub = commands.add_parser(name)
         sub.add_argument("--config", type=Path, required=True)
         sub.add_argument("--out", type=Path, required=True)
@@ -76,6 +76,9 @@ def main(argv=None) -> int:
                 result = asdict(generate_dataset(config.data, args.out))
             elif args.command == "train":
                 raise RuntimeUnavailable("Adapter training is gated in this offline release. The annotated pilot is solved by rules; human label review and a justified model experiment remain pending.")
+            elif args.command == "model-smoke":
+                from cam.smoke import model_smoke
+                result = model_smoke(config)
             else:
                 evaluated = evaluate(config)
                 result = {"run": str(args.out), "metrics": evaluated.metrics}

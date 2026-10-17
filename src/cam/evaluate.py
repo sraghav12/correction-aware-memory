@@ -11,7 +11,7 @@ import statistics
 import subprocess
 import time
 
-from cam.contracts import ContractError, EvalConfig, EvalReport, RuntimeUnavailable, canonical_json, parse_observation, parse_proposal
+from cam.contracts import ContractError, EvalConfig, EvalReport, canonical_json, parse_observation, parse_proposal
 from cam.data import prepare_output, read_dataset, write_json, write_jsonl
 from cam.policy import propose_rule, validate
 from cam.store import Store
@@ -77,6 +77,7 @@ def _predict(proposer, request):
         return proposal, None, time.perf_counter() - started, raw
     except (ContractError, TypeError, ValueError) as error:
         # Preserve the original returned payload, including malformed model text.
+        raw = getattr(error, "raw_output", raw)
         try:
             canonical_json(raw)
         except TypeError:
@@ -84,9 +85,29 @@ def _predict(proposer, request):
         return None, str(error), time.perf_counter() - started, raw
 
 
+def model_identity(proposer):
+    metadata = getattr(proposer, "metadata", None)
+    if metadata is not None:
+        return ("evaluated" if metadata.get("real_model") else "fake_runtime"), metadata
+    return ("not_run" if proposer is propose_rule else "custom_callable"), {}
+
+
+def run_environment():
+    project = Path(__file__).resolve().parents[2]
+    try:
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=project, text=True, stderr=subprocess.DEVNULL).strip()
+        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=project, text=True))
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        commit, dirty = None, None
+    return {"git_commit": commit, "git_dirty": dirty,
+            "dependency_lock_sha256": hashlib.sha256((project / "uv.lock").read_bytes()).hexdigest(),
+            "python": platform.python_version(), "platform": platform.platform(), "machine": platform.machine()}
+
+
 def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
     if proposer is None and config.proposer.get("kind", "rule") != "rule":
-        raise RuntimeUnavailable("Model experiments are gated in this offline release; no model or adapter has been downloaded or evaluated.")
+        from cam.models import from_eval_config
+        proposer = from_eval_config(config)
     if config.data.manifest is None:
         raise ContractError("data.manifest is required for evaluation")
     manifest, dataset = read_dataset(config.data.manifest)
@@ -94,6 +115,7 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
         raise ContractError("configured split differs from dataset manifest")
     if proposer is None:
         proposer = propose_rule
+    model_status, runtime = model_identity(proposer)
     prepare_output(config.output_dir)
     gold = {row["observation_id"]: row for row in dataset["gold.jsonl"]}
     checkpoints = defaultdict(list)
@@ -116,7 +138,8 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             predictions.append({"track": "gold_history", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(request),
                                 "proposal": asdict(one_step) if one_step else None, "raw_output": raw_output,
-                                "validation_codes": one_step_codes, "parse_error": parse_error, "latency_seconds": latency})
+                                "validation_codes": one_step_codes, "parse_error": parse_error, "latency_seconds": latency,
+                                "model_call": dict(getattr(proposer, "last_metadata", {}))})
             accepted = reference.commit(request, expected_proposal)
             if accepted.status != "committed":
                 raise CorrectnessError(f"independent gold proposal rejected: {observation.observation_id}: {accepted.validation_codes}")
@@ -140,7 +163,8 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             predictions.append({"track": "closed_loop", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(live_request),
                                 "proposal": asdict(closed_loop) if closed_loop else None, "raw_output": raw_output, "parse_error": parse_error,
-                                "commit": asdict(committed) if committed else None, "latency_seconds": latency})
+                                "commit": asdict(committed) if committed else None, "latency_seconds": latency,
+                                "model_call": dict(getattr(proposer, "last_metadata", {}))})
             after = semantic_timeline()
             records.append({"kind": "opportunity", "trajectory_id": observation.trajectory_id,
                             "non_mutating": expected_proposal.action in ("no_op", "reinforce"),
@@ -167,20 +191,14 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
                             "proposer_p50_seconds": statistics.median(latencies),
                             "proposer_p95_seconds": sorted(latencies)[max(0, int(len(latencies) * .95) - 1)],
                             "peak_process_memory_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * (1 if platform.system() == "Darwin" else 1024),
-                            "backend": "python-rules" if config.proposer.get("kind", "rule") == "rule" else config.proposer.get("device"),
-                            "model_runtime_evaluated": config.proposer.get("kind", "rule") != "rule", "tokens": None}
+                            "backend": runtime.get("backend", "python-rules" if proposer is propose_rule else "custom-callable"),
+                            "model_runtime_evaluated": runtime.get("real_model", False),
+                            "tokens": {key: sum(row["model_call"].get(key, 0) for row in predictions)
+                                       for key in ("input_tokens", "output_tokens")} if runtime else None}
     per_trajectory = {tid: _compute_metrics([r for r in records if r.get("trajectory_id") == tid]) for tid in sorted({r["trajectory_id"] for r in records})}
     resolved = json.loads(canonical_json(config))
-    project = Path(__file__).resolve().parents[2]
-    try:
-        commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=project, text=True, stderr=subprocess.DEVNULL).strip()
-        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=project, text=True))
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        commit, dirty = None, None
-    run_manifest = {"schema_version": 1, "dataset": manifest, "git_commit": commit, "git_dirty": dirty,
-                    "dependency_lock_sha256": hashlib.sha256((project / "uv.lock").read_bytes()).hexdigest(),
-                    "python": platform.python_version(), "platform": platform.platform(), "machine": platform.machine(),
-                    "review_status": manifest["review_status"], "model_status": "not_run" if config.proposer.get("kind", "rule") == "rule" else "evaluated",
+    run_manifest = {"schema_version": 1, "dataset": manifest, **run_environment(), "model": runtime,
+                    "review_status": manifest["review_status"], "model_status": model_status,
                     "adapter_status": "not_trained", "tracks": ["gold_history", "closed_loop"]}
     write_json(config.output_dir / "resolved-config.json", resolved)
     write_json(config.output_dir / "manifest.json", run_manifest)

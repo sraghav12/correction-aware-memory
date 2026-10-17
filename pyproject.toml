@@ -5,6 +5,9 @@ description = "Auditable correction-aware temporal memory and offline evaluation
 requires-python = ">=3.12"
 dependencies = []
 
+[project.optional-dependencies]
+ml = ["torch==2.14.1", "transformers==5.20.1", "huggingface-hub==2.2.0"]
+
 [project.scripts]
 cam = "cam.cli:main"
 

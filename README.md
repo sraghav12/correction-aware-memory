@@ -2,7 +2,7 @@
 
 A delayed report should not overwrite a newer fact. An authorized correction should revise an assertion while preserving what was known before the correction arrived.
 
-This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: Release A, deterministic engineering baseline. No model weights downloaded, no adapter trained, no human label review, no learned-model advantage claimed.**
+This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: verified deterministic baseline plus an optional cached-only Qwen proposer. No pretrained weights downloaded, no adapter trained, no human label review, no learned-model advantage claimed.**
 
 ## See the behavior first
 
@@ -24,7 +24,7 @@ The same effective date, October 8, returns **published** using October 9 knowle
 
 ## Reproduce the offline experiment
 
-Requires Python 3.12 and [uv](https://docs.astral.sh/uv/). `uv sync --locked` installs only the locked development/test environment; core execution uses the Python standard library. Dependency installation needs package access unless cached. Once installed, the CLI performs no network access and needs no model, API key or GPU.
+Requires Python 3.12 and [uv](https://docs.astral.sh/uv/). `uv sync --locked` installs only the locked development/test environment; core execution uses the Python standard library. Dependency installation needs package access unless cached. Once installed, the offline commands below perform no network access and need no model, API key or GPU.
 
 Run from the repository root, using fresh output directories:
 
@@ -46,7 +46,7 @@ The generator's seed-11 pilot has **50 trajectories, 412 observations and 1,005 
 ```mermaid
 flowchart LR
   O[Atomic observation + trusted annotations] --> S[Exact-key snapshot]
-  S --> P[Rule proposal]
+  S --> P[Rule or optional model proposal]
   P --> V[Shared deterministic validator]
   V --> T[Atomic SQLite transaction]
   T --> L[Immutable events and provenance]
@@ -68,11 +68,23 @@ flowchart LR
 | Contracts, original fixtures, validated ledger, rule policy | Implemented and tested |
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
 | Human label audit | [50-event review packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
-| Prompted Qwen3 runtime | Deferred; not implemented/evaluated |
+| Prompted Qwen3 runtime | Implemented; offline boundary tests pass; pretrained smoke pending absent weights |
 | LoRA training and saved adapter | Deferred; no adapter exists |
 | Matched learned-model comparisons and uncertainty | Deferred; no model effect estimated |
 
-The training gate is currently **training_not_justified** for a research campaign: supplied annotations let transparent rules solve this pilot. A small future SFT run could demonstrate structured-rule imitation. A claim of a learned-memory contribution needs a separately justified task and independent label review. Model evaluation/training requests return exit **3**, never silently substitute rule results.
+The training gate is currently **training_not_justified** for a research campaign: supplied annotations let transparent rules solve this pilot. A small future SFT run could demonstrate structured-rule imitation. A claim of a learned-memory contribution needs a separately justified task and independent label review. Model requests without a cached runtime and all training requests return exit **3**; rule results are never substituted.
+
+## Optional model diagnostics
+
+[Model setup and exact commands](docs/model-runtime.md) use a pinned Qwen3-0.6B model/tokenizer, lazy ML imports, strict JSON output, and the same deterministic commit guard. Install optional dependencies with `uv sync --locked --extra ml`. This installs libraries only; model commands always load cached files and never download weights.
+
+After explicitly caching the approved revision and generating the pilot above:
+
+```bash
+uv run --locked --extra ml python -m cam.cli model-smoke --config configs/base.json --out runs/qwen-smoke --offline
+```
+
+The smoke records ten pilot/development requests, raw responses and failures, token counts, prompt hashes, backend/dtype, latency/memory, and a tiny backward compatibility probe. It never updates or saves weights. Fake-runtime tests and randomly initialized tiny-model API checks are labeled separately from pretrained Qwen results. The current real smoke is **pending**, with no pretrained model scores.
 
 CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional experiment, `4` failed correctness gate. All generated artifacts stay inside the selected output directory.
 

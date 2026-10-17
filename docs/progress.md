@@ -9,7 +9,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 | 2. Validated immutable ledger | Complete | 22 cumulative tests passed; commit 6be0375 |
 | 3. Rule policy/adversarial cases | Complete | 33 cumulative tests passed; commit 64c2d40 |
 | 4. Independent offline pilot/report | Complete | 49 cumulative tests passed; commit 7fe75e7 |
-| 5. Prompted model runtime | Deferred | No runtime implementation/download/evaluation |
+| 5. Prompted model runtime | Implemented; pretrained smoke pending | Strict optional cached-only runtime, injected-runtime tests, tiny random-model CPU/MPS API check; no pretrained weights |
 | 6. LoRA training | Deferred | No training or adapter; research gate not justified |
 | 7. Learned-arm comparisons/statistics | Deferred | No learned arms or model effect |
 | 8. Release A package | Complete | Canonical demo, portable smoke run, 61 tests, clean-checkout fixed-code replay |
@@ -61,3 +61,20 @@ On October 17 the user requested the next step and explicitly authorized creatin
 Created [sraghav12/correction-aware-memory](https://github.com/sraghav12/correction-aware-memory) as a private repository, using the declared default while no visibility preference was supplied. Local `main` was fast-forwarded to the reviewed implementation and audit packet; all 61 tests passed on that branch. The full history was pushed, `main` was confirmed as the GitHub default branch, and remote `main` matched local commit `13920d7b2f1888f1ddb1dbedafa5ec330740c35a` before this publication-record update. The 50-event review packet was verified through GitHub's contents API. No collaborators were added and no model or human-review claims changed.
 
 The user subsequently selected **Public portfolio repository**. Repository visibility was changed to public and verified through GitHub on October 17, 2026.
+
+## Optional model boundary (October 17, 2026)
+
+User requested “go ahead with the next step” after publication. Task 5 resumed on `feature/qwen-proposer` for educational diagnostics, preserving the human-review and research-training gates. Task 6 training and Task 7 learned comparisons remain deferred.
+
+The proposer uses a label-free fixed prompt, the same pinned model/tokenizer commit, strict JSON without repair, an explicit 16-version context cap, and token limits checked before generation. Schema-valid fabricated IDs/provenance reach the shared commit guard so typed rejections stay auditable. Optional imports stay outside the offline core path. Model loads are cached-only, with no download, model/rule substitution, or backend fallback.
+
+Watched boundary and integration regressions fail before implementing them; the suite now passes 88 tests with the locked ML extra, and 87 pass with one optional native API check skipped in an isolated core environment. Native APIs were checked using randomly initialized tiny Qwen3 weights: generation and backward passed on CPU and MPS; nonfinite probe loss remains a serializable explicit failure. These checks do not evaluate pretrained Qwen. The actual `model-smoke` command returned exit 3 because the pinned weights are absent; no run directory, pretrained scores, weight updates or adapter were created. [Exact preparation and smoke commands](model-runtime.md).
+
+Task 5 rulings:
+
+1. Continue optional proposer engineering for educational diagnostics while keeping the research-training gate. Cost if wrong: no learned-memory advantage may be claimed from these checks.
+2. Use this clean dedicated feature branch as the isolated workspace. Cost if wrong: there is no second linked checkout; no unrelated user changes are present.
+3. Parse/schema failures stop at the model boundary; schema-valid semantic errors go through the existing shared guard. Cost if wrong: the wrapper alone does not guarantee semantically valid proposals, and callers must use the guarded commit path.
+4. Treat a missing cache as a legitimate pending real smoke, as Task 5 specifies. Cost if wrong: real model behavior, resource use and full-size backward compatibility remain unknown until the explicitly chosen download and smoke.
+
+Fresh review and final verification are recorded below when complete.
