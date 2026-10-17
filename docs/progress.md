@@ -24,7 +24,7 @@ User authorized execution: “start working”. Branch: feature/offline-memory.
 
 Seed 11: 50 trajectories, 412 observations, 1,005 checkpoints. Five-action macro-F1 1.000; state exact match 1,005/1,005; stale 0/561; missing 0/1,005; false overwrite 0/209. Human reviewers 0; actual model/adapter experiments 0. These are automated development-pilot results.
 
-The detailed ignored execution ledger preserves task test commands, red/green evidence and commit ranges. No merge, push or publication has occurred.
+The detailed ignored execution ledger preserves task test commands, red/green evidence and commit ranges. At this initial Release A checkpoint, no merge, push or publication had occurred.
 
 ## Independent review and fixes
 
@@ -50,8 +50,12 @@ Fixed source commit `8201fb6d13c4d1ebb265cbeb081b9b2767a50045` was checked out c
 
 A committed two-trajectory smoke run includes original synthetic dataset, raw outputs, ledgers, metrics and HTML. Its relative-path replay configuration reproduced all non-resource metrics exactly. Full local artifacts are in `runs/verified-rule/`; the original development run remains preserved in `runs/rule/`. Artifact hash inventories are saved. Browser verification checked layout and source-evidence expansion.
 
-The feature branch remains local and unmerged. No publishing or external messages occurred. Next action: conduct the actual 50-event label audit, then decide whether an educational small-model imitation experiment is useful.
+At the initial Release A handoff the feature branch remained local and unmerged, and no publishing or external messages had occurred. The next validation action was the actual 50-event label audit, followed by deciding whether an educational small-model imitation experiment is useful.
 
 ## Next-step audit preparation
 
-On October 17 the user requested the next step and explicitly authorized creating a GitHub repository and pushing updates. A portable `audits/pilot-seed11/` packet now contains 50 events (10 per action), exact evidence, prior assertion context, expected proposals/checkpoints, a blank human review CSV, and a hashed manifest tied to dataset `4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763d48` and source commit `8201fb6`. No human verdicts were invented; actual reviewer count remains zero. Repository creation and push are verified separately before reporting completion.
+On October 17 the user requested the next step and explicitly authorized creating a GitHub repository and pushing updates. A portable `audits/pilot-seed11/` packet now contains 50 events (10 per action), exact evidence, prior assertion context, expected proposals/checkpoints, a blank human review CSV, and a hashed manifest tied to dataset `4d62ec91ed5c7209d325915e283fe09c5d7afcf9ab1d0976e15ef0394a763d48` and source commit `8201fb6`. No human verdicts were invented; actual reviewer count remains zero.
+
+## GitHub repository
+
+Created [sraghav12/correction-aware-memory](https://github.com/sraghav12/correction-aware-memory) as a private repository, using the declared default while no visibility preference was supplied. Local `main` was fast-forwarded to the reviewed implementation and audit packet; all 61 tests passed on that branch. The full history was pushed, `main` was confirmed as the GitHub default branch, and remote `main` matched local commit `13920d7b2f1888f1ddb1dbedafa5ec330740c35a` before this publication-record update. The 50-event review packet was verified through GitHub's contents API. No collaborators were added and no model or human-review claims changed.
