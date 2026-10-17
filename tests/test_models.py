@@ -46,6 +46,7 @@ def test_valid_model_output_preserves_raw_and_pin(tmp_path):
     assert proposer.last_metadata["raw_output"] == raw
     assert proposer.last_metadata["revision"] == REVISION
     assert proposer.last_metadata["input_tokens"] == 100
+    assert proposer.last_metadata["generation_seconds"] >= 0
     assert len(proposer.last_metadata["prompt_sha256"]) == 64
 
 

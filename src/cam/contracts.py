@@ -329,7 +329,7 @@ def load_config(path: Path, output_dir: Path) -> EvalConfig:
     proposer = raw.get("proposer", {"kind": "rule"})
     if proposer.get("adapter_path"):
         proposer["adapter_path"] = str((path.parent / proposer["adapter_path"]).resolve())
-    if proposer.get("kind") not in ("rule", "qwen"):
+    if proposer.get("kind") not in ("rule", "qwen", "latest_arrival"):
         raise ContractError("unknown proposer")
     if proposer.get("kind") == "qwen" and not re.fullmatch(r"[0-9a-f]{40}", proposer.get("revision") or ""):
         raise ContractError("model runs require a pinned 40-hex revision")

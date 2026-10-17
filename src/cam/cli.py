@@ -45,7 +45,7 @@ def _check_fixtures(root):
 def main(argv=None) -> int:
     parser = Parser(description="Auditable correction-aware memory, offline first")
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("generate", "evaluate", "train", "model-smoke"):
+    for name in ("generate", "evaluate", "train", "model-smoke", "compare"):
         sub = commands.add_parser(name)
         sub.add_argument("--config", type=Path, required=True)
         sub.add_argument("--out", type=Path, required=True)
@@ -70,6 +70,14 @@ def main(argv=None) -> int:
         elif args.command == "report":
             saved = EvalReport(args.run, json.loads((args.run / "metrics.json").read_text()), json.loads((args.run / "manifest.json").read_text()))
             result = {"report": str(write_report(saved, args.out))}
+        elif args.command == "compare":
+            from cam.compare import compare
+            compared = compare(args.config, args.out)
+            result = {"run": str(args.out), "report": str(args.out / "index.html"),
+                      "arms": {name: arm["status"] for name, arm in compared["arms"].items()}}
+            if any(arm["status"] == "unavailable" for arm in compared["arms"].values()):
+                print(json.dumps({"status": "unavailable", **result}, sort_keys=True))
+                return 3
         else:
             config = load_config(args.config, args.out)
             if args.command == "generate":

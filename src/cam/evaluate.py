@@ -7,13 +7,14 @@ import json
 from pathlib import Path
 import platform
 import resource
+import random
 import statistics
 import subprocess
 import time
 
 from cam.contracts import ContractError, EvalConfig, EvalReport, canonical_json, parse_observation, parse_proposal
 from cam.data import prepare_output, read_dataset, write_json, write_jsonl
-from cam.policy import propose_rule, validate
+from cam.policy import propose_latest_arrival, propose_rule, validate
 from cam.store import Store
 
 
@@ -23,6 +24,35 @@ class CorrectnessError(RuntimeError):
 
 def _rate(numerator, denominator):
     return {"numerator": numerator, "denominator": denominator, "value": numerator / denominator if denominator else None}
+
+
+def _bootstrap_details(paired_counts, *, seed, resamples=2000):
+    if type(resamples) is not int or not 1 <= resamples <= 100000:
+        raise ContractError("bootstrap count must be in 1..100000")
+    if not paired_counts or any(len(row) != 4 or any(type(n) is not int or n < 0 for n in row)
+                                or row[0] > row[1] or row[2] > row[3] for row in paired_counts):
+        raise ContractError("bootstrap requires complete nonnegative trajectory count pairs")
+    def contrast(rows):
+        a, b, c, d = (sum(row[i] for row in rows) for i in range(4))
+        return c / d - a / b if b and d else None
+    rng, samples = random.Random(seed), []
+    for _ in range(resamples):
+        difference = contrast(rng.choices(paired_counts, k=len(paired_counts)))
+        if difference is not None:
+            samples.append(difference)
+    samples.sort()
+    def percentile(p):
+        index = (len(samples) - 1) * p
+        lower = int(index)
+        return samples[lower] + (samples[min(lower + 1, len(samples) - 1)] - samples[lower]) * (index - lower)
+    return {"difference": contrast(paired_counts),
+            "interval_95": [percentile(.025), percentile(.975)] if samples else [None, None],
+            "resamples": resamples, "valid_resamples": len(samples), "undefined_resamples": resamples - len(samples),
+            "trajectory_count": len(paired_counts), "seed": seed, "method": "paired_trajectory_pooled_rate_percentile"}
+
+
+def _paired_bootstrap(paired_counts, *, seed, resamples=2000):
+    return tuple(_bootstrap_details(paired_counts, seed=seed, resamples=resamples)["interval_95"])
 
 
 def _compute_metrics(records: list[dict]) -> dict:
@@ -45,15 +75,25 @@ def _compute_metrics(records: list[dict]) -> dict:
         "missing_state_rate": _rate(sum(r["missing"] for r in states), len(states)),
         "state_exact_match": _rate(sum(r["exact"] for r in states), len(states)),
         "false_overwrite_rate": _rate(sum(r["non_mutating"] and r["semantic_changed"] for r in opportunities), sum(r["non_mutating"] for r in opportunities)),
+        "erroneous_mutations_among_commits": _rate(sum(r.get("committed", False) and r["semantic_changed"] and not r.get("post_commit_exact", True) for r in opportunities), sum(r.get("committed", False) for r in opportunities)),
         "invalid_output_rate": _rate(sum(not r.get("valid", True) for r in all_proposals), len(all_proposals)),
         "provenance_precision": _rate(sum(r["provenance_tp"] for r in states), sum(r["provenance_claimed"] for r in states)),
         "provenance_recall": _rate(sum(r["provenance_tp"] for r in states), sum(r["provenance_expected"] for r in states)),
     }
+    guarded = [{**r, "predicted_action": None if r.get("validator_rejected") else r.get("predicted_action")} for r in proposals]
+    guarded_f1 = []
+    for action in per_class:
+        tp = sum(r["expected_action"] == r.get("predicted_action") == action for r in guarded)
+        count = sum(r["expected_action"] == action for r in guarded) + sum(r.get("predicted_action") == action for r in guarded)
+        guarded_f1.append(2 * tp / count if count else 0.0)
+    result["guard_valid_action_macro_f1"] = sum(guarded_f1) / 5
     for track in ("gold_history", "closed_loop"):
         subset = [r for r in all_proposals if r.get("track", "gold_history") == track]
         parsed = [r for r in subset if r.get("valid", True)]
         result[f"parse_invalid_rate_{track}"] = _rate(sum(not r.get("valid", True) for r in subset), len(subset))
         result[f"validator_rejection_rate_{track}"] = _rate(sum(r.get("validator_rejected", False) for r in parsed), len(parsed))
+    live = [r for r in all_proposals if r.get("track") == "closed_loop"]
+    result["mechanical_provenance_validity"] = _rate(sum(r.get("mechanically_valid", False) for r in live), len(live))
     for kind in ("current", "historical_or_future"):
         subset = [r for r in states if r.get("query_kind") == kind]
         result[f"state_exact_match_{kind}"] = _rate(sum(r["exact"] for r in subset), len(subset))
@@ -89,7 +129,7 @@ def model_identity(proposer):
     metadata = getattr(proposer, "metadata", None)
     if metadata is not None:
         return ("evaluated" if metadata.get("real_model") else "fake_runtime"), metadata
-    return ("not_run" if proposer is propose_rule else "custom_callable"), {}
+    return ("not_run" if proposer is propose_rule else "diagnostic" if proposer is propose_latest_arrival else "custom_callable"), {}
 
 
 def run_environment():
@@ -105,7 +145,9 @@ def run_environment():
 
 
 def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
-    if proposer is None and config.proposer.get("kind", "rule") != "rule":
+    if proposer is None and config.proposer.get("kind", "rule") == "latest_arrival":
+        proposer = propose_latest_arrival
+    elif proposer is None and config.proposer.get("kind", "rule") != "rule":
         from cam.models import from_eval_config
         proposer = from_eval_config(config)
     if config.data.manifest is None:
@@ -122,6 +164,11 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
     for row in dataset["checkpoints.jsonl"]:
         checkpoints[row["observation_id"]].append(row)
     records, predictions, saved_checkpoints, latencies = [], [], [], []
+    def save_prediction(row):
+        predictions.append(row)
+        # Keep completed calls even when a later model/backend call is unavailable.
+        with (config.output_dir / "predictions.jsonl").open("a") as stream:
+            stream.write(canonical_json(row) + "\n")
     guard_rejections, mechanical_valid, mechanical_total = 0, 0, 0
     started = time.perf_counter()
     with Store(config.output_dir / "gold-history.sqlite") as reference, Store(config.output_dir / "memory.sqlite") as memory:
@@ -133,9 +180,9 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             one_step_codes = validate(request, one_step) if one_step else []
             latencies.append(latency)
             records.append({"kind": "proposal", "track": "gold_history", "trajectory_id": observation.trajectory_id,
-                            "expected_action": expected_proposal.action, "predicted_action": one_step.action if one_step and not one_step_codes else None,
+                            "expected_action": expected_proposal.action, "predicted_action": one_step.action if one_step else None,
                             "valid": one_step is not None, "validator_rejected": bool(one_step_codes)})
-            predictions.append({"track": "gold_history", "observation_id": observation.observation_id,
+            save_prediction({"track": "gold_history", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(request),
                                 "proposal": asdict(one_step) if one_step else None, "raw_output": raw_output,
                                 "validation_codes": one_step_codes, "parse_error": parse_error, "latency_seconds": latency,
@@ -146,6 +193,7 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             live_request = memory.snapshot(observation)
             # Check every possibly affected boundary, including future and historical facts.
             boundaries = {version.effective_at for version in live_request.candidate_versions}
+            boundaries.update(version.effective_at for version in reference.snapshot(observation).candidate_versions)
             if observation.effective_at is not None:
                 boundaries.add(observation.effective_at)
             def semantic_timeline():
@@ -159,8 +207,9 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             mechanical_total += 1
             mechanical_valid += int(closed_loop is not None and "EVIDENCE_MISMATCH" not in (committed.validation_codes if committed else ()))
             records.append({"kind": "proposal", "track": "closed_loop", "trajectory_id": observation.trajectory_id,
-                            "valid": closed_loop is not None, "validator_rejected": committed is not None and committed.status == "rejected"})
-            predictions.append({"track": "closed_loop", "observation_id": observation.observation_id,
+                            "valid": closed_loop is not None, "validator_rejected": committed is not None and committed.status == "rejected",
+                            "mechanically_valid": closed_loop is not None and "EVIDENCE_MISMATCH" not in (committed.validation_codes if committed else ())})
+            save_prediction({"track": "closed_loop", "observation_id": observation.observation_id,
                                 "trajectory_id": observation.trajectory_id, "request": asdict(live_request),
                                 "proposal": asdict(closed_loop) if closed_loop else None, "raw_output": raw_output, "parse_error": parse_error,
                                 "commit": asdict(committed) if committed else None, "latency_seconds": latency,
@@ -168,7 +217,9 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
             after = semantic_timeline()
             records.append({"kind": "opportunity", "trajectory_id": observation.trajectory_id,
                             "non_mutating": expected_proposal.action in ("no_op", "reinforce"),
-                            "semantic_changed": before != after})
+                            "semantic_changed": before != after, "committed": committed is not None and committed.status == "committed",
+                            "post_commit_exact": after == tuple((boundary, _semantic(reference.view(observation.entity_id, observation.predicate,
+                                effective_as_of=boundary, known_at=observation.observed_at))) for boundary in sorted(boundaries))})
             for checkpoint in checkpoints[observation.observation_id]:
                 selected = memory.view(observation.entity_id, observation.predicate, effective_as_of=checkpoint["effective_as_of"], known_at=checkpoint["known_at"])
                 expected = checkpoint["expected"]
@@ -195,6 +246,19 @@ def evaluate(config: EvalConfig, *, proposer=None) -> EvalReport:
                             "model_runtime_evaluated": runtime.get("real_model", False),
                             "tokens": {key: sum(row["model_call"].get(key, 0) for row in predictions)
                                        for key in ("input_tokens", "output_tokens")} if runtime else None}
+    metrics["resources"].update(warmup_policy="none; first call retained", model_load_seconds=runtime.get("load_seconds"),
+                                peak_memory_scope="process lifetime high-water mark; includes prior arms")
+    metrics["resources"]["tracks"] = {}
+    for track in ("gold_history", "closed_loop"):
+        rows = [row for row in predictions if row["track"] == track]
+        def latency_summary(values):
+            return {"total_seconds": sum(values), "p50_seconds": statistics.median(values),
+                    "p95_seconds": sorted(values)[max(0, int(len(values) * .95) - 1)]} if values else None
+        metrics["resources"]["tracks"][track] = {"proposer_calls": len(rows),
+            "end_to_end": latency_summary([r["latency_seconds"] for r in rows]),
+            "model_only": latency_summary([r["model_call"]["generation_seconds"] for r in rows if "generation_seconds" in r["model_call"]]),
+            "model_only_scope": "model.generate including decode; excludes prompt rendering/tokenization/parse",
+            "tokens": {key: sum(r["model_call"].get(key, 0) for r in rows) for key in ("input_tokens", "output_tokens")} if runtime else None}
     per_trajectory = {tid: _compute_metrics([r for r in records if r.get("trajectory_id") == tid]) for tid in sorted({r["trajectory_id"] for r in records})}
     resolved = json.loads(canonical_json(config))
     run_manifest = {"schema_version": 1, "dataset": manifest, **run_environment(), "model": runtime,

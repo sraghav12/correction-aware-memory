@@ -103,3 +103,22 @@ def propose_rule(request: DecisionRequest) -> Proposal:
     if observation.value == latest.value:
         return ignore("ambiguous", True)
     return proposal("supersede", latest.version_id, "retraction" if observation.value is None else "new_effective_state")
+
+
+def propose_latest_arrival(request: DecisionRequest) -> Proposal:
+    """Weak diagnostic: choose the most recently supported version, retaining all guards."""
+    observation = request.observation
+    def proposal(action, target=None, reason="initial_fact", review=False):
+        return Proposal(action, target, None if action == "no_op" else observation.value,
+                        None if action == "no_op" else observation.effective_at, observation.source_id,
+                        observation.evidence_start, observation.evidence_end, reason, review)
+    if observation.authority != "official":
+        return proposal("no_op", reason="untrusted", review=True)
+    if observation.effective_at is None:
+        return proposal("no_op", reason="ambiguous", review=True)
+    if not request.candidate_versions:
+        return proposal("create") if observation.value is not None else proposal("no_op", reason="retraction_unsupported", review=True)
+    target = max(request.candidate_versions, key=lambda v: max(ref.observed_at for ref in v.source_refs))
+    same = (observation.value, observation.effective_at) == (target.value, target.effective_at)
+    return proposal("reinforce" if same else "supersede", target.version_id,
+                    "retraction" if observation.value is None else "same_fact" if same else "new_effective_state")

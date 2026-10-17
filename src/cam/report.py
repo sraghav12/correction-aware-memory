@@ -14,6 +14,47 @@ def _display(value):
     return escape(str(value))
 
 
+def write_comparison_report(comparison: dict, out_dir: Path) -> Path:
+    metrics = ("action_macro_f1", "guard_valid_action_macro_f1", "stale_active_rate", "missing_state_rate",
+               "false_overwrite_rate", "erroneous_mutations_among_commits", "state_exact_match", "deterministic_qa_exact_match")
+    lines = ["# Exploratory development comparison", "", "Reference: " + comparison["reference"] + ". Differences below are arm minus reference.",
+             "One inference seed; training seed variation is not estimable. Final test remains unopened.", "",
+             "| Arm | Status | " + " | ".join(metrics) + " |", "|---|---|" + "---|" * len(metrics)]
+    html_rows = []
+    for name, arm in comparison["arms"].items():
+        values = []
+        for metric in metrics:
+            value = arm.get("metrics", {}).get(metric)
+            if isinstance(value, dict):
+                values.append(f'{value["value"]:.4f} ({value["numerator"]}/{value["denominator"]})' if value["value"] is not None else f'undefined ({value["numerator"]}/{value["denominator"]})')
+            else:
+                values.append(f"{value:.4f}" if value is not None else "—")
+        label = name + (" (diagnostic)" if arm.get("diagnostic") else "")
+        lines.append("| " + " | ".join([label, arm["status"], *values]) + " |")
+        html_rows.append("<tr>" + "".join(f"<td>{escape(v)}</td>" for v in [label, arm["status"], *values]) + "</tr>")
+    lines += ["", "## Paired trajectory uncertainty", "", "95% percentile intervals; pooled counts after resampling complete trajectories. Undefined draws are excluded and counted.", "",
+              "| Arm | Metric | Difference | 95% interval | Undefined draws |", "|---|---|---|---|---|"]
+    interval_rows = []
+    for name, contrasts in comparison["contrasts"].items():
+        for metric, row in contrasts.items():
+            values = [name, metric, str(row["difference"]), str(row["interval_95"]), f'{row["undefined_resamples"]}/{row["resamples"]}']
+            lines.append("| " + " | ".join(values) + " |")
+            interval_rows.append("<tr>" + "".join(f"<td>{escape(v)}</td>" for v in values) + "</tr>")
+    lines += ["", "## Limitations", "", *["- " + value for value in comparison["limitations"]], ""]
+    (out_dir / "comparison.md").write_text("\n".join(lines))
+    limits = "".join(f"<li>{escape(v)}</li>" for v in comparison["limitations"])
+    columns = "".join(f"<th>{escape(v)}</th>" for v in ("Arm", "Status", *metrics))
+    path = out_dir / "index.html"
+    path.write_text(f'''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Correction-aware memory · development comparison</title><style>body{{font:15px/1.6 system-ui,sans-serif;margin:0;background:#f4f6f2;color:#162b36}}main{{max-width:1500px;margin:auto;padding:40px 24px}}h1{{font-size:36px;line-height:1.15}}section{{overflow:auto;background:white;border:1px solid #d7e2df;padding:20px;margin:20px 0}}table{{border-collapse:collapse;white-space:nowrap;width:100%}}td,th{{padding:12px;text-align:left;border-bottom:1px solid #d7e2df}}.notice{{padding:16px;border-left:4px solid #b27c2d;background:#fff8e9}}a{{color:#076b60}}</style>
+    <main><h1>Matched development comparison</h1><p class="notice">Exploratory synthetic annotated data. Zero human label reviewers. Neither adapter passed the twenty-target overfit check. Final test unopened.</p>
+    <p>Reference: <strong>{escape(comparison['reference'])}</strong>. One inference seed; {comparison['training_seed_count']} distinct training seed(s). Intervals quantify trajectory resampling, not seed variation or external generalization.</p>
+    <section><h2>Measured outcomes</h2><table><thead><tr>{columns}</tr></thead><tbody>{''.join(html_rows)}</tbody></table></section>
+    <section><h2>Paired uncertainty</h2><p>Differences are arm minus reference. For stale rate, negative is favorable only alongside missing-state and false-overwrite non-regression. Complete trajectories are resampled; counts are pooled before computing rates. Undefined draws remain explicit.</p><table><thead><tr><th>Arm</th><th>Metric</th><th>Difference</th><th>95% interval</th><th>Undefined draws</th></tr></thead><tbody>{''.join(interval_rows)}</tbody></table></section>
+    <section><h2>Limits</h2><ul>{limits}</ul><p><a href="comparison.json">All metrics and per-trajectory counts</a> · <a href="registration.json">Prospective run registration</a> · <a href="comparison.md">Markdown report</a></p></section></main></html>''')
+    return path
+
+
 def write_report(report: EvalReport, out_dir: Path) -> Path:
     prepare_output(out_dir)
     metrics = report.metrics

@@ -61,7 +61,9 @@ class ModelProposer:
             self.last_metadata["input_tokens"] = prepared.token_count
             if prepared.token_count > self.generation.max_input_tokens:
                 raise ModelOutputError("CONTEXT_LIMIT", f"{prepared.token_count} input tokens exceed {self.generation.max_input_tokens}")
+            generation_started = time.perf_counter()
             output = self.runtime.generate(prepared, self.generation)
+            self.last_metadata["generation_seconds"] = time.perf_counter() - generation_started
             self.last_metadata.update(raw_output=output.text, output_tokens=output.output_tokens)
             if output.output_tokens > self.generation.max_new_tokens:
                 raise ModelOutputError("OUTPUT_LIMIT", "runtime exceeded generation budget", output.text)

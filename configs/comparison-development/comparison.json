@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "purpose": "exploratory_development",
+  "arms": {
+    "rule": "rule.json",
+    "base": "base.json",
+    "sft-default": "sft-default.json",
+    "sft-adjusted": "sft-adjusted.json",
+    "latest-arrival": "latest-arrival.json"
+  },
+  "reference": "base",
+  "seed": 11,
+  "bootstrap_count": 2000
+}

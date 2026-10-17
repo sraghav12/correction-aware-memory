@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "data": {
+    "manifest": "../../examples/educational-sft/dataset/development/manifest.json",
+    "split": "development",
+    "seed": 11,
+    "trajectories": 5
+  },
+  "proposer": {
+    "kind": "latest_arrival"
+  },
+  "generation": {
+    "max_input_tokens": 2048,
+    "max_new_tokens": 256,
+    "enable_thinking": false,
+    "do_sample": false,
+    "decoding": "unconstrained"
+  },
+  "training": {
+    "gate": "training_not_justified"
+  },
+  "evaluation": {
+    "seeds": [
+      11
+    ],
+    "bootstrap_count": 2000,
+    "qa_mode": "deterministic"
+  }
+}
