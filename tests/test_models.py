@@ -130,6 +130,26 @@ def test_optional_ml_not_imported_by_offline_cli():
     assert completed.returncode == 0, completed.stderr
 
 
+def test_frozen_inference_model_skips_backward_without_touching_weights():
+    from types import SimpleNamespace
+
+    class FrozenModel:
+        def parameters(self):
+            return iter([SimpleNamespace(requires_grad=False)])
+
+        def train(self):
+            raise AssertionError("frozen inference model entered training mode")
+
+    runtime = models.HuggingFaceRuntime.__new__(models.HuggingFaceRuntime)
+    runtime.model = FrozenModel()
+    probe = runtime.probe_backward()
+    assert probe["status"] == "skipped"
+    assert "inference-only" in probe["reason"]
+    assert probe["weights_updated"] is False
+    assert probe["tokens"] == 0
+    assert probe["seconds"] >= 0
+
+
 def test_evaluator_preserves_model_errors_and_runtime_identity(tmp_path):
     from cam import data, evaluate as evaluation
     from cam.report import write_report

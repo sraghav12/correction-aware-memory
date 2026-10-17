@@ -156,6 +156,9 @@ class HuggingFaceRuntime:
     def probe_backward(self):
         """Tiny compatibility check; no optimizer, updates, saved weights, or training claim."""
         started = time.perf_counter()
+        if not any(parameter.requires_grad for parameter in self.model.parameters()):
+            return {"status": "skipped", "reason": "inference-only model has no trainable parameters",
+                    "weights_updated": False, "tokens": 0, "seconds": time.perf_counter() - started}
         result = {"status": "failed", "weights_updated": False, "tokens": 4}
         try:
             self.model.train()

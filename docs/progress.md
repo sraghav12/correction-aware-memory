@@ -106,3 +106,5 @@ Task6 execution rulings and costs:
 5. After the default's six steps underfit, use exactly one accumulation adjustment with all other settings and hashes fixed. Cost: a second local run; both are disclosed, with no additional sweep.
 
 Full matched development comparison, the remaining original metrics/controls, actual human audits and a locked final study remain unfinished. The original handoff and its input/output scope have not been changed.
+
+Fresh whole-branch review found no Critical or Important findings and independently verified all forty artifact hashes, reconstructed requests/targets, masks, checkpoint tensors, loss aggregates and disclosed metrics. One Minor diagnostic issue was reproduced and fixed: frozen inference checkpoints now explicitly skip the backward probe without entering training mode. Final verification: **112 tests passed with the ML extra; 110 passed and two optional native checks skipped in an isolated core environment**. The original brief remains byte-identical; neither training control meets the twenty-target overfit criterion.
