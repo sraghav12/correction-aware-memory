@@ -1,0 +1,49 @@
+{
+  "started_at_utc": "2026-10-18T02:57:01.746245+00:00",
+  "reviewer_type": "ai",
+  "provider": "OpenRouter / Google",
+  "model": "google/gemini-2.5-flash-lite",
+  "sample_count": 50,
+  "checkpoint_count": 114,
+  "first_run_registration_sha256": "b6df9a69583289b10832d5b55dc177318b34c24c5b7068edb16072919e2fbc5f",
+  "requests_sha256": "0df43c610b444d671834ab35b2aff03d56d2117910aaa7c5dca5e6586d93189e",
+  "runner_sha256": "b97aff7b124a9405616577d95086e2a95ca87947d993bd7cb7581ecbe519431c",
+  "change": "Same blinded source/history/queries and policy prompt; different provider/model after both Anthropic credentials hit low-credit errors. Reasoning explicitly disabled; API JSON-object mode; max output remains1500.",
+  "previous_attempts": "Anthropic initial50 calls preserved,31truncated/1credit error. Explicit-thinking-off Anthropic follow-up stopped at token preflight with no inference because fallback credential also lacks credits.",
+  "probe_case": "pilot-11-0006:o2",
+  "continuation_gate": "HTTP200, finish_reason=stop, valid JSON envelope and no reasoning tokens; no semantic-match requirement.",
+  "max_inference_calls": 50,
+  "automatic_retries": 0,
+  "concurrency": 4,
+  "scope": "One AI model review; not a replication of the original trained-model comparison or independent human validation.",
+  "original_answer_key_changed": false,
+  "pricing_metadata": {
+    "id": "google/gemini-2.5-flash-lite",
+    "pricing": {
+      "prompt": "0.0000001",
+      "completion": "0.0000004",
+      "image": "0.0000001",
+      "audio": "0.0000003",
+      "input_audio_cache": "0.00000003",
+      "web_search": "0.014",
+      "internal_reasoning": "0.0000004",
+      "input_cache_read": "0.00000001",
+      "input_cache_write": "0.0000000833333333333333"
+    },
+    "supported_parameters": [
+      "include_reasoning",
+      "max_tokens",
+      "reasoning",
+      "response_format",
+      "seed",
+      "stop",
+      "structured_outputs",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_p"
+    ]
+  },
+  "pricing_url": "https://openrouter.ai/google/gemini-2.5-flash-lite",
+  "source_input_unchanged": true
+}

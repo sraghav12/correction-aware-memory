@@ -1,0 +1,23 @@
+{
+  "started_at_utc": "2026-10-18T02:55:13.217800+00:00",
+  "reviewer_type": "ai",
+  "provider": "Anthropic",
+  "model": "claude-haiku-5-5",
+  "sample_count": 50,
+  "checkpoint_count": 114,
+  "first_run_registration_sha256": "b6df9a69583289b10832d5b55dc177318b34c24c5b7068edb16072919e2fbc5f",
+  "requests_sha256": "b0d5a5a8f9df9f51552de3a84fe259c46447cb508ca8408eba24bd01bc0458a6",
+  "runner_sha256": "fd78a3a12935936d978c7267f2aa472e73d0ec15689abf668fc63b3c3bae6cca",
+  "change": "Same model, system prompt, blind observation/history/query inputs and 1500 output-token cap; explicitly thinking=disabled and effort=medium. Different user-authorized fallback credential after credit failure.",
+  "reason": "First run had 31 thinking-only max_tokens responses and one low-credit HTTP400. Preserve that run; this is a separate full-sample setup correction, not selective answer replacement.",
+  "continuation_gate": "First case HTTP200, end_turn, valid JSON envelope, zero thinking tokens; no semantic-match requirement.",
+  "probe_case": "pilot-11-0006:o2",
+  "max_inference_calls": 50,
+  "automatic_retries": 0,
+  "concurrency": 4,
+  "overall_estimated_cost_cap_usd": 0.15,
+  "prior_run_estimated_cost_usd": 0.045283800000000006,
+  "pricing_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "thinking_reference": "https://platform.claude.com/docs/en/build-with-claude/thinking",
+  "scope": "AI consistency review only; original gold, human judgments, original model experiment results and final test remain unchanged."
+}

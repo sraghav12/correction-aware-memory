@@ -1,0 +1,1215 @@
+{
+  "schema_version": 1,
+  "reviewer_type": "ai",
+  "reviewer_model": "gpt-6.1-sol",
+  "date_utc": "2026-10-18T03:00:14.229421+00:00",
+  "scope": "Read-only AI adjudication of all 30 Gemini mismatching pilot cases, all their checkpoint differences, and all 18 completed initial Haiku predictions. This is not a human review and does not approve or redefine canonical labels.",
+  "authority": [
+    "docs/superpowers/handoffs/correction-aware-memory.md: Atomic input and output; Action semantics and temporal state",
+    "Preserved blinded requests.jsonl policy/projection contract for deterministic version IDs, new-head support sets and exact reason codes",
+    "Packet observation and prior_versions histories; no reference implementation invoked as correctness oracle"
+  ],
+  "method": "Manual per-case reasoning from source annotation, surviving correction lineages, latest effective boundary, inclusive known time, half-open neighboring intervals and permitted provenance. Source schemas/store read only to understand representation. Local standard-library SHA256/span/coverage/integrity checks only; no external requests, credentials, training, tests, or evaluator execution.",
+  "gemini_original_comparison_counts": {
+    "case_count": 50,
+    "checkpoint_count": 114,
+    "action_matches": 39,
+    "full_proposal_matches": 32,
+    "full_checkpoint_matches": 67,
+    "entire_case_matches": 20,
+    "entire_case_mismatches": 30
+  },
+  "gemini_adjudication_counts": {
+    "model_error": 30,
+    "gold_error": 0,
+    "spec_ambiguity": 0,
+    "unresolved": 0,
+    "mismatching_checkpoints_inspected": 47
+  },
+  "cases": [
+    {
+      "observation_id": "pilot-11-0001:o6",
+      "category": "model_error",
+      "rationale": "Same official value and Jan1 boundary reinforce o0; the exact annotated span must remain [0,100), not the empty [100,100). Both projected checkpoints agree.",
+      "proposal_difference_fields": [
+        "evidence_start"
+      ],
+      "checkpoint_adjudications": [],
+      "matching_checkpoint_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0003:o5",
+      "category": "model_error",
+      "rationale": "The Jan1 withdrawn head o0 already exists with s0/s2/s3 support. Official repetition reinforces it, rather than creating o5 or replacing its provenance.",
+      "proposal_difference_fields": [
+        "action",
+        "reason_code",
+        "target_version_id"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Keep o0 and add s5 to existing s0/s2/s3."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-17T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "The same Jan1 head and accumulated sources remain selected on Jan17."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0004:o4",
+      "category": "model_error",
+      "rationale": "Null repeats the latest Jan11 null head o3 at the same boundary: reinforce with reason retraction. Supersede requires a strictly later changed boundary.",
+      "proposal_difference_fields": [
+        "action",
+        "reason_code"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-11T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "status",
+            "version_id"
+          ],
+          "rationale": "Select retracted o3 with s3/s4, without creating o4."
+        },
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-14T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "status",
+            "version_id"
+          ],
+          "rationale": "Jan14 still selects Jan11 retracted o3 and both sources."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0002:o2",
+      "category": "model_error",
+      "rationale": "The supersede proposal is correct. Supersession bounds the prior preliminary assertion; it does not retract that non-null historical assertion.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "status"
+          ],
+          "rationale": "At effective Jan1 the value preliminary remains active through the half-open Jan8 boundary."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0002:o7",
+      "category": "model_error",
+      "rationale": "Jan29 supersede is correct and pending at Jan23. It does not erase the existing Jan1 historical assertion.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "effective_until",
+            "source_ids",
+            "status",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Jan1 is inclusive: select preliminary o0 with s0/s1 over [Jan1,Jan8), not an invented absent/retracted view."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        1,
+        2
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0002:o8",
+      "category": "model_error",
+      "rationale": "Jan30 supersede is correct. Known future Jan29 and Jan30 boundaries do not become current on Jan26.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-26T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "effective_until",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Effective Jan26 selects withdrawn o5 over [Jan23,Jan29), with s5; selecting future o7 changes value, version, sources and interval incorrectly."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0,
+        2
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0004:o1",
+      "category": "model_error",
+      "rationale": "Official later null is a superseding retraction, explicitly requiring reason retraction. The new null assertion is retracted, not active.",
+      "proposal_difference_fields": [
+        "reason_code"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-05T00:00:00.000000Z",
+          "known_at": "2026-01-05T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "status"
+          ],
+          "rationale": "Jan5 selects null o1 with status retracted."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0004:o2",
+      "category": "model_error",
+      "rationale": "Jan8 supersede is correct. The existing Jan5 null assertion remains a timeline boundary despite its retraction status.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until"
+          ],
+          "rationale": "Published o0 ends at neighboring Jan5, not Jan8; do not skip the null boundary."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0004:o3",
+      "category": "model_error",
+      "rationale": "Official later null is a superseding retraction with reason retraction, preserving the earlier timeline.",
+      "proposal_difference_fields": [
+        "reason_code"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-11T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "status"
+          ],
+          "rationale": "Jan11 selects null o3 with status retracted, not active."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0004:o7",
+      "category": "model_error",
+      "rationale": "Jan23 published differs from the latest Jan11 null head o3 and must supersede it. Matching an older Jan1 value cannot justify reinforcement or rewriting the input date.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "target_version_id"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-23T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "effective_until",
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select new Jan23 o7, only s7, and no end; do not revive Jan1 o0 or add s7 to its support."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0000:o4",
+      "category": "model_error",
+      "rationale": "The authorized correction updates the Jan8 boundary without adding a new effective boundary at its Jan14 arrival.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until"
+          ],
+          "rationale": "Corrected o4 has no later effective neighbor, so effective_until stays null rather than Jan14."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0,
+        2
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0000:o7",
+      "category": "model_error",
+      "rationale": "The authorized correction references o0 at Jan1; target that boundary head, not the Jan8 correction head o4. The Jan8 lineage remains intact.",
+      "proposal_difference_fields": [
+        "target_version_id"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "At Jan8 select corrected preliminary o4 with only s4 and no end; replaced o2 is not a live neighbor or selected assertion."
+        },
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-23T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "status"
+          ],
+          "rationale": "On Jan23 non-null preliminary o4 remains active; historical correction does not retract it."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0004:o6",
+      "category": "model_error",
+      "rationale": "Authorized Jan5 correction updates historical null o1 only, preserving the Jan8 and Jan11 boundaries.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-20T00:00:00.000000Z",
+          "known_at": "2026-01-20T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "effective_until",
+            "source_ids",
+            "status",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Effective Jan20 selects the later Jan11 null o3 with s3/s4, status retracted and no end; Jan5 o6 cannot become current by arriving Jan20."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0005:o1",
+      "category": "model_error",
+      "rationale": "Authorized correction appends a new Jan1 assertion o1 replacing o0; this is an immutable lineage update, not in-place mutation or reinforcement.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-05T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select new o1 with only s1; s0 supports the replaced withdrawn assertion."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-05T00:00:00.000000Z",
+          "known_at": "2026-01-05T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Current Jan5 likewise selects new o1 with only s1."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0005:o3",
+      "category": "model_error",
+      "rationale": "The second authorized correction replaces live head o1 by appended o3 at Jan1. Ancestor support is not support for the new published assertion.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select o3 with only s3, not o1 with s1/s3."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-11T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Current Jan11 likewise selects o3 with only s3."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0006:o2",
+      "category": "model_error",
+      "rationale": "Authorized Jan1 correction references o0, so target o0 rather than latest Jan5 head o1. Preserve the Jan5 withdrawn assertion and interval.",
+      "proposal_difference_fields": [
+        "target_version_id"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "status",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Jan1 selects new preliminary o2 with s2 over [Jan1,Jan5), active rather than retracted old o0."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-05T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until",
+            "status"
+          ],
+          "rationale": "Jan5 selects non-null withdrawn o1, active with no end; observed Jan8 is not a new boundary."
+        },
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Effective Jan8 still selects Jan5 withdrawn o1 and s1; arrival recency cannot make historical o2 current."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0007:o4",
+      "category": "model_error",
+      "rationale": "Authorized Jan1 correction appends o4 replacing o0; it does not retain the ancestor identifier or merge ancestor support.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select published o4 with only s4."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-14T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Current Jan14 also selects published o4 with only s4."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0007:o6",
+      "category": "model_error",
+      "rationale": "The correction of Jan1 live head o4 appends o6; known_at Jan20 includes this observation for all effective-time queries.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-20T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "status",
+            "value",
+            "version_id"
+          ],
+          "rationale": "At Jan1 using Jan20 knowledge select withdrawn active o6 and s6, not superseded published o4 marked retracted."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0009:o1",
+      "category": "model_error",
+      "rationale": "Authorized Jan1 correction appends o1, replacing o0. Retaining o0 and combining s0/s1 contradict the explicit projection contract.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-05T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select withdrawn o1 and only s1, keeping o0/s0 solely in prior knowledge history."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-05T00:00:00.000000Z",
+          "known_at": "2026-01-05T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Current Jan5 likewise selects withdrawn o1 and only s1."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0010:o3",
+      "category": "model_error",
+      "rationale": "Authorized correction appends published o3 replacing preliminary o0. Reinforcements s0/s1/s2 belong to the ancestor assertion, not the new head.",
+      "proposal_difference_fields": [],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Select o3 with only s3, not o0 with the union of all old supports."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-11T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Current Jan11 likewise selects o3 with only s3."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0000:o3",
+      "category": "model_error",
+      "rationale": "Official repeat refers to older Jan1 after accepted Jan8 boundary: no_op(stale), even though the historical value is true. No create, support change or new boundary follows.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "version_id"
+          ],
+          "rationale": "Retain Jan1 o0 with s0/s1, not a recreated o3 supported only by s3."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-11T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until"
+          ],
+          "rationale": "Jan8 withdrawn o2 has no later boundary; observed Jan11 must not become effective_until."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        2
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0000:o5",
+      "category": "model_error",
+      "rationale": "Informal disagreement with Jan8 corrected head is untrusted no_op with review; document instructions cannot confer authority. Equal boundary also cannot supersede.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "target_version_id",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until",
+            "status"
+          ],
+          "rationale": "Jan8 remains active preliminary o4 with no end, not a zero-length retracted interval."
+        },
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-17T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until",
+            "status"
+          ],
+          "rationale": "Current Jan17 remains the same active preliminary head with no end."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0000:o6",
+      "category": "model_error",
+      "rationale": "Informal published assertion cannot mutate facts and requires untrusted no_op/review. No strictly later boundary or authorized correction exists.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "target_version_id",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-20T00:00:00.000000Z",
+          "known_at": "2026-01-20T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Current Jan20 stays preliminary o4 supported only by s4, not invented published o6/s6."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0,
+        1
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0000:o8",
+      "category": "model_error",
+      "rationale": "Official Jan8 conflict lacks authorized correction and is ambiguous no_op/review, not supersede at an equal boundary. Existing correction heads must still govern projection.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "target_version_id",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Jan1 selects withdrawn correction o7 with only s7, replacing preliminary o0 and its sources."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until",
+            "source_ids"
+          ],
+          "rationale": "Jan8 selects preliminary correction o4 with only s4 and no later effective boundary; ancestor o2 is replaced, not a second Jan8 boundary or support for o4."
+        },
+        {
+          "query_index": 2,
+          "effective_as_of": "2026-01-26T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Current Jan26 remains preliminary o4/s4; no new published o8 may be created."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0001:o2",
+      "category": "model_error",
+      "rationale": "Missing effective date requires ambiguous no_op/review. Existing history rules out create, and observed Jan8 cannot supply the missing effective date.",
+      "proposal_difference_fields": [
+        "action",
+        "reason_code",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_until"
+          ],
+          "rationale": "Existing published o0 keeps no end; the undated observation adds no boundary."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-08T00:00:00.000000Z",
+          "known_at": "2026-01-08T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Jan8 still selects dated Jan1 published o0 with s0/s1, not an undated preliminary o2."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0001:o5",
+      "category": "model_error",
+      "rationale": "Official different value at the existing Jan1 boundary without authorized correction is ambiguous no_op/review, not create.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Keep published o0 and s0/s1/s3/s4; conflicting s5 does not replace the head or support it."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-17T00:00:00.000000Z",
+          "known_at": "2026-01-17T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Current Jan17 retains the same published head and sources."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0001:o7",
+      "category": "model_error",
+      "rationale": "Informal text has neither correction authorization nor referenced observation; its embedded instructions do not authorize update. Use untrusted no_op/review.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "target_version_id",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value"
+          ],
+          "rationale": "Retain published o0 and s0/s1/s3/s4/s6; untrusted s7 cannot change the value or become support."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-23T00:00:00.000000Z",
+          "known_at": "2026-01-23T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value"
+          ],
+          "rationale": "Current Jan23 retains the same published head and sources."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0001:o8",
+      "category": "model_error",
+      "rationale": "Informal same-boundary disagreement is untrusted no_op/review, with null target/value/date. Supersede additionally requires a later boundary.",
+      "proposal_difference_fields": [
+        "action",
+        "effective_at",
+        "reason_code",
+        "review_required",
+        "target_version_id",
+        "value"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 0,
+          "effective_as_of": "2026-01-01T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Retain published o0 and its five accepted sources; preliminary o8/s8 is not a valid replacement."
+        },
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-26T00:00:00.000000Z",
+          "known_at": "2026-01-26T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Current Jan26 retains the same published head and accepted provenance."
+        }
+      ],
+      "matching_checkpoint_indices": []
+    },
+    {
+      "observation_id": "pilot-11-0001:o9",
+      "category": "model_error",
+      "rationale": "Official observation has missing effective date: ambiguous no_op/review, preserving input source s9 and span [0,79). Null date does not remove official authority or evidence identity.",
+      "proposal_difference_fields": [
+        "evidence_end",
+        "evidence_start",
+        "reason_code",
+        "source_id"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-29T00:00:00.000000Z",
+          "known_at": "2026-01-29T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Current Jan29 remains Jan1 published o0 and its five sources; arrival cannot become an invented Jan29 preliminary boundary."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0
+      ]
+    },
+    {
+      "observation_id": "pilot-11-0002:o4",
+      "category": "model_error",
+      "rationale": "Official undated observation correctly suggests no_op, but reason must be ambiguous rather than untrusted. Known future Jan17 boundary remains pending on Jan14.",
+      "proposal_difference_fields": [
+        "reason_code"
+      ],
+      "checkpoint_adjudications": [
+        {
+          "query_index": 1,
+          "effective_as_of": "2026-01-14T00:00:00.000000Z",
+          "known_at": "2026-01-14T00:00:00.000000Z",
+          "category": "model_error",
+          "difference_fields": [
+            "effective_at",
+            "effective_until",
+            "source_ids",
+            "value",
+            "version_id"
+          ],
+          "rationale": "Effective Jan14 selects withdrawn o2 with s2 over [Jan8,Jan17), not future published o3."
+        }
+      ],
+      "matching_checkpoint_indices": [
+        0,
+        2
+      ]
+    }
+  ],
+  "anthropic_completed_review": {
+    "completed_predictions": 18,
+    "full_proposal_matches": 18,
+    "full_checkpoint_matches": 34,
+    "checkpoint_count": 36,
+    "model_projection_errors": 1,
+    "consistent_with_spec_cases": 17,
+    "cases": [
+      {
+        "observation_id": "pilot-11-0000:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null preliminary effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0001:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null published effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0002:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null preliminary effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0003:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null withdrawn effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0004:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null published effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0005:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null withdrawn effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "The source_sha256 value cannot be checked against the supplied material, so source integrity is taken from the loader annotation.",
+            "resolution": "Reviewer did not recompute source integrity. SHA256 over exact UTF-8 current source text and Unicode span checks pass for all 50 observations. Prior source-ref original texts are not all supplied, so their independent authenticity is outside this review; no actual corruption is established."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0006:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null published effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0007:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null preliminary effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "The source_sha256 value cannot be verified against the supplied text in this review, so source integrity is taken from the loader annotation.",
+            "resolution": "Reviewer did not recompute source integrity. SHA256 over exact UTF-8 current source text and Unicode span checks pass for all 50 observations. Prior source-ref original texts are not all supplied, so their independent authenticity is outside this review; no actual corruption is established."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0008:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null withdrawn effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "The source_sha256 value and the evidence_start/evidence_end offsets (0 to 100) were not independently recomputed or checked against a stored source document, so source integrity rests on the loader annotations.",
+            "resolution": "Reviewer did not recompute source integrity. SHA256 over exact UTF-8 current source text and Unicode span checks pass for all 50 observations. Prior source-ref original texts are not all supplied, so their independent authenticity is outside this review; no actual corruption is established."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0009:o0",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Empty matching history and official non-null published effective Jan1 require create. Both Jan1 and Jan2 queries at Jan2 knowledge select the new o0 with s0 and no end.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0001:o1",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "Both source records carry the same source_sha256 value despite distinct source IDs, which may indicate duplicated content or a copying artifact; this cannot be verified from the supplied data.",
+            "resolution": "Same exact notice bytes correctly yield the same SHA256 under different loader source IDs. All 50 current input hashes/spans validate locally. Policy and review prompt accumulate distinct source IDs, not independent authors or unique content hashes; this is a synthetic provenance limitation, not a label defect."
+          },
+          {
+            "concern": "Query 0 and query 1 treat observation pilot-11-0001:s1 as known at known_at 2026-01-05 because its observed_at equals known_at; this assumes known_at is inclusive.",
+            "resolution": "Resolved by handoff view definition: observed_at <= known_at explicitly includes the observation at equality. Prompt wording is less formal, but canonical temporal policy is unambiguous."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0001:o3",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "All prior source_refs and the new observation carry the same source_sha256 value despite distinct source_ids, which may indicate a copied or placeholder hash that cannot be independently verified here.",
+            "resolution": "Same exact notice bytes correctly yield the same SHA256 under different loader source IDs. All 50 current input hashes/spans validate locally. Policy and review prompt accumulate distinct source IDs, not independent authors or unique content hashes; this is a synthetic provenance limitation, not a label defect."
+          },
+          {
+            "concern": "The prior version's source_refs are the only evidence for the 2026-01-01 boundary; the reinforcement adds support without any independent check of the underlying notice.",
+            "resolution": "Prior history is trusted packet input in this bounded action task. Missing original historical document text limits external authenticity checks but does not contradict its stored boundary or support."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0001:o4",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "All listed source_sha256 values are identical across the observation and prior sources, which is unusual but does not affect this decision.",
+            "resolution": "Reviewer did not recompute source integrity. SHA256 over exact UTF-8 current source text and Unicode span checks pass for all 50 observations. Prior source-ref original texts are not all supplied, so their independent authenticity is outside this review; no actual corruption is established."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0001:o6",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0002:o1",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "Source s0 and source s1 carry an identical source_sha256 despite distinct source IDs, which may indicate the same underlying document; this cannot be verified from the supplied data.",
+            "resolution": "Same exact notice bytes correctly yield the same SHA256 under different loader source IDs. All 50 current input hashes/spans validate locally. Policy and review prompt accumulate distinct source IDs, not independent authors or unique content hashes; this is a synthetic provenance limitation, not a label defect."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0003:o3",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Official repetition matches the sole latest Jan1 boundary and value: reinforce the existing o0. Both checkpoints keep that head and include the new source alongside the listed prior supports; known_at includes equal observed_at.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "The notice's observed_at equals the query known_at (2026-01-11T00:00:00.000000Z), so including s3 in the query sources assumes known_at is inclusive.",
+            "resolution": "Resolved by handoff view definition: observed_at <= known_at explicitly includes the observation at equality. Prompt wording is less formal, but canonical temporal policy is unambiguous."
+          },
+          {
+            "concern": "The source_sha256 for the notice cannot be verified from the supplied text alone.",
+            "resolution": "Reviewer did not recompute source integrity. SHA256 over exact UTF-8 current source text and Unicode span checks pass for all 50 observations. Prior source-ref original texts are not all supplied, so their independent authenticity is outside this review; no actual corruption is established."
+          }
+        ]
+      },
+      {
+        "observation_id": "pilot-11-0009:o1",
+        "category": "model_error",
+        "assessment": "model_error",
+        "rationale": "The official authorized correction references Jan1 o0, targets it, and appends new version v:pilot-11-0009:o1. Both queries use Jan5 knowledge and must select that new head. Keeping version o0 is a model projection error; the proposal, value, date, status and s1-only support already agree. The supplied prompt explicitly specifies the appended ID.",
+        "difference_paths": [
+          "states[0].version_id",
+          "states[1].version_id"
+        ],
+        "concern_resolutions": []
+      },
+      {
+        "observation_id": "pilot-11-0001:o9",
+        "category": null,
+        "assessment": "consistent_with_spec",
+        "rationale": "Missing effective date requires ambiguous no_op/review. Both checkpoints retain the existing Jan1 published o0 and its five accepted sources; the concern restates the intended abstention case rather than identifying wrong gold.",
+        "difference_paths": [],
+        "concern_resolutions": [
+          {
+            "concern": "The observation's effective date is null (the text says 'effective None'), so its intended effective boundary cannot be determined and it requires review.",
+            "resolution": "Intended missing-date case: abstain with ambiguous no_op/review. It does not invalidate the existing timeline or gold."
+          }
+        ]
+      }
+    ]
+  },
+  "actual_gold_defects": [],
+  "overall_findings": [
+    "No actual gold defect established in the inspected mismatch and completed-Haiku scope. Model disagreement alone supplies no evidence that gold should change.",
+    "Repeated notice text across distinct source IDs explains identical SHA256 values. All 50 current source digests and spans validate; distinct IDs do not demonstrate independent evidence or authorship.",
+    "known_at is inclusive by the written <= definition; arrival time does not create effective boundaries.",
+    "Corrections append a new version at their referenced boundary; the new assertion has new-source support, while old assertions remain in knowledge history. Haiku 0009:o1 violates only the new selected-version ID requirement."
+  ],
+  "limitations": [
+    "This adjudicator sees gold, predictions, and written policy; adjudication is unblinded and AI-only. It is a consistency analysis, not independent human validation, empirical proof of gold correctness, or certification of the reviewer/model.",
+    "The 50 cases are a stratified development pilot selected from a small synthetic template family. Match rates do not establish generalization or a learned advantage, and 18 successful Haiku outputs are a truncated/error-selected subset, not a completed 50-case Haiku evaluation.",
+    "Candidate value/date/authority/correction authorization are trusted loader annotations; extraction, source authenticity and real-world truth are outside scope. Repeated content is not independent corroboration. Historical source_refs omit some original source texts, limiting independent verification of every historical digest.",
+    "The handoff states appended correction lineage but does not enumerate every version-ID string or source-set formatting rule. The preserved blinded projection prompt explicitly supplies those representation rules; disagreements solely on those fields concern the supplied contract, not an independently inferred ontology.",
+    "All differing checkpoints in the 30 mismatches were inspected. The 20 matching Gemini cases were not subjected to a fresh exhaustive semantic adjudication except overlapping Haiku cases and all-50 input hash/span checks. No conclusion that every canonical label is proven correct follows.",
+    "No training/test split access, training, external API calls, tracked-file edits, packet edits, model prediction changes or human verdict changes were performed. Human audit remains one accepted verdict with 49 pending."
+  ],
+  "input_integrity": {
+    "all_50_current_source_sha256_valid": true,
+    "all_50_current_source_spans_valid": true,
+    "frozen_packet_manifest_file_hashes_valid": true,
+    "protected_files_sha256": {
+      "docs/superpowers/handoffs/correction-aware-memory.md": "7ac059d03f0c9b00a32b7032f9c2edf83e9cc2412080df43b47c2003f182cd72",
+      "audits/pilot-seed11/manifest.json": "15be20e881f72a3c9e96ce6d3090faeac961e035acfafac2f56fe89e9ac4a220",
+      "audits/pilot-seed11/events.jsonl": "8de49de10e1960e21b64243557774b0b027e996419b4d1f48f3dbf4a75dfac85",
+      "audits/pilot-seed11/review.csv": "bdd17b9badc522d2dc6aeb1a0e118122af005e777bbff6e4f1414d9e83577312",
+      "audits/pilot-seed11/review.md": "f19d18b8fcfde5630aa4e4f339a3732fcd0d2e2a87e80fa49c4130f63e84cc06",
+      "runs/ai-label-review-gemini/comparisons.jsonl": "bf31e465b083248c18dce7d4a25d92caa204bb5a2996379695700f14c3a5a8eb",
+      "runs/ai-label-review-gemini/summary.json": "e736afe806c2616d2b22bb07fc09d491352bd9c474a7eb30614bbf5c211a5e41",
+      "runs/ai-label-review-gemini/requests.jsonl": "0df43c610b444d671834ab35b2aff03d56d2117910aaa7c5dca5e6586d93189e",
+      "runs/ai-label-review-anthropic/comparisons.jsonl": "49de93666299185b6b8d00f60651f6ca35c2672c499df72bed03a76e6dd3d2d3",
+      "runs/human-audit-anonymous/review.csv": "02609774e902029c9f4279c5672b89c6bb2f2b0d3591f7a0c3a647e8fc4b525f",
+      "runs/human-audit-anonymous/status.json": "f0d078aed0da75b73a8362d4529e64ee6aedd1db8af98bbe2cf89dace61661e4"
+    }
+  }
+}

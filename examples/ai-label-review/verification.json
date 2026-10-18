@@ -1,0 +1,25 @@
+{
+  "positive_offline_replay": "passed",
+  "negative_controls": [
+    {
+      "control": "duplicate_comparison",
+      "rejected": true
+    },
+    {
+      "control": "unexpected_prior_message",
+      "rejected": true
+    },
+    {
+      "control": "non_credit_http400",
+      "rejected": true
+    },
+    {
+      "control": "saved_prediction_mismatch",
+      "rejected": true
+    }
+  ],
+  "original_evidence_modified_by_controls": false,
+  "coverage_fix_proof": "Prior verifier accepted a 51st duplicate comparison; corrected verifier rejects it.",
+  "runtime": "Python standard library; no API calls or ML inference",
+  "note": "Synthetic altered copies had their own manifests refreshed to test semantic/coverage checks beyond hash validation."
+}

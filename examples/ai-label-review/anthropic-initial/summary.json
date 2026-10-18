@@ -1,0 +1,22 @@
+{
+  "reviewer_type": "ai",
+  "provider": "Anthropic",
+  "model": "claude-haiku-5-5",
+  "case_count": 50,
+  "checkpoint_count": 114,
+  "http_successes": 49,
+  "comparison_counts": {
+    "matched": 8,
+    "unresolved": 41,
+    "mismatch": 1
+  },
+  "action_matches": 18,
+  "full_proposal_matches": 18,
+  "matched_checkpoints": 34,
+  "input_tokens": 109083,
+  "output_tokens": 68751,
+  "estimated_cost_usd": 0.045283800000000006,
+  "checked_at_utc": "2026-10-18T02:53:24.034482+00:00",
+  "normalization": "UTC timestamp representation and source-set order only; no output repair or retries",
+  "adjudication": "Mismatches require inspection; this comparison alone cannot identify whether the model or gold is wrong."
+}

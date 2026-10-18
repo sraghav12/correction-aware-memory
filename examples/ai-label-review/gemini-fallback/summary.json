@@ -1,0 +1,23 @@
+{
+  "reviewer_type": "ai",
+  "provider": "OpenRouter / Google",
+  "model": "google/gemini-2.5-flash-lite",
+  "case_count": 50,
+  "checkpoint_count": 114,
+  "http_successes": 50,
+  "comparison_counts": {
+    "matched": 20,
+    "mismatch": 30
+  },
+  "action_matches": 39,
+  "full_proposal_matches": 32,
+  "matched_checkpoints": 67,
+  "input_tokens": 96283,
+  "output_tokens": 27606,
+  "estimated_cost_usd": 0.020670700000000004,
+  "provider_reported_cost_usd": 0.0206707,
+  "reasoning_tokens": 0,
+  "checked_at_utc": "2026-10-18T02:57:28.339626+00:00",
+  "normalization": "UTC timestamp representation and source-set order only; no output repair or retries",
+  "adjudication": "Mismatches require inspection; this comparison alone cannot identify whether the model or gold is wrong."
+}

@@ -67,7 +67,8 @@ flowchart LR
 |---|---|
 | Contracts, original fixtures, validated ledger, rule policy | Implemented and tested |
 | Original pilot, independent expected states, offline CLI/report | Implemented and experimentally exercised |
-| Human label audit | [Walkthrough](docs/human-audit-guide.md) and [50-event packet](audits/pilot-seed11/review.md) prepared; 0 actual human reviewers |
+| Human label audit | [Walkthrough](docs/human-audit-guide.md); one participant/one accepted case in local working copy; full 50-case manual audit incomplete |
+| Separate AI label review | [Blinded API review](examples/ai-label-review/README.md): Gemini completed 50 cases; 39 actions/32 full proposals matched; all 30 differing cases separately adjudicated as model errors |
 | Prompted Qwen3 runtime | Real CPU smoke complete; 0/10 schema-valid proposals; [raw evidence](examples/qwen-smoke-cpu/README.md) |
 | LoRA training and saved adapter | Two bounded educational runs saved/reloaded; full 20/20 overfit goal unmet |
 | Matched model comparisons and uncertainty | Five development trajectories, all five arms and paired intervals recorded; full final study deferred |
@@ -90,7 +91,7 @@ The smoke records ten pilot/development requests, raw responses and failures, to
 
 Following the [original brief alignment check](docs/drift-audit.md), Task 6 now includes actual completion-only LoRA training with frozen-base hashes, preserved loss/output records and exact fresh-base reload tokens. The original default produced 2/20 exact training targets; the one allowed accumulation adjustment produced 13/20, with 20/20 schema-valid outputs and 13/20 guard-valid expected actions. Neither achieved full overfit. These figures describe training-target reproduction; the separate matched development results appear below.
 
-[Default checkpoint and raw evidence](examples/educational-sft/README.md) · [Single adjustment and raw evidence](examples/educational-sft-overfit/README.md) · [Model card and reproduction](docs/model-card.md). Human reviewers remain zero, and the full final study is pending. A later matched development comparison is linked below.
+[Default checkpoint and raw evidence](examples/educational-sft/README.md) · [Single adjustment and raw evidence](examples/educational-sft-overfit/README.md) · [Model card and reproduction](docs/model-card.md). No human labels had been reviewed at training time; later partial human progress and the separate AI review are recorded above. The full final study is pending. A later matched development comparison is linked below.
 
 ## Matched development evidence
 
@@ -110,8 +111,8 @@ CLI exit codes: `0` success, `2` invalid input/config, `3` unavailable optional 
 
 Each run contains raw requests/proposals for both tracks, commit/rejection results, checkpoint scores, per-trajectory metrics, current and gold-history SQLite ledgers, resolved configuration, dataset identity, code commit/dirty status, dependency-lock hash and environment. `label-audit.jsonl` and `label-audit.md` prepare 50 stratified pilot events; reviewer/verdict fields start null. Inspect the committed [canonical trace](examples/canonical-trace.json) or [complete portable smoke run](examples/smoke/README.md).
 
-The [pilot review packet](audits/pilot-seed11/review.md) includes the exact source, supplied trust/correction metadata, prior assertion history, expected proposal, and temporal checkpoints for each of 50 events. Record actual human decisions in [review.csv](audits/pilot-seed11/review.csv); the [audit manifest](audits/pilot-seed11/manifest.json) binds the sample to its dataset and source commit. These verdict fields are intentionally empty until reviewed.
+The [pilot review packet](audits/pilot-seed11/review.md) includes the exact source, supplied trust/correction metadata, prior assertion history, expected proposal, and temporal checkpoints for each of 50 events. Record actual human decisions in a separate working copy of [review.csv](audits/pilot-seed11/review.csv), following the [walkthrough](docs/human-audit-guide.md); the [audit manifest](audits/pilot-seed11/manifest.json) binds the unchanged original packet to its dataset and source commit. The published verdict template preserves its initial blank snapshot.
 
 The task plan and execution record are under [docs/superpowers](docs/superpowers/plans/2026-10-17-correction-aware-memory.md) and [docs/progress.md](docs/progress.md). Code is MIT-licensed; original synthetic data is designated CC0-1.0. This project is not a full MEMORA/PSD reproduction or a validated novel memory method. [Related work and remaining novelty audit](docs/novelty-audit.md).
 
-**Next concrete task:** implement the original Task 7 matched development comparison and uncertainty path; complete the [50-event human pilot audit](audits/pilot-seed11/review.md) before scientific claims. Keep final tests locked and report negative results rather than extending the training sweep.
+**Next concrete task for research continuation:** establish a distinct contribution and a justified learned task before extending experiments. The bounded Task 7 development comparison is complete; full original study requirements and the manual pilot audit remain incomplete. The separate AI review is available for engineering use. Keep final tests locked until the research protocol is ready.

@@ -1,0 +1,25 @@
+{
+  "original_packet_manifest_sha256": "15be20e881f72a3c9e96ce6d3090faeac961e035acfafac2f56fe89e9ac4a220",
+  "files": {
+    "README.md": "85caf0dbffa6e6238abaa4feca9d42722ffaeed16721bd745b7e5dd308e03170",
+    "anthropic-initial/budget.json": "440b3dc3de55b1cd960300ef38c1b2998eba3bdec4c1b8a4ce719335ad725e0a",
+    "anthropic-initial/comparisons.jsonl": "49de93666299185b6b8d00f60651f6ca35c2672c499df72bed03a76e6dd3d2d3",
+    "anthropic-initial/registration.json": "b6df9a69583289b10832d5b55dc177318b34c24c5b7068edb16072919e2fbc5f",
+    "anthropic-initial/requests.jsonl": "7a9dddd096c13cbab27c62846ce89a750ca727e6252154ee8429c8a94725b594",
+    "anthropic-initial/responses.jsonl": "ddf248be9a774067555dc60d66cd3c6472273c0b759e1131c8ea53783406fcc0",
+    "anthropic-initial/summary.json": "80731b90329222c02424dcdcb75231d98b395a088bb01aea1b0193dcd3f6577a",
+    "anthropic-initial/token-preflight.json": "a537199c1ef62e3ed5ad39fc12f7f23a3352047034f1a186a9a694297500f21f",
+    "anthropic-thinking-off/registration.json": "118797db22dcea893d2995e52d4f5cd7638a59502ab64d7a8dfa5312decbc518",
+    "anthropic-thinking-off/requests.jsonl": "b0d5a5a8f9df9f51552de3a84fe259c46447cb508ca8408eba24bd01bc0458a6",
+    "anthropic-thinking-off/token-preflight.json": "780d2b73824e70d786c8cd08a157bee0f1975b9fdd1b024518dbd7b90596fb13",
+    "gemini-fallback/adjudication.json": "98c67cb78ea3cb1bebf906fb33b4dccc92efc45f8997fdbd486a53fb99953c04",
+    "gemini-fallback/budget.json": "3ee2d1bb40da4a4714054dcc2c41907cc574faffe54e7d4cbf39387b4013d71a",
+    "gemini-fallback/comparisons.jsonl": "bf31e465b083248c18dce7d4a25d92caa204bb5a2996379695700f14c3a5a8eb",
+    "gemini-fallback/registration.json": "074ac86a82a54a2f926db87b30245a20806587a64aae866d1c5396c79a2d2651",
+    "gemini-fallback/requests.jsonl": "0df43c610b444d671834ab35b2aff03d56d2117910aaa7c5dca5e6586d93189e",
+    "gemini-fallback/responses.jsonl": "2a9f11b137100a5315b22841603590b8fd5ab1cb81422e5905fe9e9c42671115",
+    "gemini-fallback/summary.json": "e736afe806c2616d2b22bb07fc09d491352bd9c474a7eb30614bbf5c211a5e41",
+    "verification.json": "f9bd9c811c07fb423e3864e78d9d0a1a83272546d82c5a2e84fb6bf5a83f851c",
+    "verify.py": "e683734a1743d0a9a43912454e16a4cd1d2543a6757dca1c064defda8008fbad"
+  }
+}

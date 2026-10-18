@@ -1,0 +1,26 @@
+{
+  "started_at_utc": "2026-10-18T02:51:53.459737+00:00",
+  "reviewer_type": "ai",
+  "provider": "Anthropic",
+  "model": "claude-haiku-5-5",
+  "sample_count": 50,
+  "checkpoint_count": 114,
+  "source_packet_manifest_sha256": "15be20e881f72a3c9e96ce6d3090faeac961e035acfafac2f56fe89e9ac4a220",
+  "source_events_sha256": "8de49de10e1960e21b64243557774b0b027e996419b4d1f48f3dbf4a75dfac85",
+  "requests_sha256": "7a9dddd096c13cbab27c62846ce89a750ca727e6252154ee8429c8a94725b594",
+  "system_prompt_sha256": "7a3d4b9fb1fab6114a85ed04062baee8bfbf08d0f04cd39d6586063d091bf4bf",
+  "runner_sha256": "4321af6b48d5a7c109718812f33fc6fd0787fff3dddbc4d4fa7c34e423079911",
+  "order_seed": 17,
+  "concurrency": 4,
+  "max_output_tokens_per_call": 1500,
+  "max_calls": 50,
+  "automatic_retries": 0,
+  "estimated_cost_cap_usd": 0.15,
+  "pricing_url": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "rates_usd_per_million": {
+    "input": 0.1,
+    "output": 0.5
+  },
+  "blinding": "Expected proposals/states, generator tags and previous human verdicts omitted. Gold prior history and query schedule supplied. Each request independent.",
+  "scope": "Single-model AI consistency review; not independent human review, authentic-source validation, trained-model evidence or final evaluation."
+}

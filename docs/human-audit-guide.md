@@ -1,6 +1,8 @@
 # Human pilot audit walkthrough
 
-The next gate is an actual person's review of the [50-event packet](../audits/pilot-seed11/review.md). It contains ten cases for each action. The published packet starts with **zero human reviewers and zero verdicts**. An agent's explanation, code review or automated replay does not count as a human label review.
+The original plan calls for an actual person's review of the [50-event packet](../audits/pilot-seed11/review.md). It contains ten cases for each action. The published packet preserves its initial **zero-reviewer, blank-verdict snapshot**. An agent's explanation, code review or automated replay does not count as a human label review.
+
+At the user's request, a [separate AI review](../examples/ai-label-review/README.md) now provides an engineering cross-check. It does not fill human verdicts or complete the original manual-audit requirement. A human audit is not a universal publication rule; evidence requirements depend on the research claim. The user need not complete 50 judgments to use this engineering project. Current local human progress is one participant/one accepted case; case 2 and the remaining cases are pending. Further one-by-one human prompts are paused while using the AI review path.
 
 ## Work from a separate copy
 
@@ -48,4 +50,4 @@ Case `pilot-11-0000:o0` has no prior memory. An official notice received January
 
 The human reviewer decides whether to accept, disagree or remain uncertain about that action and state. Until an explicit response arrives, its verdict stays blank.
 
-The current participant requested the label `Anonymous reviewer`. A request for clarification is not a verdict; do not count it as a completed review.
+The current participant requested the label `Anonymous reviewer` and later explicitly accepted case 1. That verdict is saved in the separate local working CSV; the frozen packet stays unchanged. Requests for clarification are not verdicts.
