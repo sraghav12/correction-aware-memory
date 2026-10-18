@@ -4,6 +4,8 @@ A delayed report should not overwrite a newer fact. An authorized correction sho
 
 This repository implements a small, auditable memory system and a reproducible offline benchmark. **Current status: deterministic baseline plus real, saved/reloaded educational LoRA adapters. The bounded adjustment matched 13/20 training targets, below the 20/20 overfit goal. A matched five-trajectory development comparison is now recorded; human review and the full final study remain unfinished. No learned-memory advantage is claimed.**
 
+[Read the case study: Why my memory system keeps old answers](docs/case-study.md) — the correction that shaped the design, the small-model results, and the evidence behind the claims.
+
 ## See the behavior first
 
 ```bash

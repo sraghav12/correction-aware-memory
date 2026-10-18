@@ -2,7 +2,7 @@
 
 Status: two actual bounded educational LoRA runs trained, saved and reloaded adapters with unchanged base weights. The [default](../examples/educational-sft/README.md) matched 2/20 canonical training targets; the one permitted [accumulation adjustment](../examples/educational-sft-overfit/README.md) matched 13/20. **Both failed the full 20/20 overfit acceptance criterion.** No larger campaign or further tuning followed.
 
-This follows Task 6 of the [original folder 1 brief](superpowers/handoffs/correction-aware-memory.md), after the [drift audit](drift-audit.md). Purpose is **educational structured-rule imitation**, not a learned-memory advantage over the transparent rule, external-teacher distillation, novel memory method, or research training campaign. Actual human label reviewers remain zero.
+This follows Task 6 of the [original folder 1 brief](superpowers/handoffs/correction-aware-memory.md), after the [drift audit](drift-audit.md). Purpose is **educational structured-rule imitation**, not a learned-memory advantage over the transparent rule, external-teacher distillation, novel memory method, or research training campaign. Human label reviewers were zero at these experiment milestones; [later partial human progress and the separate AI review](human-audit-guide.md) are recorded separately. The full human label audit remains incomplete.
 
 Base: `Qwen/Qwen3-0.6B`, model and tokenizer revision `c1899de289a04d12100db370d81485cdf75e47ca`, Apache-2.0. Adapter artifacts are also Apache-2.0, with the base license included; code is MIT. Original synthetic train/development data: CC0-1.0, generated independently of production policy/store projection. No private records or final test data are used.
 
